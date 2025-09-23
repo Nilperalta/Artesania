@@ -1,0 +1,727 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root{
+    --lineaMarron:rgba(146, 89, 48, 1);
+    --EncabezadoHome:rgba(120, 198, 189, 1);
+    --black:#555;
+    --light-color:#777;
+    --bg:#fceae9;
+    --border:.1rem solid rgba(0,0,0,.1);
+    --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+    --encabezados:rgba(1, 1, 1, 1);
+    --box-color: rgba(236, 236, 236, 1);
+    --boton:#c06722;
+}
+
+
+*{
+    font-family: "Nunito", sans-serif;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all .3s ease-out;
+}
+
+
+
+html{
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 9rem;
+    /*overflow: hidden;*/
+}
+
+.layout{
+    /*border: 2px solid red;*/
+    display: grid;
+    grid-template-columns: 1fr;  /* Una sola columna */
+    grid-template-rows: auto 1fr auto;  /*auto= la altura se ajusta automáticamente al contenido*/
+    grid-template-areas:  "header"
+                          "main"
+                          "footer";
+    min-height: 100vh; /* para ocupar toda la pantalla 100vh = 100% de la altura visible de la pantalla*/
+}
+
+ /*Los colores de las áreas seleccionadas arriba*/
+.layout .header{
+    background: #ffF;
+    grid-area: header;
+}
+
+.layout .contenedor{
+    background: #fff;
+    grid-area: main;
+}
+
+.layout .footer{
+    background: #ffdcc2;
+    grid-area: footer;
+}
+
+/*imágenes*/
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+
+
+/*Header*/
+.header{
+    /*border: 0.5rem solid black;*/
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 9%;
+}
+
+.header .logo{
+    height: 7rem;
+}
+
+.header .navbar{
+    /*border: 0.5px solid black;*/
+    display: flex;
+    align-items: center;
+}
+
+.header .navbar a{
+    /*border: 0.5px solid brown;*/
+    font-size: 1.7rem;
+    color: var(--light-color);
+    margin-left: 2rem;
+       
+}
+
+
+
+.header .navbar a:hover{
+    color: var(--lineaMarron);
+}
+
+.header .icons a:hover{
+    color: var(--lineaMarron);
+}
+
+
+/*btn menú*/
+#menu-btn{
+    cursor: pointer;
+    font-size: 2.5rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    color: var(--main-color);
+    background: #ffdcc2;
+    display: none;
+    color: var(--lineaMarron);
+}
+
+#menu-btn:hover{
+    color: #fff;
+    background: var(--EncabezadoHome);
+}
+
+
+/*HOME*/
+.contenedor{
+    /*border: 5px solid red;*/
+    background: #fff;
+}
+
+.contenedor .home{
+    /*border: 5px solid blue;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(236, 236, 236, 1);
+    margin: 120px auto 0 auto; /* arriba 120px, laterales automáticos */
+    max-width: 1200px;         /* ancho máximo en pantallas grandes */
+    width: 90%;                /* ocupa 90% del ancho en móviles/tablets */
+}
+
+.contenedor .home .box{
+    /*border: 5px solid red;*/
+    margin: 0 4rem;
+}
+
+.contenedor .home .box h1{
+    font-size: 5rem;
+    font-style: oblique;
+    color: var(--EncabezadoHome);
+}
+
+.contenedor .home .box  p{
+    font-size: 1.7rem;
+    color:rgba(1, 1, 1, 1);
+}
+
+.home .imageHome{
+    /*border: 5px solid red*/
+}
+
+
+/*Productos*/
+
+.contenedor .productos{
+    /*border: 5px solid red;*/
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-content: center;
+}
+
+.contenedor .productos h1{
+    /*border: 5px solid yellow;*/
+    font-size: 2.7rem;
+    color: var(--encabezados);
+    margin-top: 4rem;
+}
+
+
+.contenedor .box-container{
+    /*border: 5px solid brown;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    padding: 40px;
+    gap: 2rem;
+}
+
+.contenedor .box-container img{
+    /*border: 3px solid green;*/
+    background: rgba(236, 236, 236, 1);
+    padding: 2rem;
+    height: 25rem;
+
+}
+
+.contenedor .box img:hover{
+   transform: scale(1.1);
+}
+
+.contenedor .box p{
+    color: rgba(1, 1, 1, 1);
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+
+
+/*FOOTER*/
+
+.footer .box-container{
+    /*border: 3px solid green;*/
+    display: flex;
+    justify-content: space-evenly;
+    box-shadow: var(--box-shadow);
+}
+
+.footer .box-container .box{
+    /*border: 3px solid red;*/
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    padding: 2rem;
+}
+
+.footer .box-container .box img{
+    height: 9rem;
+}
+
+.footer .box-container .box h3{
+    font-size: 1.5rem;
+}
+
+.footer .box-container .box a{
+    font-size: 1.2rem;
+    color: var(--light-color);
+}
+
+.footer .box-container .box a i{
+    color: var(--lineaMarron);
+}
+
+.footer .box-container .box a:hover{
+    color: var(--lineaMarron);
+}
+
+.footer .credit{
+    background: var(--lineaMarron);
+    display: flex;
+    justify-content: center;
+
+}
+
+.footer .credit span{
+    color: white;
+    font-size: 1.2rem;
+}
+
+
+/*Selección de registro*/
+
+.contenedor-seleccion{
+    /*border: 0.5rem solid red;*/
+    margin-top: 8rem;
+}
+
+.contenedor-seleccion .box-container{
+    /*border: 0.5rem solid green;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 600px;     /* límite de ancho para que no se estire demasiado */
+    width: 90%;           /* ocupa el 90% de la pantalla en dispositivos pequeños */
+    margin: 5rem auto;    /* auto centra horizontalmente */
+    
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+}
+
+
+.contenedor-seleccion .heading{
+    /*border: 0.5rem solid yellow;*/
+    color: var(--EncabezadoHome);
+    font-size: 2.5rem;
+    margin: 5rem;
+    text-align: center;
+}
+.contenedor-seleccion .botones{
+    /*border: 0.5rem solid pink;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.contenedor-seleccion .btn{
+    /*border: 0.5rem solid pink;*/
+    background: black;
+    color: var(--bg);
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 0.5rem 5rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    margin: 0.2rem;
+}
+
+
+.contenedor-seleccion .btn:hover{
+    background: var(--EncabezadoHome);
+    color: var(--encabezados);
+}
+
+
+/*INICIAR SESIÓN*/ 
+
+.contenedor-form{
+    /*border: 0.5rem solid pink;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    padding: 5rem 0rem;
+}
+
+.contenedor-form .box-container{
+    /*border: 0.5rem solid green;*/
+    padding: 5rem;
+    border-radius: 0.3rem;
+    box-shadow: var(--box-shadow);
+
+}
+.contenedor-form .heading{
+    color: var(--EncabezadoHome);
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.contenedor-form .box-container form{
+    /*border: 0.5rem solid yellow;*/
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.contenedor-form .box-container form input{
+    font-size: 1.7rem;
+    border: var(--border);
+    width: 100%;
+    max-width: 300px;
+}
+
+.contenedor-form .box-container form .btn{
+    background: black;
+    color: var(--bg);
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 0.5rem 5rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    margin: 0.2rem;
+}
+
+.contenedor-form .box-container form .btn:hover{
+    background: var(--EncabezadoHome);
+    color: var(--encabezados);
+}
+
+.contenedor-form .box-container p{
+    text-align: center;
+}
+
+.contenedor-form .box-container span{
+    color: black;
+    font-weight: bold;
+}
+
+.contenedor-form .box-container span:hover{
+    color: var(--EncabezadoHome);
+}
+
+
+/*DASBOARD COMPRADOR*/
+
+.dashboard-comprador {
+    margin-top: 8rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.dashboard-comprador .heading {
+    font-size: 2.5rem;
+    color: var(--EncabezadoHome);
+    margin-bottom: 3rem;
+}
+
+.dashboard-comprador .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 2rem;
+}
+
+.dashboard-comprador .box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    transition: 0.3s ease;
+}
+
+.dashboard-comprador .box:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-comprador .box i {
+    font-size: 4rem;
+    color: var(--encabezados);
+    margin-bottom: 1rem;
+}
+
+.dashboard-comprador .box h3 {
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 1rem 0;
+}
+
+.dashboard-comprador .box p {
+    font-size: 1.4rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-comprador .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    background: var(--boton);
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.dashboard-comprador .btn:hover {
+    background: var(--EncabezadoHome);
+}
+
+
+/*DASBOARD VENDEDOR*/
+
+.dashboard-vendedor {
+    margin-top: 8rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.dashboard-vendedor .heading {
+    font-size: 2.5rem;
+    color: var(--EncabezadoHome);
+    margin-bottom: 3rem;
+}
+
+.dashboard-vendedor .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 2rem;
+}
+
+.dashboard-vendedor .box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    transition: 0.3s ease;
+}
+
+.dashboard-vendedor .box:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-vendedor .box i {
+    font-size: 4rem;
+    color: var(--encabezados);
+    margin-bottom: 1rem;
+}
+
+.dashboard-vendedor .box h3 {
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 1rem 0;
+}
+
+.dashboard-vendedor .box p {
+    font-size: 1.4rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-vendedor .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    background: var(--boton);
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.dashboard-vendedor .btn:hover {
+    background: var(--encabezados);
+}
+
+
+/* DASHBOARD ADMINISTRADOR */
+.dashboard-administrador {
+    margin-top: 8rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.dashboard-administrador .heading {
+    font-size: 2.5rem;
+    color: var(--EncabezadoHome);
+    margin-bottom: 3rem;
+}
+
+.dashboard-administrador .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 2rem;
+}
+
+.dashboard-administrador .box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    transition: 0.3s ease;
+}
+
+.dashboard-administrador .box:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-administrador .box i {
+    font-size: 4rem;
+    color: var(--encabezados);
+    margin-bottom: 1rem;
+}
+
+.dashboard-administrador .box h3 {
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 1rem 0;
+}
+
+.dashboard-administrador .box p {
+    font-size: 1.4rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-administrador .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    background: var(--boton);
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.dashboard-administrador .btn:hover {
+    background: var(--encabezados);
+}
+
+
+.contenedor-form .box-container .box-form span{
+    color: red;
+    font-weight: bold;
+    display: flex;
+}
+
+
+
+/*CONTENEDOR MAQUETA*/
+.maqueta{
+    background-color: blue;
+    margin: 120px auto 0 auto; /* arriba 120px, laterales automáticos */
+}
+
+.maqueta .box{
+    border: 5px solid red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*media queries*/
+@media(max-width: 991px){
+
+    html{
+    font-size: 55%;
+    }
+    
+    .contenedor .home{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .contenedor .home .box{
+        margin: 3rem 3rem;      
+    }
+
+    
+
+
+}
+
+@media(max-width: 768px){
+    
+    .contenedor .home {
+        flex-direction: column; 
+        text-align: center;
+        width: 100%;   /* ✅ ocupar todo el ancho */
+        margin: 100px auto 0 auto;
+    }
+
+    .contenedor .home .box{
+        margin: 3rem auto;      
+    }
+
+    .contenedor .box-container{
+        padding: 20px;  /* menos padding para que no se desborde */
+    }
+
+    .footer .box-container{
+        flex-direction: column;  /* apila las cajas del footer */
+        align-items: center;
+    }
+
+    #menu-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    .header .navbar{
+        /*border: 0.5rem solid red;*/
+        position: absolute;
+        top:115%; right: 6rem;
+        width: 30rem;
+        opacity:0;
+        display: block;
+        font-size: 2rem;
+        padding: 1rem;
+        margin: .5rem 1rem;
+        border-radius: .5rem; 
+        background: #fff; 
+        transform: scale(0);
+       
+    }
+
+    .header .navbar.active{
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .header .navbar a{
+        font-size: 2rem;
+        display: block;
+        padding: 1rem;
+        margin: .5rem 1rem;
+        border-radius: .5rem;    
+    }
+
+    .header .nav a:hover{
+        background: var(--main-color);
+    }
+
+   
+}
+
+
+@media(max-width: 450px){
+    html{
+    font-size: 50%;
+    }
+
+}
