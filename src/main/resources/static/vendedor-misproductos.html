@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Productos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" href="images/Logo-artesania.png">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Header -->
+        <header class="header">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a href="index.html">HOME</a>
+                <a href="vendedor-mi perfil.html">MI PERFIL</a>
+                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a href="login.html">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            
+            <section class="dashboard-vendedor">
+                <h1 class="heading">Bienvenido, Vendedor 👋</h1>
+                
+                 <section class="productos-vendedor">
+                    <h2 class="subtitulo">Mis Productos <span class="cantidad">(2 productos)</span></h2>
+                    <button class="btn-agregar">Agregar Productos</button>
+
+                    <div class="lista-productos">
+
+                        <!-- Producto 1 -->
+                        <div class="producto">
+                            <img src="images/producto-3.png" alt="Bolsa tejida a mano" class="producto-img">
+                            <div class="producto-info">
+                                <h3>Bolsa tejida a mano</h3>
+                                <p><strong>Color:</strong> Rojo</p>
+                                <div class="cantidad">
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
+                                    <span>1</span>
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
+                                </div>
+                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+                            </div>
+                            <p class="precio">S/. 50.00</p>
+                        </div>
+
+                        <hr>
+
+                        <!-- Producto 2 -->
+                        <div class="producto">
+                            <img src="images/producto-2.png" alt="Beanie" class="producto-img">
+                            <div class="producto-info">
+                                <h3>Beanie</h3>
+                                <p><strong>Color:</strong> Turquesa</p>
+                                <div class="cantidad">
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
+                                    <span>1</span>
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
+                                </div>
+                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+                            </div>
+                            <p class="precio">S/. 20.00</p>
+                        </div>
+
+                    </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="https://www.facebook.com"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado por Mr.Grupo | Todos los derechos reservados</span></div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+      <script>
+        function cambiarCantidad(btn, delta) {
+            const span = btn.parentElement.querySelector('span');
+            let cantidad = parseInt(span.textContent);
+            cantidad = Math.max(1, cantidad + delta);
+            span.textContent = cantidad;
+        }
+
+        function eliminarProducto(btn) {
+            btn.closest('.producto').remove();
+        }
+    </script>
+</body>
+</html>
