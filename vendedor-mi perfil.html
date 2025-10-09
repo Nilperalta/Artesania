@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" href="images/Logo-artesania.png">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Header -->
+        <header class="header">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a href="index.html">HOME</a>
+                <a href="vendedor-mi perfil.html">MI PERFIL</a>
+                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
+                <a href="vendedor-misventas.html">VENTAS</a>
+                <a href="login.html">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            <section class="dashboard-vendedor">
+             <h1 class="heading">Bienvenido, Vendedor 👋</h1>
+            
+            <h2 class="heading">Mi Perfil de Vendedor</h2>
+
+      <div class="perfil-container">
+        
+        <!-- Imagen del perfil -->
+        <div class="perfil-foto">
+          <img src="https://cdn-icons-png.flaticon.com/512/12225/12225881.png" alt="Foto del vendedor">
+          <button class="btn subir-foto"><i class="fas fa-camera"></i> Cambiar foto</button>
+        </div>
+
+        <!-- Datos personales -->
+        <div class="perfil-datos">
+          <form action="#" class="form-perfil">
+
+            <div class="campo">
+              <label>Nombre:</label>
+              <input type="text"  readonly>
+            </div>
+
+            <div class="campo">
+              <label>Correo electrónico:</label>
+              <input type="email" required>
+            </div>
+
+            <div class="campo">
+              <label>Teléfono:</label>
+              <input type="text"  readonly>
+            </div>
+
+            <div class="campo">
+              <label>Dirección:</label>
+              <input type="text"  readonly>
+            </div>
+
+            <div class="campo">
+              <label>Descripción:</label>
+              <textarea readonly></textarea>
+            </div>
+
+            <div class="botones">
+              <button type="button" id="btn-editar" class="btn editar"><i class="fas fa-edit"></i> Editar</button>
+              <button type="submit" id="btn-guardar" class="btn guardar" disabled><i class="fas fa-save"></i> Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+</section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="https://www.facebook.com"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const btnEditar = document.getElementById('btn-editar');
+        const btnGuardar = document.getElementById('btn-guardar');
+        const inputs = document.querySelectorAll('.form-perfil input, .form-perfil textarea');
+
+        btnEditar.addEventListener('click', () => {
+        inputs.forEach(i => i.removeAttribute('readonly'));
+        btnGuardar.removeAttribute('disabled');
+        btnGuardar.classList.add('enabled');
+        });
+
+        btnGuardar.addEventListener('click', (e) => {
+        e.preventDefault();
+        inputs.forEach(i => i.setAttribute('readonly', true));
+        btnGuardar.setAttribute('disabled', true);
+        btnGuardar.classList.remove('enabled');
+        alert("Cambios guardados correctamente ✅");
+        });
+    </script>
+</body>
+</html>

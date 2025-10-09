@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Ventas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" href="images/Logo-artesania.png">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Header -->
+        <header class="header">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a href="index.html">HOME</a>
+                <a href="vendedor-mi perfil.html">MI PERFIL</a>
+                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
+                <a href="vendedor-misventas.html">VENTAS</a>
+                <a href="login.html">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            
+        <section class="dashboard-vendedor">
+        <div class="ventass">
+                <h1 class="heading">Bienvenido, Vendedor 👋</h1>
+                
+            <div class="resumen-cards">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                <div>
+                <h2>5,423</h2>
+                <p>Total Ventas</p>
+                <span class="positivo">↑ 18% este mes</span>
+            </div>
+            </div>
+            <div class="card">
+            <i class="fas fa-user"></i>
+            <div>
+                <h2>1,893</h2>
+                <p>Compradores</p>
+                <span class="negativo">↓ 1% este mes</span>
+            </div>
+            </div>
+             </div>
+        </div>
+      <!-- Tabla de ventas -->
+      <section class="tabla-ventas">
+        <div class="tabla-header">
+          <h2>Todas las Ventas</h2>
+          <div class="acciones">
+            <input type="text" placeholder="Buscar...">
+            <select>
+              <option value="">Filtrar por...</option>
+              <option value="vendido">Vendido</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="anulado">Anulado</option>
+            </select>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre del Cliente</th>
+              <th>Producto</th>
+              <th>Teléfono</th>
+              <th>Email</th>
+              <th>País</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jane Cooper</td>
+              <td>Cerámica</td>
+              <td>(225) 555-0118</td>
+              <td>jane@microsoft.com</td>
+              <td>Estados Unidos</td>
+              <td><span class="estado vendido">Vendido</span></td>
+            </tr>
+            <tr>
+              <td>Floyd Miles</td>
+              <td>Beanie</td>
+              <td>(205) 555-0100</td>
+              <td>floyd@yahoo.com</td>
+              <td>Afganistán</td>
+              <td><span class="estado pendiente">Pendiente</span></td>
+            </tr>
+            <tr>
+              <td>Ronald Richards</td>
+              <td>Beanie</td>
+              <td>(302) 555-0107</td>
+              <td>ronald@adobe.com</td>
+              <td>Israel</td>
+              <td><span class="estado anulado">Anulado</span></td>
+            </tr>
+            <tr>
+              <td>Marvin McKinney</td>
+              <td>Bolso tejido a mano</td>
+              <td>(252) 555-0126</td>
+              <td>marvin@tesla.com</td>
+              <td>España</td>
+              <td><span class="estado vendido">Vendido</span></td>
+            </tr>
+            <tr>
+              <td>Jerome Bell</td>
+              <td>Cerámica</td>
+              <td>(629) 555-0129</td>
+              <td>jerome@google.com</td>
+              <td>Puerto Rico</td>
+              <td><span class="estado vendido">Vendido</span></td>
+            </tr>
+            <tr>
+              <td>Kathryn Murphy</td>
+              <td>Retablo</td>
+              <td>(406) 555-0120</td>
+              <td>kathryn@microsoft.com</td>
+              <td>Colombia</td>
+              <td><span class="estado vendido">Vendido</span></td>
+            </tr>
+            <tr>
+              <td>Jacob Jones</td>
+              <td>Retablo</td>
+              <td>(208) 555-0112</td>
+              <td>jacob@yahoo.com</td>
+              <td>Brasil</td>
+              <td><span class="estado vendido">Vendido</span></td>
+            </tr>
+            <tr>
+              <td>Jesús Alegre</td>
+              <td>Retablo</td>
+              <td>(704) 555-0127</td>
+              <td>kristin@facebook.com</td>
+              <td>Perú</td>
+              <td><span class="estado anulado">Anulado</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Paginación -->
+        <div class="paginacion">
+          <a href="#">«</a>
+          <a href="#" class="activo">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">...</a>
+          <a href="#">40</a>
+          <a href="#">»</a>
+        </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="https://www.facebook.com"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado por Mr.Grupo | Todos los derechos reservados</span></div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+   
+</body>
+</html>
