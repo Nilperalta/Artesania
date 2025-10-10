@@ -789,7 +789,8 @@ img {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 10 px;
+  
 }
 
 .precio {
@@ -1071,3 +1072,130 @@ th, td {
   background: #8d4a24;
   color: #fff;
 }
+
+/* Botón agregar */
+
+.btn-agregar:hover {
+    background-color: #a96b4a;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-contenido {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    position: relative;
+}
+.cerrar {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #999;
+}
+.cerrar:hover {
+    color: #333;
+}
+
+/* Formulario */
+#form-producto label {
+    display: block;
+    margin-top: 10px;
+}
+#form-producto input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.btn-guardar {
+    background-color: #c17f59;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+.btn-guardar:hover {
+    background-color: #a96b4a;
+}
+
+.btn-editar {
+  color: rgb(0, 0, 0);
+  box-shadow: none;
+  cursor: pointer;
+}
+/* ----- Modal de edición ----- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-contenido {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 350px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: left;
+}
+
+.modal-contenido h2 {
+  margin-top: 0;
+}
+
+.modal-contenido input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-guardar {
+  background: #6d3519;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background: #6d3519;
+}
+
+.cerrar {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #555;
+}
+
