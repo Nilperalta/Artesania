@@ -612,147 +612,126 @@ img {
     border: 5px solid red;
 }
 
-/* ---------- PERFIL 1---------- */
-
-
-/* Fuente moderna y artesanal */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@500;700&display=swap');
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #f8f4ef;
-    margin: 0;
-    color: #333;
-}
-
-/* Contenedor principal */
+/* --- PERFIL --- */
 .perfil-container {
     display: flex;
-    gap: 30px;
-    padding: 60px 40px 60px 40px; /* más espacio arriba */
-    min-height: 500px;
-    background: linear-gradient(135deg, #f8f4ef 0%, #fff8f0 100%);
-    justify-content: center;   /* centrado horizontal */
-    align-items: flex-start;   /* mantiene parte superior alineada, no demasiado centrado */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 70px;
+    margin: 100px auto;
+    padding: 80px 70px;
+    width: 90%;
+    max-width: 1400px;
+    min-height: 650px;
+    background: linear-gradient(135deg, #fdfcfb 0%, #f7f5f0 100%);
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Si la pantalla es muy alta, baja un poco más el bloque */
-@media (min-height: 800px) {
-    .perfil-container {
-        padding-top: 100px; /* baja el cuadro más al centro */
-    }
-}
-
-/* Sidebar artesanal */
+/* Menú lateral */
 .perfil-menu {
-    width: 250px;
-    background: linear-gradient(180deg, #a86c4c, #d89b72);
-    padding: 25px;
+    flex: 1;
+    max-width: 270px;
+    background: #fff;
     border-radius: 18px;
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    position: relative;
-    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    padding: 35px;
+    border-left: 5px solid #d2a679;
+    transition: all 0.3s;
 }
 
-/* Decoración sutil */
-.perfil-menu::before {
-    content: "";
-    position: absolute;
-    top: -30px;
-    right: -40px;
-    width: 120px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+.perfil-menu:hover {
+    transform: translateY(-4px);
 }
 
 .perfil-menu ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .perfil-menu li {
-    padding: 14px 14px;
+    font-size: 1.1rem;
+    color: #333;
+    margin: 20px 0;
     cursor: pointer;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 10px;
+    transition: all 0.3s;
+}
+
+.perfil-menu li i {
+    margin-right: 12px;
+    color: #b8860b;
 }
 
 .perfil-menu li:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: #b8860b;
     transform: translateX(6px);
 }
 
-/* Contenido principal del perfil */
+/* Cuadro principal */
 .perfil-info {
-    flex: 1;
-    background: #fff;
-    padding: 35px;
+    flex: 3;
+    background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    border-left: 8px solid #d89b72;
-    animation: fadeIn 0.5s ease;
+    padding: 70px 90px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-left: 8px solid #d2a679;
     background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+    background-size: cover;
+    transition: all 0.3s ease;
 }
 
-/* Encabezados */
 .perfil-info h2 {
-    color: #a86c4c;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #f0c99d;
+    color: #b8860b;
+    font-size: 2em;
+    margin-bottom: 30px;
+    font-weight: 600;
+    border-bottom: 2px solid #f1dab2;
     display: inline-block;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
 }
 
-/* Texto */
 .perfil-info p {
-    font-size: 15px;
-    margin-bottom: 12px;
+    font-size: 1.2em;
+    color: #444;
+    margin: 16px 0;
+    line-height: 1.8;
     padding-left: 10px;
-    border-left: 3px solid #f0c99d;
+    border-left: 3px solid #f1dab2;
 }
 
-/* Animación de transición */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Secciones */
+/* Secciones dinámicas */
 .seccion {
     display: none;
-    animation: fadeIn 0.4s ease;
 }
 
 .seccion.activa {
     display: block;
 }
 
-/* Adaptación móvil */
-@media (max-width: 768px) {
+
+
+/* --- RESPONSIVO --- */
+@media (max-width: 900px) {
     .perfil-container {
         flex-direction: column;
-        padding: 40px 20px;
+        align-items: stretch;
+        width: 90%;
+        margin: 60px auto;
+        padding: 50px 30px;
     }
 
     .perfil-menu {
-        width: 100%;
-        text-align: center;
+        max-width: 100%;
+        margin-bottom: 30px;
     }
 
-    .perfil-menu li {
-        justify-content: center;
+    .perfil-info {
+        padding: 40px 30px;
     }
 }
+
+
 
 /* version mas centrada*/
 /* ======== PERFIL2 ========
@@ -895,6 +874,7 @@ body {
 
 
 /* ---------- PRODUCTOS ---------- */
+/* ---------- PRODUCTOS (Catálogo) ---------- */
 .productos-page main {
   margin-top: 12rem; /* deja espacio al header fijo */
 }
@@ -917,8 +897,48 @@ body {
   border-radius: .5rem;
 }
 
+#toast {
+  visibility: hidden;
+  min-width: 400px;
+  max-width: 500px;
+  background-color: #28a745;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 15px 20px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1055;
+  opacity: 0;
+  font-weight: bold;
+  font-size: 13px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: opacity 0.5s ease, bottom 0.5s ease;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+
+
+
+
+
+/**/
+/* ---------- ESTILOS GENERALES ---------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
 /* ---------- CARRITO ---------- */
-.carrito-page main {
+/*.carrito-page main {
   margin-top: 10rem;
   background: #fffaf4;
   padding: 3rem 2rem;
@@ -927,16 +947,26 @@ body {
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
-  transition: all 0.3s ease;
+}*/
+.carrito-page main {
+  width: 80%;        /* ocupa el 90% del ancho de la pantalla */
+  max-width: 1600px; /* ancho máximo que puede alcanzar */
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fffaf4;
+  padding: 5rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
 
 .carrito-page h2 {
   font-size: 2.6rem;
-  color: #5c4033; /* tono madera */
+  color: #5c4033;
   font-weight: 700;
-  margin-bottom: 2rem;
   text-align: center;
-  letter-spacing: 1px;
+  margin-bottom: 2rem;
 }
 
 .carrito-page table {
@@ -950,7 +980,7 @@ body {
 }
 
 .carrito-page table th {
-  background: #b76e48; /* color artesanal */
+  background: #b76e48;
   color: #fff;
   text-align: center;
   padding: 1.2rem;
@@ -994,13 +1024,7 @@ body {
   transform: scale(1.05);
 }
 
-.carrito-page h3 {
-  font-size: 2rem;
-  margin-top: 2rem;
-  color: #5c4033;
-  text-align: right;
-}
-
+/* Contenedor total y botones */
 .carrito-total {
   display: flex;
   justify-content: space-between;
@@ -1012,142 +1036,84 @@ body {
 
 .carrito-total h3 {
   font-weight: 700;
-}
-
-.carrito-total .btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.carrito-total .btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
-}
-.animacion-exito {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* antes estaba center */
-  gap: 1rem;
-  margin-top: 2rem;
-  color: #6a994e;
-  font-weight: 700;
-  font-size: 1.6rem;
-  animation: fadeInUp 0.8s ease;
-  text-align: left;
-}
-
-/* =========================================================
-   🧺 ESTILOS DE CARRITO Y CHECKOUT
-   ========================================================= */
-
-/* ---------- CARRITO ---------- */
-.carrito-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: 'Poppins', sans-serif;
-}
-
-.carrito-page h2 {
-  font-size: 2.6rem;
+  font-size: 2rem;
   color: #5c4033;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
-.carrito-page table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.carrito-page th {
-  background: #b76e48;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-.carrito-page td {
-  text-align: center;
-  padding: 1rem;
-  border-bottom: 1px solid #f0e0d0;
-  color: #4d3b2b;
-}
-
-.carrito-page tr:hover {
-  background: #fff4ea;
-}
-
-.carrito-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 2px solid #d7b89c;
-}
-
-.btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
+/* Botón finalizar compra */
+#finalizarCompra {
+  background-color: #28a745;
+  color: white;
+  margin-left: 10px;
+  padding: 0.8rem 1.5rem;
+  border-radius: .5rem;
+  border: none;
+  cursor: pointer;
   font-weight: 600;
-  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
+#finalizarCompra:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* ---------- TOAST ---------- */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+/* ---------- ESTILOS GENERALES ---------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
 }
 
 /* ---------- CHECKOUT ---------- */
 .checkout-page main {
-  margin-top: 10rem;
+  max-width: 500px;
+  margin: 6rem auto 3rem auto;
   background: #fffaf4;
   padding: 3rem 2rem;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .checkout-page h2 {
-  font-size: 2.4rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #5c4033;
   margin-bottom: 2rem;
-  font-weight: 700;
 }
 
-.checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  text-align: left;
-}
-
+/* Formulario de checkout */
 .checkout-form label {
-  color: #5c4033;
+  display: block;
   font-weight: 600;
-  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #4d3b2b;
 }
 
 .checkout-form input,
@@ -1155,63 +1121,75 @@ body {
 .checkout-form select {
   width: 100%;
   padding: 0.8rem 1rem;
+  border-radius: 0.6rem;
   border: 1px solid #d7b89c;
-  border-radius: 0.8rem;
-  font-size: 1rem;
-  color: #4d3b2b;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
   background-color: #fff;
-  transition: border 0.3s ease;
 }
 
-.checkout-form input:focus,
-.checkout-form textarea:focus,
-.checkout-form select:focus {
-  border-color: #6a994e;
-  outline: none;
+.checkout-form textarea {
+  resize: none;
 }
 
 .checkout-btn {
-  background: #6a994e;
-  color: #fff;
+  display: block;
+  width: 100%;
   padding: 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: #7f6b08;
   border: none;
-  border-radius: .8rem;
-  font-weight: 600;
+  border-radius: 0.6rem;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .checkout-btn:hover {
-  background: #588640;
-  transform: translateY(-2px);
+  background-color: #218838;
+  transform: scale(1.02);
 }
 
-/* ---------- ANIMACIÓN DE ÉXITO ---------- */
+/* ---------- ANIMACION DE ÉXITO ---------- */
 .animacion-exito {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  color: #e5d41c;
+  font-weight: 700;
   margin-top: 2rem;
-  background: #f7fff3;
-  padding: 2rem;
-  border: 2px solid #6a994e;
-  border-radius: 1rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #3a6129;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 .animacion-exito img {
-  margin-bottom: 1rem;
+  width: 80px;
+  height: 80px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .checkout-page main {
+    margin: 3rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .checkout-btn {
+    font-size: 1.5rem;
+    padding: 0.8rem;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea,
+  .checkout-form select {
+    font-size: 1.5rem;
+    padding: 0.6rem 0.8rem;
+  }
 }
+
 
 
 

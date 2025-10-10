@@ -5,591 +5,297 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Productos | Artesanía</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <link rel="icon" href="images/Logo-artesania.png">
 </head>
-
 <body class="productos-page">
+  <div class="layout">
 
-<div class="layout">
+    <!-- HEADER -->
+    <header class="header">
+      <img src="images/Logo-artesania.png" alt="Logo Artesanía" class="logo">
+      <nav class="navbar">
+        <a href="index.html#home">HOME</a>
+        <a href="#productos">PRODUCTOS</a>
+        <a href="login.html">SALIR</a>
+        <a href="carrito.html" class="btn btn-warning ms-3">
+          <i class="fas fa-shopping-cart"></i> Carrito
+        </a>
+      </nav>
+      <!-- Botón menú móvil -->
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
 
-  <!--Header-->
-  <header class="header">
-    <img src="images/Logo-artesania.png" alt="Logo" class="logo">
-    <nav class="navbar">
-      <a href="index.html">HOME</a>
-      <a href="productos.html">PRODUCTOS</a>
-      <a href="SeleccionRegistro.html">REGISTRO</a>
-      <a href="login.html">LOGIN</a>
-    </nav>
-    <!--Botón de menú-->
-    <div id="menu-btn" class="fas fa-bars"></div>
-  </header>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="contenedor-maqueta">
 
-  <!-- Contenedor principal -->
-  <main class="contenedor-maqueta my-5">
-    <div class="container">
-      <h1 class="text-center mb-5">Nuestros Productos</h1>
-      <div class="row g-4">
+      <!-- CATÁLOGO -->
+      <section id="productos" class="container my-5">
+        <div class="row" id="productos-container">
+          <!-- Aquí JS insertará las tarjetas -->
+        </div>
+      </section>
 
-        <!-- 🔁 Producto 1 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-1-removebg-preview.png" class="card-img-top" alt="Jarrón Andino">
-            <div class="card-body">
-              <h5 class="card-title">Jarrón Andino</h5>
-              <p class="card-text">Hecho a mano en barro cocido.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal1">Ver más</button>
+      <!-- MODAL DETALLE -->
+      <div class="modal fade" id="productoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalNombre"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <img id="modalImagen" src="" class="img-fluid rounded" alt="">
+                </div>
+                <div class="col-md-6">
+                  <p id="modalDescripcion"></p>
+                  <h4 class="text-success">S/ <span id="modalPrecio"></span></h4>
+                  <label for="cantidad" class="form-label mt-2">Cantidad</label>
+                  <input type="number" id="modalCantidad" value="1" min="1" class="form-control w-50">
+                  <button class="btn btn-primary mt-3" id="btnAgregarCarrito">
+                    <i class="fas fa-cart-plus"></i> Añadir al carrito
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Producto 2 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-2-removebg-preview.png" class="card-img-top" alt="Textil Cusqueño">
-            <div class="card-body">
-              <h5 class="card-title">Textil Cusqueño</h5>
-              <p class="card-text">Telar tradicional de alpaca.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal2">Ver más</button>
-            </div>
-          </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="box-container">
+        <div class="box">
+          <img src="images/Logo-artesania.png" alt="Logo Artesanía">
         </div>
 
-        <!-- Producto 3 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-3-removebg-preview.png" class="card-img-top" alt="Collar de semillas">
-            <div class="card-body">
-              <h5 class="card-title">Collar de Semillas</h5>
-              <p class="card-text">Elaborado con semillas naturales.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal3">Ver más</button>
-            </div>
-          </div>
+        <div class="box">
+          <h3>Síguenos</h3>
+          <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
         </div>
 
-        <!-- Producto 4 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-4-removebg-preview.png" class="card-img-top" alt="Mate Burilado">
-            <div class="card-body">
-              <h5 class="card-title">Mate Burilado</h5>
-              <p class="card-text">Arte en calabaza tallada.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal4">Ver más</button>
-            </div>
-          </div>
+        <div class="box">
+          <h3>Servicios</h3>
+          <a href="index.html#home"><i class="fas fa-check"></i> Home</a>
+          <a href="#productos"><i class="fas fa-check"></i> Productos</a>
+          <a href="carrito.html"><i class="fas fa-check"></i> Carrito</a>
+          <a href="login.html"><i class="fas fa-check"></i> Salir</a>
         </div>
-
-
-                <!-- Producto 5 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-5-removebg-preview.png" class="card-img-top" alt="Jarrón Andino">
-            <div class="card-body">
-              <h5 class="card-title">Jarrón Andino</h5>
-              <p class="card-text">Hecho a mano en barro cocido.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal5">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 6 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-6-removebg-preview.png" class="card-img-top" alt="Textil Cusqueño">
-            <div class="card-body">
-              <h5 class="card-title">Textil Cusqueño</h5>
-              <p class="card-text">Telar tradicional de alpaca.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal6">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 7 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-7-removebg-preview.png" class="card-img-top" alt="Collar de semillas">
-            <div class="card-body">
-              <h5 class="card-title">Collar de Semillas</h5>
-              <p class="card-text">Elaborado con semillas naturales.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal7">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 8 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-8-removebg-preview.png" class="card-img-top" alt="Mate Burilado">
-            <div class="card-body">
-              <h5 class="card-title">Mate Burilado</h5>
-              <p class="card-text">Arte en calabaza tallada.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal8">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-
-                <!--  Producto  9 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-9-removebg-preview.png" class="card-img-top" alt="Jarrón Andino">
-            <div class="card-body">
-              <h5 class="card-title">Jarrón Andino</h5>
-              <p class="card-text">Hecho a mano en barro cocido.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal9">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 10 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-10-removebg-preview.png" class="card-img-top" alt="Textil Cusqueño">
-            <div class="card-body">
-              <h5 class="card-title">Textil Cusqueño</h5>
-              <p class="card-text">Telar tradicional de alpaca.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal10">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 11 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-11-removebg-preview.png" class="card-img-top" alt="Collar de semillas">
-            <div class="card-body">
-              <h5 class="card-title">Collar de Semillas</h5>
-              <p class="card-text">Elaborado con semillas naturales.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal11">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 12 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-12-removebg-preview.png" class="card-img-top" alt="Mate Burilado">
-            <div class="card-body">
-              <h5 class="card-title">Mate Burilado</h5>
-              <p class="card-text">Arte en calabaza tallada.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal12">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-
-
-                <!--  Producto 13 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-13-removebg-preview.png" class="card-img-top" alt="Jarrón Andino">
-            <div class="card-body">
-              <h5 class="card-title">Jarrón Andino</h5>
-              <p class="card-text">Hecho a mano en barro cocido.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal13">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 14 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-14-removebg-preview.png" class="card-img-top" alt="Textil Cusqueño">
-            <div class="card-body">
-              <h5 class="card-title">Textil Cusqueño</h5>
-              <p class="card-text">Telar tradicional de alpaca.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal14">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 15 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-15-removebg-preview.png" class="card-img-top" alt="Collar de semillas">
-            <div class="card-body">
-              <h5 class="card-title">Collar de Semillas</h5>
-              <p class="card-text">Elaborado con semillas naturales.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal15">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 16 -->
-        <div class="col-md-3">
-          <div class="card h-100">
-            <img src="images/coleccion-16-removebg-preview.png" class="card-img-top" alt="Mate Burilado">
-            <div class="card-body">
-              <h5 class="card-title">Mate Burilado</h5>
-              <p class="card-text">Arte en calabaza tallada.</p>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal16">Ver más</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 🔁 Copiar y pegar hasta el producto 16 cambiando el número de modal -->
       </div>
-    </div>
-  </main>
+      <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="box-container">
-      <div class="box">
-        <img src="images/Logo-artesania.png" alt="Logo">
-      </div>
-      <div class="box">
-        <h3>Síguenos</h3>
-        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-      </div>
-      <div class="box">
-        <h3>Servicios</h3>
-        <a href="index.html"><i class="fas fa-check"></i> Home</a>
-        <a href="productos.html"><i class="fas fa-check"></i> Productos</a>
-        <a href="SeleccionRegistro.html"><i class="fas fa-check"></i> Registro</a>
-        <a href="login.html"><i class="fas fa-check"></i> Login</a>
-      </div>
-    </div>
-    <div class="credit"><span>Creado por Mr.Grupo | Todos los derechos reservados</span></div>
-  </footer>
-
-</div>
-
-<!-- Modales -->
-<!--  Modal Producto 1 -->
-<div class="modal fade" id="productModal1" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Jarrón Andino</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-1-removebg-preview.png" class="img-fluid mb-3" alt="Jarrón Andino">
-        <p>Hecho a mano en barro cocido. Ideal para decoración.</p>
-        <p><strong>Precio:</strong> S/ 80.00</p>
-        <label for="qty1">Cantidad:</label>
-        <input type="number" id="qty1" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
   </div>
-</div>
 
-<!-- Modal Producto 2 -->
-<div class="modal fade" id="productModal2" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-2-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty2">Cantidad:</label>
-        <input type="number" id="qty2" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 3 -->
-<div class="modal fade" id="productModal3" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-3-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty3">Cantidad:</label>
-        <input type="number" id="qty3" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 4 -->
-<div class="modal fade" id="productModal4" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-4-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty4">Cantidad:</label>
-        <input type="number" id="qty4" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 5 -->
-<div class="modal fade" id="productModal5" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-5-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty5">Cantidad:</label>
-        <input type="number" id="qty5" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Producto 6 -->
-<div class="modal fade" id="productModal6" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-6-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty6">Cantidad:</label>
-        <input type="number" id="qty6" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 7 -->
-<div class="modal fade" id="productModal7" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-7-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty7">Cantidad:</label>
-        <input type="number" id="qty7" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 8 -->
-<div class="modal fade" id="productModal8" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-8-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty8">Cantidad:</label>
-        <input type="number" id="qty8" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 9 -->
-<div class="modal fade" id="productModal9" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-9-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty9">Cantidad:</label>
-        <input type="number" id="qty9" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Producto 10 -->
-<div class="modal fade" id="productModal10" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-10-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty10">Cantidad:</label>
-        <input type="number" id="qty10" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 11 -->
-<div class="modal fade" id="productModal11" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-11-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty11">Cantidad:</label>
-        <input type="number" id="qty11" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 12 -->
-<div class="modal fade" id="productModal12" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-12-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty12">Cantidad:</label>
-        <input type="number" id="qty12" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 13 -->
-<div class="modal fade" id="productModal13" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-13-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty13">Cantidad:</label>
-        <input type="number" id="qty13" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Producto 14 -->
-<div class="modal fade" id="productModal14" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-14-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty14">Cantidad:</label>
-        <input type="number" id="qty14" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 15 -->
-<div class="modal fade" id="productModal15" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-15-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty15">Cantidad:</label>
-        <input type="number" id="qty15" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Producto 16 -->
-<div class="modal fade" id="productModal16" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Textil Cusqueño</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img src="images/coleccion-16-removebg-preview.png" class="img-fluid mb-3" alt="Textil">
-        <p>Telar tradicional elaborado en alpaca natural.</p>
-        <p><strong>Precio:</strong> S/ 150.00</p>
-        <label for="qty16">Cantidad:</label>
-        <input type="number" id="qty16" min="1" value="1" class="form-control mb-3">
-        <button class="btn btn-success">Añadir al carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- 🔁 Repite hasta Modal 16 -->
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+  <!-- Bootstrap + JS productos -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="productos.js"></script>
 </body>
 </html>
+
+
+  <!-- JS DE JAVASCRIP  -->
+   // Lista de 16 productos artesanales
+const productos = [
+  {
+    id: 1,
+    nombre: "Vasija Ceremonial Andina",
+    descripcion: "Vasija de cerámica con diseños geométricos incas en tonos tierra, representando la tradición alfarera del sur andino.",
+    precio: 130,
+    imagen: "images/coleccion-1-removebg-preview.png"
+  },
+  {
+    id: 2,
+    nombre: "Jarro Cusqueño Tallado",
+    descripcion: "Pieza artesanal de cerámica roja con grabados florales inspirados en la iconografía cusqueña tradicional.",
+    precio: 115,
+    imagen: "images/coleccion-2-removebg-preview.png"
+  },
+  {
+    id: 3,
+    nombre: "Par de Vasijas Decorativas",
+    descripcion: "Conjunto de vasijas pequeñas con acabados pulidos y motivos lineales en color arcilla y negro.",
+    precio: 140,
+    imagen: "images/coleccion-3-removebg-preview.png"
+  },
+  {
+    id: 4,
+    nombre: "Jarrones Étnicos del Altiplano",
+    descripcion: "Juego de tres jarrones pintados a mano con figuras tradicionales del altiplano, ideales para decoración interior.",
+    precio: 210,
+    imagen: "images/coleccion-4-removebg-preview.png"
+  },
+  {
+    id: 5,
+    nombre: "Canastas de Palma Tejida",
+    descripcion: "Conjunto de canastas artesanales elaboradas con palma natural teñida en verde, típicas del arte amazónico peruano.",
+    precio: 90,
+    imagen: "images/coleccion-5-removebg-preview.png"
+  },
+  {
+    id: 6,
+    nombre: "Vasija Roja Arequipeña",
+    descripcion: "Cerámica en tonos rojizos y negros con detalles finos en relieve, inspirada en la alfarería arequipeña.",
+    precio: 125,
+    imagen: "images/coleccion-6-removebg-preview.png"
+  },
+  {
+    id: 7,
+    nombre: "Cerámica Multicolor de Ayacucho",
+    descripcion: "Pieza única con colores vibrantes que representa la alegría y diversidad del arte ayacuchano.",
+    precio: 150,
+    imagen: "images/coleccion-7-removebg-preview.png"
+  },
+  {
+    id: 8,
+    nombre: "Mini Vasija Decorativa",
+    descripcion: "Pequeña vasija de tonos naranjas y blancos, perfecta para adornar espacios pequeños o vitrinas.",
+    precio: 60,
+    imagen: "images/coleccion-8-removebg-preview.png"
+  },
+  {
+    id: 9,
+    nombre: "Jarrón de Oro y Terracota",
+    descripcion: "Cerámica artística con detalles dorados y grabados incisos, símbolo de la fusión entre tradición y elegancia.",
+    precio: 180,
+    imagen: "images/coleccion-9-removebg-preview.png"
+  },
+  {
+    id: 10,
+    nombre: "Botella Ceremonial Nazca",
+    descripcion: "Pieza inspirada en los motivos de la cultura Nazca, con formas geométricas y tonos ocres.",
+    precio: 145,
+    imagen: "images/coleccion-10-removebg-preview.png"
+  },
+  {
+    id: 11,
+    nombre: "Vasija Mochica Ornamental",
+    descripcion: "Hermosa vasija con iconografía mochica en tonos rojizos y amarillos, elaborada artesanalmente.",
+    precio: 160,
+    imagen: "images/coleccion-11-removebg-preview.png"
+  },
+  {
+    id: 12,
+    nombre: "Campanilla de Bronce Tallada",
+    descripcion: "Campanilla metálica con figura tradicional, trabajada a mano con técnicas de fundición artesanal.",
+    precio: 95,
+    imagen: "images/coleccion-12-removebg-preview.png"
+  },
+  {
+    id: 13,
+    nombre: "Tazas de Cerámica Rustica",
+    descripcion: "Juego de tazas hechas a mano con esmalte natural, representando la calidez de la cerámica tradicional peruana.",
+    precio: 110,
+    imagen: "images/coleccion-13-removebg-preview.png"
+  },
+  {
+    id: 14,
+    nombre: "Canasta Trenzada de Bambú",
+    descripcion: "Canasta artesanal tejida con fibras naturales, ideal para almacenamiento o decoración rústica.",
+    precio: 80,
+    imagen: "images/coleccion-14-removebg-preview.png"
+  },
+  {
+    id: 15,
+    nombre: "Colgante de Amuleto Inca",
+    descripcion: "Amuleto decorativo en tonos rojos y dorados, símbolo de protección y prosperidad.",
+    precio: 70,
+    imagen: "images/coleccion-15-removebg-preview.png"
+  },
+  {
+    id: 16,
+    nombre: "Jarrón Ceremonial Dorado",
+    descripcion: "Elegante jarrón de acabado dorado con relieves inspirados en la iconografía precolombina.",
+    precio: 190,
+    imagen: "images/coleccion-16-removebg-preview.png"
+  }
+];
+
+
+// Renderizar productos en tarjetas
+const contenedor = document.getElementById("productos-container");
+
+productos.forEach(prod => {
+  contenedor.innerHTML += `
+    <div class="col-md-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img src="${prod.imagen}" class="card-img-top" alt="${prod.nombre}">
+        <div class="card-body">
+          <h5 class="card-title">${prod.nombre}</h5>
+          <p class="card-text text-truncate">${prod.descripcion}</p>
+          <p class="text-success fw-bold">S/ ${prod.precio}</p>
+          <button class="btn btn-outline-primary btn-ver-mas" data-id="${prod.id}" data-bs-toggle="modal" data-bs-target="#productoModal">
+            Ver más
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+});
+
+// Abrir modal con detalles dinámicos
+let productoSeleccionado = null;
+
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("btn-ver-mas")) {
+    const id = e.target.getAttribute("data-id");
+    productoSeleccionado = productos.find(p => p.id == id);
+
+    document.getElementById("modalNombre").textContent = productoSeleccionado.nombre;
+    document.getElementById("modalDescripcion").textContent = productoSeleccionado.descripcion;
+    document.getElementById("modalPrecio").textContent = productoSeleccionado.precio;
+    document.getElementById("modalImagen").src = productoSeleccionado.imagen;
+    document.getElementById("modalCantidad").value = 1;
+  }
+});
+
+// Añadir al carrito con localStorage
+document.getElementById("btnAgregarCarrito").addEventListener("click", () => {
+  const cantidad = parseInt(document.getElementById("modalCantidad").value);
+  if (!productoSeleccionado) return;
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const existe = carrito.find(p => p.id === productoSeleccionado.id);
+
+  if (existe) {
+    existe.cantidad += cantidad;
+  } else {
+    carrito.push({ ...productoSeleccionado, cantidad });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert("Producto añadido al carrito ✅");
+});
+
+
+///////////
+/* ---------- PRODUCTOS ---------- */
+/* ---------- PRODUCTOS (Catálogo) ---------- */
+.productos-page main {
+  margin-top: 12rem; /* deja espacio al header fijo */
+}
+
+.productos-page .card {
+  height: 100%; /* todas las tarjetas misma altura */
+  box-shadow: var(--box-shadow);
+  transition: transform 0.2s ease;
+}
+
+.productos-page .card:hover {
+  transform: translateY(-5px);
+}
+
+/* Imágenes iguales */
+.productos-page .card img {
+  width: 100%;
+  height: 200px;   /* ✅ altura fija */
+  object-fit: cover; /* recorta proporcionalmente */
+  border-radius: .5rem;
+}
