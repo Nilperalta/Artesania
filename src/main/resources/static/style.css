@@ -914,26 +914,27 @@ body {
   border-radius: .5rem;
 }
 
+
 /* ---------- CARRITO ---------- */
 .carrito-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
+  width: 80%;        /* ocupa el 90% del ancho de la pantalla */
+  max-width: 1600px; /* ancho máximo que puede alcanzar */
+  margin-top: 5rem;
   margin-left: auto;
   margin-right: auto;
-  transition: all 0.3s ease;
+  background: #fffaf4;
+  padding: 5rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
 
 .carrito-page h2 {
   font-size: 2.6rem;
-  color: #5c4033; /* tono madera */
+  color: #5c4033;
   font-weight: 700;
-  margin-bottom: 2rem;
   text-align: center;
-  letter-spacing: 1px;
+  margin-bottom: 2rem;
 }
 
 .carrito-page table {
@@ -947,7 +948,7 @@ body {
 }
 
 .carrito-page table th {
-  background: #b76e48; /* color artesanal */
+  background: #b76e48;
   color: #fff;
   text-align: center;
   padding: 1.2rem;
@@ -991,13 +992,7 @@ body {
   transform: scale(1.05);
 }
 
-.carrito-page h3 {
-  font-size: 2rem;
-  margin-top: 2rem;
-  color: #5c4033;
-  text-align: right;
-}
-
+/* Contenedor total y botones */
 .carrito-total {
   display: flex;
   justify-content: space-between;
@@ -1009,142 +1004,84 @@ body {
 
 .carrito-total h3 {
   font-weight: 700;
-}
-
-.carrito-total .btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.carrito-total .btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
-}
-.animacion-exito {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* antes estaba center */
-  gap: 1rem;
-  margin-top: 2rem;
-  color: #6a994e;
-  font-weight: 700;
-  font-size: 1.6rem;
-  animation: fadeInUp 0.8s ease;
-  text-align: left;
-}
-
-/* =========================================================
-   🧺 ESTILOS DE CARRITO Y CHECKOUT
-   ========================================================= */
-
-/* ---------- CARRITO ---------- */
-.carrito-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: 'Poppins', sans-serif;
-}
-
-.carrito-page h2 {
-  font-size: 2.6rem;
+  font-size: 2rem;
   color: #5c4033;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
-.carrito-page table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.carrito-page th {
-  background: #b76e48;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-.carrito-page td {
-  text-align: center;
-  padding: 1rem;
-  border-bottom: 1px solid #f0e0d0;
-  color: #4d3b2b;
-}
-
-.carrito-page tr:hover {
-  background: #fff4ea;
-}
-
-.carrito-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 2px solid #d7b89c;
-}
-
-.btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
+/* Botón finalizar compra */
+#finalizarCompra {
+  background-color: #28a745;
+  color: white;
+  margin-left: 10px;
+  padding: 0.8rem 1.5rem;
+  border-radius: .5rem;
+  border: none;
+  cursor: pointer;
   font-weight: 600;
-  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
+#finalizarCompra:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* ---------- TOAST ---------- */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+/* ---------- ESTILOS GENERALES ---------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
 }
 
 /* ---------- CHECKOUT ---------- */
 .checkout-page main {
-  margin-top: 10rem;
+  max-width: 500px;
+  margin: 6rem auto 3rem auto;
   background: #fffaf4;
   padding: 3rem 2rem;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .checkout-page h2 {
-  font-size: 2.4rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #5c4033;
   margin-bottom: 2rem;
-  font-weight: 700;
 }
 
-.checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  text-align: left;
-}
-
+/* Formulario de checkout */
 .checkout-form label {
-  color: #5c4033;
+  display: block;
   font-weight: 600;
-  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #4d3b2b;
 }
 
 .checkout-form input,
@@ -1152,64 +1089,74 @@ body {
 .checkout-form select {
   width: 100%;
   padding: 0.8rem 1rem;
+  border-radius: 0.6rem;
   border: 1px solid #d7b89c;
-  border-radius: 0.8rem;
-  font-size: 1rem;
-  color: #4d3b2b;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
   background-color: #fff;
-  transition: border 0.3s ease;
 }
 
-.checkout-form input:focus,
-.checkout-form textarea:focus,
-.checkout-form select:focus {
-  border-color: #6a994e;
-  outline: none;
+.checkout-form textarea {
+  resize: none;
 }
 
 .checkout-btn {
-  background: #6a994e;
-  color: #fff;
+  display: block;
+  width: 100%;
   padding: 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: #7f6b08;
   border: none;
-  border-radius: .8rem;
-  font-weight: 600;
+  border-radius: 0.6rem;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .checkout-btn:hover {
-  background: #588640;
-  transform: translateY(-2px);
+  background-color: #218838;
+  transform: scale(1.02);
 }
 
-/* ---------- ANIMACIÓN DE ÉXITO ---------- */
+/* ---------- ANIMACION DE ÉXITO ---------- */
 .animacion-exito {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  color: #e5d41c;
+  font-weight: 700;
   margin-top: 2rem;
-  background: #f7fff3;
-  padding: 2rem;
-  border: 2px solid #6a994e;
-  border-radius: 1rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #3a6129;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 .animacion-exito img {
-  margin-bottom: 1rem;
+  width: 80px;
+  height: 80px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .checkout-page main {
+    margin: 3rem 1rem;
+    padding: 2rem 1.5rem;
+  }
 
+  .checkout-btn {
+    font-size: 1.5rem;
+    padding: 0.8rem;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea,
+  .checkout-form select {
+    font-size: 1.5rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
 
 
 
