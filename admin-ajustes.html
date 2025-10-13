@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Ajustes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" href="images/Logo-artesania.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+        :root{
+            --lineaMarron:rgba(146, 89, 48, 1);
+            --EncabezadoHome:rgba(120, 198, 189, 1);
+            --black:#555;
+            --light-color:#777;
+            --bg:#fceae9;
+            --border:.1rem solid rgba(0,0,0,.1);
+            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+            --encabezados:rgba(1, 1, 1, 1);
+            --box-color: rgba(236, 236, 236, 1);
+            --boton:#c06722;
+        }
+
+        *{
+            font-family: "Nunito", sans-serif;
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none; border: none;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all .3s ease-out;
+        }
+
+        html{
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 9rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .layout{
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:  "header"
+                                  "main"
+                                  "footer";
+            min-height: 100vh;
+        }
+
+        .layout .header{
+            background: #fff;
+            grid-area: header;
+        }
+
+        .layout .contenedor{
+            background: #fff;
+            grid-area: main;
+        }
+
+        .layout .footer{
+            background: #ffdcc2;
+            grid-area: footer;
+        }
+
+        /* Header */
+        .header{
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 9%;
+        }
+
+        .header .logo{
+            height: 7rem;
+        }
+
+        .header .navbar{
+            display: flex;
+            align-items: center;
+        }
+
+        .header .navbar a{
+            font-size: 1.7rem;
+            color: var(--light-color);
+            margin-left: 2rem;
+        }
+
+        .header .navbar a:hover{
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn{
+            cursor: pointer;
+            font-size: 2.5rem;
+            padding: 1rem;
+            border-radius: .5rem;
+            color: var(--main-color);
+            background: #ffdcc2;
+            display: none;
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn:hover{
+            color: #fff;
+            background: var(--EncabezadoHome);
+        }
+
+        /* Contenedor */
+        .contenedor{
+            background: #fff;
+        }
+
+        /* Panel de Control */
+        .panel-control {
+            margin-top: 8rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .panel-control .heading-panel {
+            font-size: 3rem;
+            color: var(--EncabezadoHome);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        /* Grid de tarjetas */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .card-panel {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 0.8rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
+        }
+
+        .card-panel h3 {
+            font-size: 2rem;
+            color: var(--encabezados);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-panel p {
+            font-size: 1.4rem;
+            color: var(--light-color);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .card-panel .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.4rem;
+            border-radius: 0.5rem;
+            background: var(--boton);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-panel .btn:hover {
+            background: var(--lineaMarron);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer .box-container{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: var(--box-shadow);
+        }
+
+        .footer .box-container .box{
+            display: flex;
+            flex-direction: column;
+            margin: 2rem;
+            padding: 2rem;
+        }
+
+        .footer .box-container .box img{
+            height: 9rem;
+        }
+
+        .footer .box-container .box h3{
+            font-size: 1.5rem;
+        }
+
+        .footer .box-container .box a{
+            font-size: 1.2rem;
+            color: var(--light-color);
+        }
+
+        .footer .box-container .box a i{
+            color: var(--lineaMarron);
+            margin-right: 0.5rem;
+        }
+
+        .footer .box-container .box a:hover{
+            color: var(--lineaMarron);
+        }
+
+        .footer .credit{
+            background: var(--lineaMarron);
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .footer .credit span{
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Media queries */
+        @media(max-width: 991px){
+            html{
+                font-size: 55%;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            }
+        }
+
+        @media(max-width: 768px){
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-control {
+                padding: 1rem;
+            }
+
+            .footer .box-container{
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #menu-btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 2rem;
+            }
+
+            .header .navbar{
+                position: absolute;
+                top:115%; right: 6rem;
+                width: 30rem;
+                opacity:0;
+                display: block;
+                font-size: 2rem;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem; 
+                background: #fff; 
+                transform: scale(0);
+            }
+
+            .header .navbar.active{
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            .header .navbar a{
+                font-size: 2rem;
+                display: block;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem;    
+            }
+        }
+
+        @media(max-width: 450px){
+            html{
+                font-size: 50%;
+            }
+
+            .panel-control .heading-panel {
+                font-size: 2.5rem;
+            }
+
+            .card-panel {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Header -->
+        <header class="header">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a href="index.html">HOME</a>
+                <a href="index.html#productos">PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a href="login.html">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            
+            <section class="panel-control">
+                <h1 class="heading-panel">TU PANEL DE CONTROL</h1>
+                
+                <!-- Grid de tarjetas -->
+                <div class="cards-grid">
+                    
+                    <!-- Parámetros Generales -->
+                    <div class="card-panel">
+                        <h3>Parámetros Generales</h3>
+                        <p>Configura nombre, logo, idioma y moneda de la plataforma.</p>
+                        <a href="#" class="btn">Configurar</a>
+                    </div>
+
+                    <!-- Usuarios y Roles -->
+                    <div class="card-panel">
+                        <h3>Usuarios y Roles</h3>
+                        <p>Gestiona permisos, crea nuevos roles y define accesos.</p>
+                        <a href="#" class="btn">Administrar</a>
+                    </div>
+
+                    <!-- Pagos y Comisiones -->
+                    <div class="card-panel">
+                        <h3>Pagos y Comisiones</h3>
+                        <p>Ajusta métodos de pago y porcentajes de comisión.</p>
+                        <a href="#" class="btn">Ver más</a>
+                    </div>
+
+                    <!-- Seguridad -->
+                    <div class="card-panel">
+                        <h3>Seguridad</h3>
+                        <p>Define políticas de contraseña, sesiones y 2FA.</p>
+                        <a href="#" class="btn">Revisar</a>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+        </footer>
+    </div>
+
+    <script>
+        // Menú móvil
+        let menu = document.querySelector('#menu-btn');
+        let navbar = document.querySelector('.navbar');
+
+        if(menu && navbar) {
+            menu.onclick = () => {
+                menu.classList.toggle('fa-times');
+                navbar.classList.toggle('active');
+            }
+
+            window.onscroll = () => {
+                menu.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
