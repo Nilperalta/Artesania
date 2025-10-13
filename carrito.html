@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras | Artesanía</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <link rel="icon" href="images/Logo-artesania.png">
+</head>
+<body class="carrito-page">
+
+    <div class="layout">
+
+        <!--Header-->
+        <header class="header">
+            <img src="images/Logo-artesania.png" alt="Logo Artesanía" class="logo">
+            
+            <nav class="navbar">
+                <a href="index.html">HOME</a>
+                <a href="productos.html">PRODUCTOS</a>
+                <a href="login.html">SALIR</a>
+            </nav>
+
+            <!--Botón de menú-->
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!--Main Carrito-->
+        <main class="contenedor-maqueta">
+          <h2>🛒 Tu carrito</h2>
+          <table id="tablaCarrito">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio (S/.)</th>
+                <th>Cantidad</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="carrito-total">
+            <h3>Total: S/. <span id="totalPrecio">0.00</span></h3>
+            <div>
+              <button id="vaciarCarrito">Vaciar carrito 🗑️</button>
+              <a href="checkout.html">
+                <button id="finalizarCompra">Finalizar Compra ✅</button>
+              </a>
+            </div>
+          </div>
+        </main>
+
+        <div id="toast" class="toast">Producto eliminado del carrito 🗑️</div>
+
+        <!--Footer-->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a href="index.html"><i class="fas fa-check"></i>Home</a>
+                    <a href="productos.html"><i class="fas fa-check"></i>Productos</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Salir</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado por mr.Grupo | Todos los derechos reservados</span></div>
+        </footer>
+
+    </div>
+
+    <script>
+      const tablaCarrito = document.querySelector("#tablaCarrito tbody");
+      const totalPrecio = document.getElementById("totalPrecio");
+      const vaciarBtn = document.getElementById("vaciarCarrito");
+      const toast = document.getElementById("toast");
+
+      function cargarCarrito() {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  tablaCarrito.innerHTML = "";
+  let total = 0;
+
+  if (carrito.length === 0) {
+    tablaCarrito.innerHTML = `<tr><td colspan="5">Tu carrito está vacío 🛒</td></tr>`;
+    totalPrecio.textContent = "0.00";
+    return;
+  }
+
+  carrito.forEach((producto, index) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td><img src="${producto.imagen}" alt="${producto.nombre}" width="50"></td>
+      <td>${producto.nombre}</td>
+      <td>${producto.cantidad}</td>
+      <td>S/ ${(producto.precio * producto.cantidad).toFixed(2)}</td>
+      <td><button onclick="eliminarProducto(${index})">Eliminar</button></td>
+    `;
+    tablaCarrito.appendChild(fila);
+    total += producto.precio * producto.cantidad;
+  });
+
+  totalPrecio.textContent = total.toFixed(2);
+}
+
+
+      function eliminarProducto(index) {
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.splice(index, 1);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        mostrarToast("Producto eliminado del carrito 🗑️");
+        cargarCarrito();
+      }
+
+      function mostrarToast(mensaje) {
+        toast.textContent = mensaje;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2000);
+      }
+
+      vaciarBtn.addEventListener("click", () => {
+        localStorage.removeItem("carrito");
+        mostrarToast("Carrito vaciado 🧹");
+        setTimeout(() => location.reload(), 800);
+      });
+
+      // Cargar carrito al abrir la página
+      cargarCarrito();
+    </script>
+</body>
+</html>
