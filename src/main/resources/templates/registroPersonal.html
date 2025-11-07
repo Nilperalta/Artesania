@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro personal</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!--Header-->
+    <header class="header">
+        <img th:src="@{/images/Logo-artesania.png}" alt="Logo" class="logo">
+        <nav class="navbar">
+            <a th:href="@{/}">HOME</a>
+            <a href="#productos">PRODUCTOS</a>
+            <a th:href="@{/registro-personal}">REGISTRO</a>
+            <a th:href="@{/login}">LOGIN</a>
+        </nav>
+        <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+
+    <div th:if="${error}" style="color:red; font-weight:bold;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <main class="contenedor-form">
+        <div class="box-container">
+            <h1 class="heading">REGISTRO PERSONAL</h1>
+
+            <div class="box-form">
+                <form th:action="@{/registro-personal}" method="post">
+                    <div class="form-group">
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="box" autocomplete="name">
+                        <span class="error" id="nombre-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="registro-personal-email" name="email" placeholder="Email" class="box" autocomplete="email">
+                        <span class="error" id="registro-personal-email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" id="registro-personal-password" name="password" placeholder="Contraseña" class="box" autocomplete="new-password">
+                        <span class="error" id="registro-personal-password-error"></span>
+                    </div>
+
+                    <input type="submit" id="btn-RP" value="Registrar" class="btn">
+                </form>
+            </div>
+
+            <p>¿Ya tienes una cuenta? <a th:href="@{/login}"><span>Inicia sesión</span></a></p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <img th:src="@{/images/Logo-artesania.png}" alt="">
+            </div>
+
+            <div class="box">
+                <h3>Síguenos</h3>
+                <a href="#"><i class="fab fa-facebook"></i>facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i>instagram</a>
+            </div>
+
+            <div class="box">
+                <h3>Servicios</h3>
+                <a th:href="@{/}"><i class="fas fa-check"></i>Home</a>
+                <a href="#productos"><i class="fas fa-check"></i>Productos</a>
+                <a th:href="@{/registro-personal}"><i class="fas fa-check"></i>Registro</a>
+                <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
+            </div>
+        </div>
+
+        <div class="credit"><span>Creado por mr.Grupo | Todos los derechos reservados</span></div>
+    </footer>
+</div>
+
+<!-- JS -->
+<script src= registroPersonal.js></script>
+</body>
+</html>

@@ -20,10 +20,10 @@
             <img src="images/Logo-artesania.png" alt="" class="logo">
             
             <nav class="navbar">
-                <a th:href="@{/}">HOME</a>
+                <a href="index.html">HOME</a>
                 <a href="#productos">PRODUCTOS</a>
-                <a th:href="@{/seleccion-registro}">REGISTRO</a>
-                <a th:href="@{/login}">LOGIN</a>
+                <a href="SeleccionRegistro.html">REGISTRO</a>
+                <a href="login.html">LOGIN</a>
             </nav>
             
              <!--Botón de menú-->
@@ -40,9 +40,9 @@
 
                 <div class="botones">
 
-                    <a href="registroPersonal.html"><button class="btn">Crear cuenta personal</button></a>
-
-                    <a href="registroEmpresa.html"><button class="btn">Crear cuenta Empresa</button></a>
+                    <a th:href="@{/registro-personal}"><button class="btn">Crear cuenta personal</button></a>
+                    <a th:href="@{/registro-empresa}"><button class="btn">Crear cuenta empresa</button></a>
+                
                 </div>
                 
 

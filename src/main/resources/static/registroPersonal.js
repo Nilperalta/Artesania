@@ -1,65 +1,53 @@
 let menu = document.querySelector('#menu-btn');
 let navbar = document.querySelector('.navbar');
 
-menu.onclick=() =>{
+menu.onclick = () => {
     menu.classList.toggle('fa-times');
     navbar.classList.toggle('active');
-}
+};
 
-window.onscroll=() =>{
+window.onscroll = () => {
     menu.classList.remove('fa-times');
     navbar.classList.remove('active');
-}
+};
 
 
-
-//Validación del registro personal
+// --- Validación del registro personal ---
 
 const nombreRP = document.getElementById('nombre');
-const apellidoRP = document.getElementById('apellido');
-const pantallaNombreError = document.getElementById('nombre-error');
-const pantallaApellidoError = document.getElementById('apellido-error');
 const emailRP = document.getElementById('registro-personal-email');
 const passwordRP = document.getElementById('registro-personal-password');
-const pantallaEmaiErrorRP= document.getElementById('registro-personal-email-error');
-const pantallaPasswordErroRP= document.getElementById('registro-personal-password-error');
-const btnRP = document.getElementById('btn-RP')
+const pantallaNombreError = document.getElementById('nombre-error');
+const pantallaEmaiErrorRP = document.getElementById('registro-personal-email-error');
+const pantallaPasswordErroRP = document.getElementById('registro-personal-password-error');
+const btnRP = document.getElementById('btn-RP');
 
+// Seleccionamos el formulario directamente (sin ID)
+const formulario = document.querySelector('form');
 
-
-btnRP.addEventListener('click', (e)=>{
+btnRP.addEventListener('click', (e) => {
     e.preventDefault();
 
-    let valido = true
+    let valido = true;
 
-    // Validación del nombre
+    // Validar nombre
     if (nombreRP.value.trim() === "") {
         pantallaNombreError.textContent = "Ingresa un nombre";
         valido = false;
-    }else{
+    } else {
         pantallaNombreError.textContent = "";
     }
 
-    // Validación del apellido
-    if (apellidoRP.value.trim() === "") {
-        pantallaApellidoError.textContent = "Ingresa un apellido";
-        valido = false;
-    }else{
-        pantallaApellidoError.textContent = "";
-    }
-
-    // Validación del correo
-
+    // Validar correo
     const emailRegexRP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-     if (!emailRegexRP.test(emailRP.value.trim())) {
+    if (!emailRegexRP.test(emailRP.value.trim())) {
         pantallaEmaiErrorRP.textContent = "Ingresa un email válido (ejemplo@correo.com)";
         valido = false;
     } else {
         pantallaEmaiErrorRP.textContent = "";
     }
 
-    // Validación de contraseña segura
+    // Validar contraseña
     const passwordRPEva = passwordRP.value.trim();
     const passwordRegexRP = /^(?=.*[A-Z])(?=.*[!@#$%^&*])/; 
 
@@ -73,26 +61,9 @@ btnRP.addEventListener('click', (e)=>{
         pantallaPasswordErroRP.textContent = "";
     }
 
-
-    if(valido) {
-        console.log("Formulario válido, puedes continuar con el login ✅");
+    // Si todo está bien, enviamos el formulario
+    if (valido) {
+        console.log("Formulario válido, enviando registro personal ✅");
+        formulario.submit(); // 👈 Enviar al backend (Spring)
     }
-
-
-
-
-
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
+});

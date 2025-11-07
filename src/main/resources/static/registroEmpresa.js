@@ -1,18 +1,18 @@
 let menu = document.querySelector('#menu-btn');
 let navbar = document.querySelector('.navbar');
 
-menu.onclick=() =>{
+menu.onclick = () => {
     menu.classList.toggle('fa-times');
     navbar.classList.toggle('active');
-}
+};
 
-window.onscroll=() =>{
+window.onscroll = () => {
     menu.classList.remove('fa-times');
     navbar.classList.remove('active');
-}
+};
 
 
-//Validación del registro empresa
+// --- Validación del registro empresa ---
 
 const nombreRE = document.getElementById('empresa-nombre');
 const emailRE = document.getElementById('empresa-email');
@@ -22,23 +22,24 @@ const pantallaEmailEmpresaError = document.getElementById('empresa-email-error')
 const pantallaPasswordErroRE = document.getElementById('empresa-password-error');
 const btnRE = document.getElementById('btn-RE');
 
+// Seleccionamos el formulario directamente (sin ID)
+const formulario = document.querySelector('form');
 
-btnRE.addEventListener('click', (e)=>{
+btnRE.addEventListener('click', (e) => {
     e.preventDefault();
 
     let valido = true;
 
+    // Validación del nombre
     if (nombreRE.value.trim() === "") {
         pantallaNombreEmpresaError.textContent = "Ingresa un nombre";
         valido = false;
-    }else{
-        pantallaNombreEmpresaError.textContent = " ";
+    } else {
+        pantallaNombreEmpresaError.textContent = "";
     }
 
     // Validación del correo
-
     const emailRegexRE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
     if (!emailRegexRE.test(emailRE.value.trim())) {
         pantallaEmailEmpresaError.textContent = "Ingresa un email válido (ejemplo@correo.com)";
         valido = false;
@@ -46,9 +47,9 @@ btnRE.addEventListener('click', (e)=>{
         pantallaEmailEmpresaError.textContent = "";
     }
 
-    // Validación de contraseña segura
+    // Validación de contraseña
     const passwordREVa = passwordRE.value.trim();
-    const passwordRegexRE = /^(?=.*[A-Z])(?=.*[!@#$%^&*])/; 
+    const passwordRegexRE = /^(?=.*[A-Z])(?=.*[!@#$%^&*])/; // Al menos una mayúscula y un caracter especial
 
     if (passwordREVa.length < 8) {
         pantallaPasswordErroRE.textContent = "La contraseña debe tener al menos 8 caracteres";
@@ -60,9 +61,9 @@ btnRE.addEventListener('click', (e)=>{
         pantallaPasswordErroRE.textContent = "";
     }
 
-    if(valido) {
-        console.log("Formulario válido, puedes continuar con el login ✅");
+    // Si todo es válido, enviamos el formulario
+    if (valido) {
+        console.log("Formulario válido, enviando registro de empresa ✅");
+        formulario.submit(); // ✅ usa el <form> encontrado
     }
-
-
 });

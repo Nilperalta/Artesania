@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Header -->
+    <header class="header">
+        <img th:src="@{/images/Logo-artesania.png}" alt="Logo" class="logo">
+
+        <nav class="navbar">
+            <a th:href="@{/}">HOME</a>
+            <a href="#productos">PRODUCTOS</a>
+            <a th:href="@{/seleccion-registro}">REGISTRO</a>
+            <a th:href="@{/login}">LOGIN</a>
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="contenedor-form">
+        <div class="box-container">
+
+            <h1 class="heading">INICIAR SESIÓN</h1>
+
+            <div class="box-form">
+                <!-- Formulario con Thymeleaf -->
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Correo electrónico" class="box" required>
+                        <span class="error" id="email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Contraseña" class="box" required>
+                        <span class="error" id="password-error"></span>
+                    </div>
+
+                    <input type="submit" id="btn-Login" value="Iniciar sesión" class="btn">
+                </form>
+            </div>
+
+            <!-- Mensaje de error (si existe) -->
+            <p th:if="${error}" th:text="${error}" class="error" style="color: red;"></p>
+
+            <p>¿No tienes cuenta? 
+                <a th:href="@{/seleccion-registro}">
+                    <span>Regístrate</span>
+                </a>
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <img th:src="@{/images/Logo-artesania.png}" alt="Logo">
+            </div>
+
+            <div class="box">
+                <h3>Síguenos</h3>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+
+            <div class="box">
+                <h3>Servicios</h3>
+                <a th:href="@{/}"><i class="fas fa-check"></i> Home</a>
+                <a href="#productos"><i class="fas fa-check"></i> Productos</a>
+                <a th:href="@{/seleccion-registro}"><i class="fas fa-check"></i> Registro</a>
+                <a th:href="@{/login}"><i class="fas fa-check"></i> Login</a>
+            </div>
+        </div>
+
+        <div class="credit">
+            <span>Creado por Mr.Grupo | Todos los derechos reservados</span>
+        </div>
+    </footer>
+
+</div>
+
+<script th:src="@{/login.js}"></script>
+</body>
+</html>
