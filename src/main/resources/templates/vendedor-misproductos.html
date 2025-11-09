@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Productos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
 </head>
 <body>
 
@@ -14,14 +14,14 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
             
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="vendedor-miperfil.html">MI PERFIL</a>
-                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
-                <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
+                <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
+                <a th:href="@{/vendedor/ventas}">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -65,7 +65,7 @@
 
                         <!-- Producto 1 -->
                         <div class="producto">
-                            <img src="images/producto-3.png" alt="Bolsa tejida a mano" class="producto-img">
+                            <img th:src="@{/images/producto-3.png}" alt="Bolsa tejida a mano" class="producto-img">
                             <div class="producto-info">
                                 <h3>Bolsa tejida a mano</h3>
                                 <p><strong>Color:</strong> Rojo</p>
@@ -84,7 +84,7 @@
 
                         <!-- Producto 2 -->
                         <div class="producto">
-                            <img src="images/producto-2.png" alt="Beanie" class="producto-img">
+                            <img th:src="@{/images/producto-2.png}" alt="Beanie" class="producto-img">
                             <div class="producto-info">
                                 <h3>Beanie</h3>
                                 <p><strong>Color:</strong> Turquesa</p>
@@ -108,7 +108,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" alt="">
                 </div>
 
                 <div class="box">
@@ -119,10 +119,10 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                    <a th:href="@{/index.html#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/index.html#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro.html}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script th:src="@{/script.js}"></script>
       <script>
         function cambiarCantidad(btn, delta) {
             const span = btn.parentElement.querySelector('span');
