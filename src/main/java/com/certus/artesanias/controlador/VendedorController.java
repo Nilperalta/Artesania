@@ -9,4 +9,19 @@ public class VendedorController {
     public String dashboard() {
         return "dashboard-vendedor";
     }
+    
+    @GetMapping("/vendedor/ventas")
+    public String misVentas() {
+        return "vendedor-misventas";
+    }
+    
+    @GetMapping("/vendedor/productos")
+    public String misProductos() {
+        return "vendedor-misproductos";
+    }
+    
+    @GetMapping("/vendedor/perfil")
+    public String miPerfil() {
+        return "vendedor-miperfil";
+    }
 }
