@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Productos</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Header -->
+        <header class="header">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
+                <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
+                <a th:href="@{/vendedor/ventas}">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            
+            <section class="dashboard-vendedor">
+                <h1 class="heading">Bienvenido, Vendedor 👋</h1>
+                
+                 <section class="productos-vendedor">
+                    <h2 class="subtitulo">Mis Productos <span class="cantidad">(2 productos)</span></h2>
+                    <button class="btn-agregar">Agregar Productos</button>
+
+                    <!-- Modal para agregar producto -->
+                        <div id="modal" class="modal">
+                            <div class="modal-contenido">
+                                <span id="cerrar-modal" class="cerrar">&times;</span>
+                                <h2>Agregar Producto</h2>
+                                <form id="form-producto">
+                                    <label>Nombre:</label>
+                                    <input type="text" id="nombre" required>
+
+                                    <label>Color:</label>
+                                    <input type="text" id="color" required>
+
+                                    <label>Precio (S/.):</label>
+                                    <input type="number" id="precio" required step="0.01">
+
+                                    <label>Imagen (URL o ruta):</label>
+                                    <input type="text" id="imagen" placeholder="images/producto-3.png" required>
+
+                                    <button type="submit" class="btn-guardar">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                    <div class="lista-productos">
+
+                        <!-- Producto 1 -->
+                        <div class="producto">
+                            <img th:src="@{/images/producto-3.png}" alt="Bolsa tejida a mano" class="producto-img">
+                            <div class="producto-info">
+                                <h3>Bolsa tejida a mano</h3>
+                                <p><strong>Color:</strong> Rojo</p>
+                                <div class="cantidad">
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
+                                    <span>1</span>
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
+                                </div>
+                                <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
+                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+                            </div>
+                            <p class="precio">S/. 50.00</p>
+                        </div>
+
+                        <hr>
+
+                        <!-- Producto 2 -->
+                        <div class="producto">
+                            <img th:src="@{/images/producto-2.png}" alt="Beanie" class="producto-img">
+                            <div class="producto-info">
+                                <h3>Beanie</h3>
+                                <p><strong>Color:</strong> Turquesa</p>
+                                <div class="cantidad">
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
+                                    <span>1</span>
+                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
+                                </div>
+                                <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
+                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+                            </div>
+                            <p class="precio">S/. 20.00</p>
+                        </div>
+
+                    </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img th:src="@{/images/Logo-artesania.png}" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="https://www.facebook.com"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a th:href="@{/index.html#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/index.html#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro.html}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado por Mr.Grupo | Todos los derechos reservados</span></div>
+        </footer>
+    </div>
+
+    <script th:src="@{/script.js}"></script>
+      <script>
+        function cambiarCantidad(btn, delta) {
+            const span = btn.parentElement.querySelector('span');
+            let cantidad = parseInt(span.textContent);
+            cantidad = Math.max(1, cantidad + delta);
+            span.textContent = cantidad;
+        }
+
+        function eliminarProducto(btn) {
+            btn.closest('.producto').remove();
+        }
+    </script>
+   <script>
+    function cambiarCantidad(btn, delta) {
+        const span = btn.parentElement.querySelector('span');
+        let cantidad = parseInt(span.textContent);
+        cantidad = Math.max(1, cantidad + delta);
+        span.textContent = cantidad;
+    }
+
+    function eliminarProducto(btn) {
+        btn.closest('.producto').remove();
+        actualizarContador();
+    }
+
+    // --- Modal ---
+    const modal = document.getElementById("modal");
+    const btnAgregar = document.querySelector(".btn-agregar");
+    const cerrar = document.getElementById("cerrar-modal");
+
+    btnAgregar.onclick = () => modal.style.display = "block";
+    cerrar.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+
+    // --- Agregar producto dinámicamente ---
+    const form = document.getElementById("form-producto");
+    const lista = document.querySelector(".lista-productos");
+    const contador = document.querySelector(".cantidad");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById("nombre").value;
+        const color = document.getElementById("color").value;
+        const precio = document.getElementById("precio").value;
+        const imagen = document.getElementById("imagen").value;
+
+        const nuevoProducto = document.createElement("div");
+        nuevoProducto.classList.add("producto");
+        nuevoProducto.innerHTML = `
+            <img src="${imagen}" alt="${nombre}" class="producto-img">
+            <div class="producto-info">
+                <h3>${nombre}</h3>
+                <p><strong>Color:</strong> ${color}</p>
+                <div class="cantidad">
+                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
+                    <span>1</span>
+                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
+                </div>
+                 <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
+                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+            </div>
+            <p class="precio">S/. ${parseFloat(precio).toFixed(2)}</p>
+        `;
+        
+        lista.appendChild(nuevoProducto);
+        form.reset();
+        modal.style.display = "none";
+        actualizarContador();
+    });
+
+    // --- Actualizar contador de productos ---
+    function actualizarContador() {
+        const total = document.querySelectorAll('.producto').length;
+        contador.textContent = `(${total} ${total === 1 ? 'producto' : 'productos'})`;
+    }
+
+    // Inicializar contador
+    actualizarContador();
+
+    function editarProducto(index) {
+  alert('Función de edición en desarrollo para el producto #' + (index + 1));
+}
+
+</script>
+
+<div id="modalEditar" class="modal">
+  <div class="modal-contenido">
+    <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
+    <h2>Editar Producto</h2>
+    <form id="formEditar">
+      <label>Nombre:</label>
+      <input type="text" id="editarNombre" required>
+
+      <label>Color:</label>
+      <input type="text" id="editarColor" required>
+
+      <label>Precio (S/.):</label>
+      <input type="number" id="editarPrecio" step="0.01" required>
+
+      <button type="submit" class="btn-guardar">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+
+<script>
+      let productoEditando = null;
+
+      function editarProducto(btn) {
+        const producto = btn.closest('.producto');
+        productoEditando = producto;
+        document.getElementById('editarNombre').value = producto.querySelector('h3').textContent;
+        document.getElementById('editarColor').value = producto.querySelector('p').textContent.replace('Color: ', '');
+        document.getElementById('editarPrecio').value = producto.querySelector('.precio').textContent.replace('S/. ', '');
+        document.getElementById('modalEditar').style.display = 'flex';
+      }
+
+      function cerrarModalEditar() {
+        document.getElementById('modalEditar').style.display = 'none';
+      }
+
+      document.getElementById('formEditar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (productoEditando) {
+          productoEditando.querySelector('h3').textContent = document.getElementById('editarNombre').value;
+          productoEditando.querySelector('p').innerHTML = '<strong>Color:</strong> ' + document.getElementById('editarColor').value;
+          productoEditando.querySelector('.precio').textContent = 'S/. ' + parseFloat(document.getElementById('editarPrecio').value).toFixed(2);
+        }
+        cerrarModalEditar();
+      });
+    </script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Vendedor</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
 </head>
 <body>
 
@@ -14,14 +14,14 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
             
             <nav class="navbar">
-                <a href="/">HOME</a>
-                <a href="vendedor-mi perfil.html">MI PERFIL</a>
-                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
-                <a href="vendedor-misventas.html">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
+                <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
+                <a th:href="@{/vendedor/ventas}">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -39,21 +39,21 @@
                         <i class="fas fa-box-open"></i>
                         <h3>Mis Productos</h3>
                         <p>Administra, edita y agrega nuevos productos.</p>
-                        <a href="vendedor-misproductos.html" class="btn">Gestionar</a>
+                        <a th:href="@{/vendedor/productos}" class="btn">Gestionar</a>
                     </div>
 
                     <div class="box">
                         <i class="fas fa-shopping-bag"></i>
                         <h3>Mis Ventas</h3>
                         <p>Revisa el historial de tus ventas realizadas.</p>
-                        <a href="vendedor-misventas.html" class="btn">Ver Ventas</a>
+                        <a th:href="@{/vendedor/ventas}" class="btn">Ver Ventas</a>
                     </div>
 
                     <div class="box">
                         <i class="fas fa-user-cog"></i>
                         <h3>Mi Perfil</h3>
                         <p>Actualiza tu información de vendedor.</p>
-                        <a href="vendedor-mi perfil.html" class="btn">Editar Perfil</a>
+                        <a th:href="@{/vendedor/perfil}" class="btn">Editar Perfil</a>
                     </div>
 
                 </div>
@@ -65,7 +65,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" alt="">
                 </div>
 
                 <div class="box">
@@ -76,10 +76,10 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                    <a th:href="@{/index.html#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/index.html#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro.html}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 

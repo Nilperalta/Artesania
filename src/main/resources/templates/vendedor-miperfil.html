@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil</title>
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+  <link rel="icon" th:href="@{/images/Logo-artesania.png}">
 </head>
 <body>
 
@@ -14,15 +14,15 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+      <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
             
-            <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="vendedor-mi perfil.html">MI PERFIL</a>
-                <a href="vendedor-misproductos.html">MIS PRODUCTOS</a>
-                <a href="vendedor-misventas.html">VENTAS</a>
-                <a href="login.html">SALIR</a>
-            </nav>
+      <nav class="navbar">
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
+        <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
+        <a th:href="@{/vendedor/ventas}">VENTAS</a>
+        <a th:href="@{/login}">SALIR</a>
+      </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
         </header>
@@ -48,27 +48,27 @@
 
             <div class="campo">
               <label>Nombre:</label>
-              <input type="text"  readonly>
+              <input type="text" value="Juan Castillo" readonly>
             </div>
 
             <div class="campo">
               <label>Correo electrónico:</label>
-              <input type="email" required>
+              <input type="email" value="juanc@gmail.com" readonly>
             </div>
 
             <div class="campo">
               <label>Teléfono:</label>
-              <input type="text"  readonly>
+              <input type="text" value="987654321" readonly>
             </div>
 
             <div class="campo">
               <label>Dirección:</label>
-              <input type="text"  readonly>
+              <input type="text" value="Av. Los Artesanos 123, Arequipa" readonly>
             </div>
 
             <div class="campo">
               <label>Descripción:</label>
-              <textarea readonly></textarea>
+              <textarea readonly>Vendedor de artesanías hechas a mano, especializado en tejidos peruanos.</textarea>
             </div>
 
             <div class="botones">
@@ -84,9 +84,9 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="box-container">
-                <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
-                </div>
+        <div class="box">
+          <img th:src="@{/images/Logo-artesania.png}" alt="">
+        </div>
 
                 <div class="box">
                     <h3>Síguenos</h3>
@@ -96,10 +96,10 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+          <a th:href="@{/index.html#home}"><i class="fas fa-check"></i>Home</a>
+          <a th:href="@{/index.html#productos}"><i class="fas fa-check"></i>Productos</a>
+          <a th:href="@{/SeleccionRegistro.html}"><i class="fas fa-check"></i>Registro</a>
+          <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
@@ -107,7 +107,7 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+  <script th:src="@{/script.js}"></script>
     <script>
         const btnEditar = document.getElementById('btn-editar');
         const btnGuardar = document.getElementById('btn-guardar');
