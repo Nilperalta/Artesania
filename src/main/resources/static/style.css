@@ -914,300 +914,329 @@ body {
   border-radius: .5rem;
 }
 
-/* ---------- CARRITO ---------- */
-.carrito-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  transition: all 0.3s ease;
-}
 
-.carrito-page h2 {
-  font-size: 2.6rem;
-  color: #5c4033; /* tono madera */
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-.carrito-page table {
+/* ======== HEADER ======== */
+.header {
+  position: fixed;
+  top: 0; left: 0;
   width: 100%;
-  border-collapse: collapse;
-  border-radius: 1rem;
-  overflow: hidden;
-  font-size: 1.6rem;
+  z-index: 1000;
   background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
 }
 
-.carrito-page table th {
-  background: #b76e48; /* color artesanal */
-  color: #fff;
-  text-align: center;
-  padding: 1.2rem;
-  font-weight: 600;
+.header .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #6A1B9A;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.carrito-page table td {
-  text-align: center;
-  padding: 1rem;
-  vertical-align: middle;
-  border-bottom: 1px solid #f1e1d0;
-  color: #4d3b2b;
+.logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
-.carrito-page table tr:hover {
-  background-color: #fff4ea;
-  transition: background 0.2s ease;
+.navbar a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-.carrito-page img {
-  width: 70px;
-  height: 70px;
-  border-radius: .8rem;
-  object-fit: cover;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.navbar a:hover,
+.navbar a.active {
+  color: #6A1B9A;
 }
 
-.carrito-page .btn {
-  border: none;
-  background: #b76e48;
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  border-radius: .5rem;
+#menu-btn {
+  display: none;
+  font-size: 1.8rem;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
 }
 
-.carrito-page .btn:hover {
-  background: #a25f3f;
-  transform: scale(1.05);
-}
+/* ---------- CARRITO ARTESANAL CENTRADO ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@500;700&display=swap');
 
-.carrito-page h3 {
-  font-size: 2rem;
-  margin-top: 2rem;
-  color: #5c4033;
-  text-align: right;
-}
-
-.carrito-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 2px solid #d7b89c;
-}
-
-.carrito-total h3 {
-  font-weight: 700;
-}
-
-.carrito-total .btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.carrito-total .btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
-}
-.animacion-exito {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* antes estaba center */
-  gap: 1rem;
-  margin-top: 2rem;
-  color: #6a994e;
-  font-weight: 700;
-  font-size: 1.6rem;
-  animation: fadeInUp 0.8s ease;
-  text-align: left;
-}
-
-/* =========================================================
-   🧺 ESTILOS DE CARRITO Y CHECKOUT
-   ========================================================= */
-
-/* ---------- CARRITO ---------- */
-.carrito-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
+body {
   font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f9f5f0 0%, #fff8f0 100%);
+  margin: 0;
+  color: #3a2a1e;
+  overflow-x: hidden;
 }
 
-.carrito-page h2 {
-  font-size: 2.6rem;
-  color: #5c4033;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.carrito-page table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.carrito-page th {
-  background: #b76e48;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-.carrito-page td {
-  text-align: center;
-  padding: 1rem;
-  border-bottom: 1px solid #f0e0d0;
-  color: #4d3b2b;
-}
-
-.carrito-page tr:hover {
-  background: #fff4ea;
-}
-
-.carrito-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 2px solid #d7b89c;
-}
-
-.btn-checkout {
-  background: #6a994e;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: .8rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.btn-checkout:hover {
-  background: #588640;
-  transform: translateY(-2px);
-}
-
-/* ---------- CHECKOUT ---------- */
-.checkout-page main {
-  margin-top: 10rem;
-  background: #fffaf4;
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-}
-
-.checkout-page h2 {
-  font-size: 2.4rem;
-  color: #5c4033;
-  margin-bottom: 2rem;
-  font-weight: 700;
-}
-
-.checkout-form {
+/* ====== CONTENEDOR PRINCIPAL ====== */
+.carrito-page {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  text-align: left;
+  min-height: 100vh;
+  background: linear-gradient(145deg, #f8f4ef, #fff8f0);
 }
 
-.checkout-form label {
-  color: #5c4033;
+/* Centrado visual del contenido principal */
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ✅ centrado vertical */
+  padding-top: 80px; /* evita que se pegue al header */
+  padding-bottom: 60px;
+}
+
+/* ====== CARD PRINCIPAL ====== */
+.card {
+  border: none;
+  background: #fffdf9;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-left: 8px solid #c98956;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  animation: fadeIn 0.7s ease;
+}
+
+/* ====== TÍTULOS ====== */
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #8c4b27;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #f3d6b3;
+}
+
+/* ====== TABLA DEL CARRITO ====== */
+.table {
+  background-color: #fffaf5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: #d89b72;
+  color: #fff;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.table th, 
+.table td {
+  vertical-align: middle;
+  border-bottom: 1px solid #f0e3d4;
+  padding: 14px 10px;
+  font-size: 15px;
+  color: #3a2a1e;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #fff8f0;
+}
+
+/* ====== BOTONES ====== */
+.btn-outline-secondary {
+  border-color: #a86c4c;
+  color: #a86c4c;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #a86c4c;
+  color: #fff;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #a86c4c, #d89b72);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #d89b72, #a86c4c);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.btn-danger {
+  background-color: #d46b42;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #b94c29;
+}
+
+/* ====== TOTAL ====== */
+h4 {
+  color: #7a3e16;
+  font-weight: 700;
+}
+
+/* ====== FOOTER ====== */
+.footer {
+  background: #fffaf5;
+  border-top: 2px solid #f1d9c1;
+  color: #5c3a27;
+}
+
+.footer h5 {
+  color: #8c4b27;
+  font-weight: 700;
+}
+
+.footer a {
+  color: #5c3a27;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #a86c4c;
+}
+
+/* ====== ANIMACIÓN ====== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .card {
+    padding: 20px;
+  }
+
+  .container {
+    padding-top: 60px;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+
+/* ---------- CHECKOUT ARTESANAL ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@500;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f8f4ef 0%, #fff8f0 100%);
+  color: #3a2a1e;
+  margin: 0;
+}
+
+/* ====== CONTENEDOR PRINCIPAL ====== */
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+  padding-top: 90px;
+}
+
+/* ====== CARD PRINCIPAL ====== */
+.card {
+  background: #fffdf9;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-left: 8px solid #d89b72;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+}
+
+/* ====== TÍTULOS ====== */
+h2 {
+  color: #a86c4c;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 1px 1px 0 #f3d6b3;
+}
+
+/* ====== FORMULARIO ====== */
+.checkout-form label {
+  color: #6b4226;
+  font-weight: 600;
 }
 
 .checkout-form input,
-.checkout-form textarea,
 .checkout-form select {
-  width: 100%;
-  padding: 0.8rem 1rem;
   border: 1px solid #d7b89c;
-  border-radius: 0.8rem;
-  font-size: 1rem;
-  color: #4d3b2b;
-  background-color: #fff;
-  transition: border 0.3s ease;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fffefb;
+  transition: all 0.3s ease;
 }
 
 .checkout-form input:focus,
-.checkout-form textarea:focus,
 .checkout-form select:focus {
-  border-color: #6a994e;
+  border-color: #a86c4c;
+  box-shadow: 0 0 5px rgba(168,108,76,0.3);
   outline: none;
 }
 
+/* ====== BOTÓN DE COMPRA ====== */
 .checkout-btn {
-  background: #6a994e;
+  background: linear-gradient(90deg, #a86c4c, #d89b72);
   color: #fff;
-  padding: 1rem;
+  padding: 12px 30px;
   border: none;
-  border-radius: .8rem;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .checkout-btn:hover {
-  background: #588640;
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #d89b72, #a86c4c);
 }
 
-/* ---------- ANIMACIÓN DE ÉXITO ---------- */
-.animacion-exito {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  background: #f7fff3;
-  padding: 2rem;
-  border: 2px solid #6a994e;
-  border-radius: 1rem;
-  font-size: 1.5rem;
+/* ====== TARJETA (SIMULACIÓN PASARELA) ====== */
+.tarjeta-section {
+  background: #fffaf3;
+  border: 2px dashed #d7b89c;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+/* ====== TABLA ====== */
+.table thead {
+  background-color: #d89b72;
+  color: #fff;
   font-weight: 600;
+}
+
+.table td, .table th {
+  color: #3a2a1e;
+}
+
+/* ====== ALERTA ÉXITO ====== */
+.alert-success {
+  background: #e8f8e0;
+  border: 1px solid #8fd48f;
   color: #3a6129;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  animation: fadeIn 0.5s ease-in-out;
+  border-radius: 10px;
 }
 
-.animacion-exito img {
-  margin-bottom: 1rem;
+/* ====== FOOTER ====== */
+.footer {
+  background: #fffaf5;
+  border-top: 2px solid #f1d9c1;
+  color: #5c3a27;
 }
 
+/* ====== ANIMACIÓN ====== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 

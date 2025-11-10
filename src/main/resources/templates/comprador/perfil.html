@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Artesanías</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+</head>
+<body>
+<div class="layout">
+    <header class="header">
+        <img th:src="@{/images/Logo-artesania.png}" alt="Logo" class="logo">
+        <nav class="navbar">
+            <a th:href="@{/comprador}">HOME</a>
+            <a th:href="@{/comprador/productos}">PRODUCTOS</a>
+            <a th:href="@{/comprador/perfil}">PERFIL</a>
+            <a th:href="@{/comprador/carrito}">CARRITO</a>
+            <a th:href="@{/comprador/salir}">SALIR</a>
+        </nav>
+    </header>
+
+    <main class="perfil-container">
+        <aside class="perfil-menu">
+            <ul>
+                <li onclick="mostrarSeccion('personal')"><i class="fas fa-user"></i> Información Personal</li>
+                <li onclick="mostrarSeccion('cuenta')"><i class="fas fa-id-card"></i> Datos de la Cuenta</li>
+                <li onclick="mostrarSeccion('direcciones')"><i class="fas fa-map-marker-alt"></i> Direcciones</li>
+                <li onclick="mostrarSeccion('tarjetas')"><i class="fas fa-credit-card"></i> Tarjetas</li>
+                <li onclick="mostrarSeccion('comunicaciones')"><i class="fas fa-envelope"></i> Comunicaciones</li>
+            </ul>
+        </aside>
+
+        <div class="perfil-info">
+         <div id="personal" class="seccion activa">
+        <h2>Información Personal</h2>
+        <p><strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+        <p><strong>Rol:</strong> <span th:text="${usuario.rol}"></span></p>
+         </div>
+        <div id="cuenta" class="seccion oculto">
+        <h2>Datos de la Cuenta</h2>
+        <p><strong>Usuario:</strong> <span th:text="${usuario.nombre}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+        </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <img th:src="@{/images/Logo-artesania.png}" alt="">
+            </div>
+            <div class="box">
+                <h3>Síguenos</h3>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+            <div class="box">
+                <h3>Servicios</h3>
+                <a th:href="@{/comprador}"><i class="fas fa-check"></i> Home</a>
+                <a th:href="@{/comprador/productos}"><i class="fas fa-check"></i> Productos</a>
+                <a th:href="@{/seleccion-registro}"><i class="fas fa-check"></i> Registro</a>
+                <a th:href="@{/login}"><i class="fas fa-check"></i> Login</a>
+            </div>
+        </div>
+        <div class="credit"><span>Creado por Mr.Grupo | Todos los derechos reservados</span></div>
+    </footer>
+
+    <script>
+        function mostrarSeccion(id) {
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(sec => sec.classList.remove('activa'));
+            document.getElementById(id).classList.add('activa');
+        }
+        window.onload = () => mostrarSeccion('personal');
+    </script>
+</div>
+</body>
+</html>

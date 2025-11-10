@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Comprador</title>
+
+    <!-- CSS propio -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <!-- Icono -->
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+</head>
+<body>
+<div class="layout">
+    <header class="header">
+        <img th:src="@{/images/Logo-artesania.png}" alt="Logo" class="logo">
+        <nav class="navbar">
+            <a th:href="@{/comprador}">HOME</a>
+            <a th:href="@{/comprador/productos}">PRODUCTOS</a>
+            <a th:href="@{/comprador/perfil}">PERFIL</a>
+            <a th:href="@{/comprador/carrito}">CARRITO</a>
+            <a th:href="@{/comprador/salir}">SALIR</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        <section class="dashboard-comprador">
+            <h1 class="heading">Bienvenido, Comprador 👋</h1>
+            <div class="box-container">
+                <div class="box">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Mi Carrito</h3>
+                    <p>Revisa y administra los productos agregados.</p>
+                    <a th:href="@{/comprador/carrito}" class="btn">Ver Carrito</a>
+                </div>
+                <div class="box">
+                    <i class="fas fa-box"></i>
+                    <h3>Ver Productos</h3>
+                    <p>Mira los productos que te ofrecemos.</p>
+                    <a th:href="@{/comprador/productos}" class="btn">Ver Compras</a>
+                </div>
+                <div class="box">
+                    <i class="fas fa-user"></i>
+                    <h3>Mi Perfil</h3>
+                    <p>Actualiza tus datos personales y preferencias.</p>
+                    <a th:href="@{/comprador/perfil}" class="btn">Editar Perfil</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <img th:src="@{/images/Logo-artesania.png}" alt="Logo">
+            </div>
+            <div class="box">
+                <h3>Síguenos</h3>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+            <div class="box">
+                <h3>Servicios</h3>
+                <a th:href="@{/comprador}"><i class="fas fa-check"></i> Home</a>
+                <a th:href="@{/comprador/productos}"><i class="fas fa-check"></i> Productos</a>
+                <a th:href="@{/seleccion-registro}"><i class="fas fa-check"></i> Registro</a>
+                <a th:href="@{/login}"><i class="fas fa-check"></i> Login</a>
+            </div>
+        </div>
+        <div class="credit"><span>Creado por mr.Grupo | Todos los derechos reservados</span></div>
+    </footer>
+</div>
+
+<!-- JS propio -->
+<script th:src="@{/script.js}"></script>
+<script th:src="@{/productos.js}"></script>
+</body>
+</html>
