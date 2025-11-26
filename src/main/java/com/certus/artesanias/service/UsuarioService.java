@@ -1,22 +1,22 @@
 package com.certus.artesanias.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.certus.artesanias.dto.CreateUsuarioRequest;
+import com.certus.artesanias.dto.UpdateUsuarioRequest;
 import com.certus.artesanias.models.Usuario;
-import com.certus.artesanias.repository.UsuarioRepository;
+import java.util.List;
 
-@Service
-public class UsuarioService {
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    public void registrarUsuario(Usuario usuario) {
-        usuarioRepository.save(usuario);
-    }
-
-    public Usuario login(String email, String password) {
-        return usuarioRepository.findByEmailAndPassword(email, password);
-    }
+// ESTO DEBE SER SOLO UNA INTERFAZ - sin @Service, sin implementaciones
+public interface UsuarioService {
+    
+    // Métodos de autenticación
+    Usuario login(String email, String password);
+    void registrarUsuario(Usuario usuario);
+    
+    // Métodos CRUD  
+    List<Usuario> getAllUsuarios();
+    Usuario obtenerPorIdDTO(Long id);
+    Usuario crear(CreateUsuarioRequest createRequest);
+    Usuario actualizar(Long id, UpdateUsuarioRequest updateRequest);
+    void eliminar(Long id);
+    Usuario toggleEstado(Long id);
 }

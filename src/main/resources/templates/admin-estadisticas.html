@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrador</title>
+    <title>Admin - Estadísticas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <link rel="icon" href="images/Logo-artesania.png">
     <style>
@@ -20,7 +20,6 @@
             --encabezados:rgba(1, 1, 1, 1);
             --box-color: rgba(236, 236, 236, 1);
             --boton:#c06722;
-            --gris-oscuro: #4a4a4a;
         }
 
         *{
@@ -48,25 +47,11 @@
         .layout{
             display: grid;
             grid-template-columns: 1fr;
-            grid-template-rows: auto auto 1fr auto;
-            grid-template-areas:  "admin-bar"
-                                  "header"
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:  "header"
                                   "main"
                                   "footer";
             min-height: 100vh;
-        }
-
-        /* Barra de administrador */
-        .admin-bar {
-            background: var(--gris-oscuro);
-            grid-area: admin-bar;
-            padding: 0.8rem 9%;
-            color: #fff;
-        }
-
-        .admin-bar p {
-            font-size: 1.4rem;
-            margin: 0;
         }
 
         .layout .header{
@@ -86,8 +71,8 @@
 
         /* Header */
         .header{
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
             background: #fff;
             box-shadow: var(--box-shadow);
@@ -137,103 +122,112 @@
             background: #fff;
         }
 
-        /* Panel de Control Admin */
-        .panel-admin {
-            padding: 3rem 2rem;
-            max-width: 1200px;
+        /* Estadísticas */
+        .estadisticas {
+            margin-top: 8rem;
+            padding: 2rem;
+            max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .panel-admin .heading-panel {
-            font-size: 3rem;
+        .estadisticas .heading-estadisticas {
+            font-size: 3.5rem;
             color: var(--EncabezadoHome);
-            margin-bottom: 4rem;
-            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
         }
 
-        /* Grid de tarjetas 2x2 */
-        .cards-grid {
+        /* Tarjetas superiores */
+        .cards-estadisticas {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
-            margin-bottom: 5rem;
+            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .card-admin {
+        .card-estadistica {
             background: #fff;
             padding: 4rem 3rem;
             border-radius: 0.8rem;
             box-shadow: var(--box-shadow);
             text-align: center;
             transition: transform 0.3s ease;
+        }
+
+        .card-estadistica:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-estadistica h3 {
+            font-size: 2.4rem;
+            font-weight: 400;
+            color: var(--encabezados);
+        }
+
+        /* Sección de gráfico y resumen */
+        .grafico-resumen {
+            display: grid;
+            grid-template-columns: 1fr 35rem;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Contenedor del gráfico */
+        .chart-container {
+            background: #999;
+            border-radius: 0.8rem;
+            padding: 2rem;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            box-shadow: var(--box-shadow);
         }
 
-        .card-admin:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
+        #chart {
+            max-width: 100%;
+            height: auto;
         }
 
-        .card-admin .icon-admin {
-            font-size: 6rem;
-            margin-bottom: 2rem;
-            color: var(--encabezados);
+        /* Tarjeta de resumen */
+        .resumen-card {
+            background: #fff;
+            border-radius: 0.8rem;
+            padding: 3rem;
+            box-shadow: var(--box-shadow);
+            align-self: start;
         }
 
-        .card-admin .icon-admin i {
-            font-size: 6rem;
-        }
-
-        /* Íconos personalizados con imágenes */
-        .icon-users {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-chart {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-settings {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-bell {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .card-admin h3 {
+        .resumen-card h3 {
+            text-align: center;
             font-size: 1.8rem;
-            color: var(--encabezados);
-            margin-bottom: 1.5rem;
             font-weight: 600;
+            margin-bottom: 2.5rem;
+            color: var(--encabezados);
         }
 
-        .card-admin .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
+        .resumen-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 0.1rem solid #e0e0e0;
+        }
+
+        .resumen-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .resumen-label {
+            color: var(--light-color);
             font-size: 1.4rem;
-            border-radius: 0.5rem;
-            background: var(--boton);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
         }
 
-        .card-admin .btn:hover {
-            background: var(--lineaMarron);
-            transform: scale(1.05);
+        .resumen-value {
+            color: var(--encabezados);
+            font-weight: 600;
+            font-size: 1.4rem;
         }
 
         /* Footer */
@@ -265,7 +259,6 @@
 
         .footer .box-container .box a i{
             color: var(--lineaMarron);
-            margin-right: 0.5rem;
         }
 
         .footer .box-container .box a:hover{
@@ -276,7 +269,6 @@
             background: var(--lineaMarron);
             display: flex;
             justify-content: center;
-            padding: 1.5rem;
         }
 
         .footer .credit span{
@@ -290,18 +282,34 @@
                 font-size: 55%;
             }
 
-            .cards-grid {
+            .grafico-resumen {
                 grid-template-columns: 1fr;
+            }
+            
+            .estadisticas .heading-estadisticas {
+                font-size: 3rem;
             }
         }
 
         @media(max-width: 768px){
-            .cards-grid {
+            .cards-estadisticas {
                 grid-template-columns: 1fr;
             }
-
-            .panel-admin {
-                padding: 2rem 1rem;
+            
+            .chart-container {
+                padding: 1rem;
+            }
+            
+            #chart {
+                width: 100%;
+            }
+            
+            .resumen-card {
+                padding: 2rem;
+            }
+            
+            .estadisticas {
+                padding: 1rem;
             }
 
             .footer .box-container{
@@ -349,12 +357,16 @@
                 font-size: 50%;
             }
 
-            .panel-admin .heading-panel {
+            .estadisticas .heading-estadisticas {
                 font-size: 2.5rem;
             }
-
-            .card-admin {
-                padding: 2rem;
+            
+            .card-estadistica {
+                padding: 2rem 1.5rem;
+            }
+            
+            .card-estadistica h3 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -362,11 +374,6 @@
 <body>
 
     <div class="layout">
-
-        <!-- Barra de administrador -->
-        <div class="admin-bar">
-            <p>Administrador</p>
-        </div>
 
         <!-- Header -->
         <header class="header">
@@ -385,43 +392,47 @@
         <!-- Contenido principal -->
         <main class="contenedor">
             
-            <section class="panel-admin">
-                <h1 class="heading-panel">TU PANEL DE CONTROL</h1>
+            <section class="estadisticas">
+                <h1 class="heading-estadisticas">Mis estadísticas</h1>
                 
-                <!-- Grid de tarjetas 2x2 -->
-                <div class="cards-grid">
-                    
-                    <!-- Control de Cuentas -->
-                    <div class="card-admin">
-                        <i class="fas fa-users icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-users" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-controlcuentas.html" class="btn">Ver Más</a>
+                <!-- Tarjetas superiores -->
+                <div class="cards-estadisticas">
+                    <div class="card-estadistica">
+                        <h3>Compras</h3>
+                    </div>
+                    <div class="card-estadistica">
+                        <h3>Usuarios</h3>
+                    </div>
+                    <div class="card-estadistica">
+                        <h3>Productos</h3>
+                    </div>
+                </div>
+
+                <!-- Sección de gráfico y resumen -->
+                <div class="grafico-resumen">
+                    <div class="chart-container">
+                        <canvas id="chart"></canvas>
                     </div>
 
-                    <!-- Estadísticas -->
-                    <div class="card-admin">
-                        <i class="fas fa-chart-line icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-compradores" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-estadisticas.html" class="btn">Ver Más</a>
+                    <div class="resumen-card">
+                        <h3>RESUMEN</h3>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Total de Usuarios:</span>
+                            <span class="resumen-value">120</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Total de Vendedores:</span>
+                            <span class="resumen-value">60</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Compras este mes:</span>
+                            <span class="resumen-value">$/100</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Ventas acumuladas:</span>
+                            <span class="resumen-value">$/101</span>
+                        </div>
                     </div>
-
-                    <!-- Ajustes -->
-                    <div class="card-admin">
-                        <i class="fas fa-cog icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-vendedores" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>                        <a href="admin-ajustes.html" class="btn">Configurar</a>
-                    </div>
-
-                    <!-- Alertas -->
-                    <div class="card-admin">
-                        <i class="fas fa-bell icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-admins" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-alertas.html" class="btn">Revisar</a>
-                    </div>
-
                 </div>
             </section>
 
@@ -436,8 +447,8 @@
 
                 <div class="box">
                     <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                    <a href="#"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
                 </div>
 
                 <div class="box">
@@ -445,10 +456,11 @@
                     <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
                     <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
                     <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
-            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+            <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
         </footer>
     </div>
 
@@ -468,18 +480,76 @@
                 navbar.classList.remove('active');
             }
         }
+
+        // Gráfico de estadísticas
+        const months = ['enero', 'febrero', 'marzo', 'mayo', 'abril', 'junio', 'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
+        const data = [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
+
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 700;
+        canvas.height = 450;
+
+        const padding = 50;
+        const chartWidth = canvas.width - padding * 2;
+        const chartHeight = canvas.height - padding * 2;
+        const barWidth = chartWidth / months.length - 10;
+        const maxValue = Math.max(...data);
+
+        // Fondo gris
+        ctx.fillStyle = '#999';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Líneas de guía y valores Y
+        ctx.strokeStyle = '#666';
+        ctx.fillStyle = '#fff';
+        ctx.font = '14px Nunito';
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i++) {
+            const y = padding + (chartHeight / 4) * i;
+            const value = maxValue - (maxValue / 4) * i;
+            
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(canvas.width - padding, y);
+            ctx.stroke();
+            
+            ctx.fillText(Math.round(value), 10, y + 5);
+        }
+
+        // Dibujar barras
+        ctx.fillStyle = '#c8d93b';
+        data.forEach((value, i) => {
+            const barHeight = (value / maxValue) * chartHeight;
+            const x = padding + i * (barWidth + 10) + 5;
+            const y = padding + chartHeight - barHeight;
+            
+            ctx.fillRect(x, y, barWidth, barHeight);
+        });
+
+        // Etiquetas X
+        ctx.fillStyle = '#fff';
+        ctx.font = '11px Nunito';
+        ctx.save();
+        months.forEach((month, i) => {
+            const x = padding + i * (barWidth + 10) + barWidth / 2;
+            const y = canvas.height - 20;
+            
+            ctx.translate(x, y);
+            ctx.rotate(-Math.PI / 4);
+            ctx.fillText(month, 0, 0);
+            ctx.rotate(Math.PI / 4);
+            ctx.translate(-x, -y);
+        });
+        ctx.restore();
+
+        // Eje Y (label "0")
+        ctx.fillStyle = '#fff';
+        ctx.font = '14px Nunito';
+        ctx.fillText('0', 20, canvas.height - padding + 5);
     </script>
 
-
-   <script>
-fetch('/admin/api/stats')
-    .then(response => response.json())
-    .then(stats => {
-        document.getElementById('total-users').textContent = stats.totalUsers;
-        document.getElementById('total-compradores').textContent = stats.totalCompradores;
-        document.getElementById('total-vendedores').textContent = stats.totalVendedores;
-        document.getElementById('total-admins').textContent = stats.totalAdmins;
-    });
-</script>   
 </body>
 </html>
