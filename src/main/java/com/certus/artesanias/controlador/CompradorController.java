@@ -15,7 +15,7 @@ import com.certus.artesanias.models.Carrito;
 import com.certus.artesanias.models.Producto;
 import com.certus.artesanias.models.Usuario;
 import com.certus.artesanias.service.CarritoService;
-import com.certus.artesanias.service.ProductoService;
+import com.certus.artesanias.service.ProductoCliente;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,11 +23,11 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/comprador")
 public class CompradorController {
 
-    private final ProductoService productoService;
+    private final ProductoCliente productoCliente;
     private final CarritoService carritoService;
 
-    public CompradorController(ProductoService productoService, CarritoService carritoService) {
-        this.productoService = productoService;
+    public CompradorController(ProductoCliente productoCliente, CarritoService carritoService) {
+        this.productoCliente = productoCliente;
         this.carritoService = carritoService;
     }
 
@@ -48,7 +48,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        List<Producto> productos = productoService.listarTodos();
+        List<Producto> productos = productoCliente.obtenerProductos();
         model.addAttribute("productos", productos);
         model.addAttribute("usuario", usuario);
 
@@ -64,7 +64,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        Producto producto = productoService.obtenerPorId(id);
+        Producto producto = productoCliente.obtenerProductoPorId(id);
         if (producto == null) return "redirect:/comprador/productos";
 
         model.addAttribute("producto", producto);
