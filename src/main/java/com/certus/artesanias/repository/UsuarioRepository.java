@@ -7,6 +7,6 @@ import com.certus.artesanias.models.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Usuario findByEmailAndPassword(String email, String password);
     Usuario findByEmail(String email);
 }
+
