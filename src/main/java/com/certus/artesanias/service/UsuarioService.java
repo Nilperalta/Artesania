@@ -23,12 +23,9 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    // nuevo login seguro
-    public Usuario login(String email, String password) {
-        Usuario usuario = usuarioRepository.findByEmail(email);
-        if (usuario != null && passwordEncoder.matches(password, usuario.getPassword())) {
-            return usuario;
-        }
-        return null;
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
+
+    
 }

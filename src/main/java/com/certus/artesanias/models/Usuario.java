@@ -1,5 +1,4 @@
 package com.certus.artesanias.models;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +10,7 @@ public class Usuario {
     private Long id;
 
     private String nombre;
+    @Column(unique = true)
     private String email;
     private String password;
     private String rol; // ADMIN, COMPRADOR o VENDEDOR

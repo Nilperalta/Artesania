@@ -29,25 +29,6 @@ public class HomeController {
         return "login"; 
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-    Usuario usuario = usuarioService.login(email, password);
-
-    if (usuario != null) {
-        // Guardamos el usuario logueado en la sesión
-        session.setAttribute("usuarioLogeado", usuario);
-
-        switch (usuario.getRol()) {
-            case "ADMIN": return "redirect:/admin";
-            case "COMPRADOR": return "redirect:/comprador";
-            case "VENDEDOR": return "redirect:/vendedor";
-        }
-    }
-
-    model.addAttribute("error", "Credenciales incorrectas");
-    return "login";
-}
-
     @GetMapping("/seleccion-registro")
     public String seleccionRegistro() {
         return "SeleccionRegistro";
