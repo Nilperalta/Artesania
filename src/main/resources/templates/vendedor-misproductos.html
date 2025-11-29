@@ -61,43 +61,31 @@
                         </div>
 
 
-                    <div class="lista-productos">
+                <div class="lista-productos" th:if="${productos.size() > 0}">
+                    <div class="producto" th:each="p : ${productos}">
+                            <img th:src="@{${p.imagen}}" class="producto-img">
 
-                        <!-- Producto 1 -->
-                        <div class="producto">
-                            <img th:src="@{/images/producto-3.png}" alt="Bolsa tejida a mano" class="producto-img">
-                            <div class="producto-info">
-                                <h3>Bolsa tejida a mano</h3>
-                                <p><strong>Color:</strong> Rojo</p>
-                                <div class="cantidad">
-                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
-                                    <span>1</span>
-                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
-                                </div>
-                                <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
-                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
+                        <div class="producto-info">
+                                <h3 th:text="${p.nombre}"></h3>
+
+                            <p><strong>Descripción:</strong> <span th:text="${p.descripcion}"></span></p>
+
+                            <div class="cantidad">
+                                <span th:text="'Stock: ' + ${p.stock}"></span>
                             </div>
-                            <p class="precio">S/. 50.00</p>
+
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
                         </div>
 
-                        <hr>
+                        <p class="precio" th:text="'S/. ' + ${p.precio}"></p>
+                    </div>
+                </div>
 
-                        <!-- Producto 2 -->
-                        <div class="producto">
-                            <img th:src="@{/images/producto-2.png}" alt="Beanie" class="producto-img">
-                            <div class="producto-info">
-                                <h3>Beanie</h3>
-                                <p><strong>Color:</strong> Turquesa</p>
-                                <div class="cantidad">
-                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
-                                    <span>1</span>
-                                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
-                                </div>
-                                <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
-                                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
-                            </div>
-                            <p class="precio">S/. 20.00</p>
-                        </div>
+<h3 th:if="${productos.size() == 0}">
+    No tienes productos registrados aún.
+</h3>
+
 
                     </div>
             </section>

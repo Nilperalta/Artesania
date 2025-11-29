@@ -9,7 +9,6 @@ import com.certus.artesanias.models.Carrito;
 import com.certus.artesanias.models.Producto;
 import com.certus.artesanias.models.Usuario;
 import com.certus.artesanias.repository.CarritoRepository;
-import com.certus.artesanias.repository.ProductoRepository;
 
 @Service
 public class CarritoService {
@@ -18,14 +17,14 @@ public class CarritoService {
     private CarritoRepository carritoRepository;
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductoCliente productoCliente;
 
     public List<Carrito> obtenerPorUsuario(Long usuarioId) {
         return carritoRepository.findByUsuarioId(usuarioId);
     }
 
     public void agregarProducto(Long usuarioId, Long productoId, int cantidad) {
-        Producto producto = productoRepository.findById(productoId).orElse(null);
+        Producto producto = productoCliente.obtenerProductoPorId(productoId);
         if (producto == null) return;
 
         List<Carrito> carrito = carritoRepository.findByUsuarioId(usuarioId);

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Alertas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+        <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Barra de administrador -->
+        <div class="admin-bar">
+            <p>Administrador</p>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            
+            <nav class="navbar">
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
+            </nav>
+
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="contenedor">
+            
+            <section class="panel-alertas">
+                <h1 class="heading-panel">ALERTAS DEL SISTEMA</h1>
+                
+                <div id="alertas-container">
+                    <p style="text-align: center; font-size: 1.6rem; color: #999;">Cargando alertas...</p>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box">
+                    <img th:src="@{/images/Logo-artesania.png}" alt="">
+                </div>
+
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                </div>
+
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                </div>
+            </div>
+
+            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+        </footer>
+    </div>
+
+    <script>
+        // Menú móvil
+        let menu = document.querySelector('#menu-btn');
+        let navbar = document.querySelector('.navbar');
+
+        if(menu && navbar) {
+            menu.onclick = () => {
+                menu.classList.toggle('fa-times');
+                navbar.classList.toggle('active');
+            }
+
+            window.onscroll = () => {
+                menu.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            }
+        }
+
+        // Cargar alertas desde backend
+        const apiAlerts = '/admin/api/alerts';
+
+        fetch(apiAlerts)
+            .then(r => r.json())
+            .then(alertas => {
+                const container = document.getElementById('alertas-container');
+                
+                if(alertas.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; font-size: 1.6rem; color: #999;">No hay alertas disponibles</p>';
+                    return;
+                }
+
+                container.innerHTML = alertas.map(a => {
+                    const tipoColor = a.tipo === 'DANGER' ? '#d9534f' : 
+                                     a.tipo === 'WARNING' ? '#f0ad4e' : '#5bc0de';
+                    const tipoTexto = a.tipo === 'DANGER' ? 'Crítico' : 
+                                     a.tipo === 'WARNING' ? 'Advertencia' : 'Información';
+                    
+                    return `
+                        <div class="alert ${a.tipo.toLowerCase()}" style="padding:2rem; margin:2rem 0; border-left:5px solid ${tipoColor}; background: ${a.tipo === 'DANGER' ? '#f8d7da' : a.tipo === 'WARNING' ? '#fff3cd' : '#d1ecf1'}; border-radius: 0.5rem; box-shadow: var(--box-shadow);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="font-size: 1.6rem; color: ${tipoColor};">${tipoTexto}</strong>
+                                    <p style="font-size: 1.4rem; margin: 0.5rem 0; color: #333;">${a.mensaje}</p>
+                                    <small style="font-size: 1.2rem; color: #777;">${new Date(a.fecha).toLocaleString('es-PE')}</small>
+                                </div>
+                                ${!a.leida ? `<button onclick="marcarLeida(${a.id})" style="padding: 0.8rem 1.5rem; background: var(--boton); color: #fff; border-radius: 0.4rem; cursor: pointer; font-size: 1.3rem;">Marcar leída</button>` : '<span style="color: #5cb85c; font-size: 1.3rem; font-weight: bold;">✓ Leída</span>'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('alertas-container').innerHTML = '<p style="text-align: center; font-size: 1.6rem; color: #d9534f;">Error al cargar alertas</p>';
+            });
+
+        function marcarLeida(id) {
+            fetch(`${apiAlerts}/${id}/read`, {method: 'PATCH'})
+                .then(() => location.reload())
+                .catch(error => console.error('Error:', error));
+        }
+    </script>   
+</body>
+</html>

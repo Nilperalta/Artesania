@@ -1,8 +1,8 @@
 package com.certus.artesanias.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.certus.artesanias.dto.CreateUsuarioRequest;
+import com.certus.artesanias.dto.UpdateUsuarioRequest;
+import com.certus.artesanias.dto.UsuarioDTO;
 import com.certus.artesanias.models.Usuario;
 import com.certus.artesanias.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;

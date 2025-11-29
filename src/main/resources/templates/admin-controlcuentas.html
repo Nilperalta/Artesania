@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Control de Cuentas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+    <style>
+        .btn-accion {
+            padding: 0.6rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+            border: none;
+            color: #fff;
+        }
+        .btn-editar { background: #5bc0de; }
+        .btn-editar:hover { background: #46b8da; }
+        .btn-eliminar { background: #d9534f; }
+        .btn-eliminar:hover { background: #c9302c; }
+        .btn-toggle { background: #f0ad4e; }
+        .btn-toggle:hover { background: #ec971f; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .modal-header h2 {
+            font-size: 2.5rem;
+            color: var(--EncabezadoHome);
+            margin: 0;
+        }
+        .close {
+            font-size: 3rem;
+            cursor: pointer;
+            color: #aaa;
+            line-height: 1;
+        }
+        .close:hover { color: #000; }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.4rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+        .btn-guardar {
+            background: var(--boton);
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 1.4rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+        }
+        .btn-guardar:hover { background: var(--lineaMarron); }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+        <div class="admin-bar"><p>Administrador</p></div>
+
+        <header class="header">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            <nav class="navbar">
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
+            </nav>
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <main class="contenedor">
+            <section class="control-cuentas">
+                <h1 class="heading-control">CONTROL DE CUENTAS</h1>
+
+                <div class="filtros-container">
+                    <div class="info-cuentas">
+                        <h3>Todas Las Cuentas: <span id="totalCuentas">0</span></h3>
+                    </div>
+                    <div class="filtros-derecha">
+                        <div class="search-box">
+                            <input type="text" placeholder="Buscar..." id="searchInput">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select class="filtro-select" id="filtroRol">
+                            <option value="todos">Todos</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="VENDEDOR">Vendedor</option>
+                            <option value="COMPRADOR">Comprador</option>
+                        </select>
+                        <select class="filtro-select" id="filtroEstado">
+                            <option value="todos">Todos</option>
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    <table class="table table-hover" id="tablaCuentas">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Fecha Registro</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="6" style="text-align:center;color:#999;">Cargando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box"><img th:src="@{/images/Logo-artesania.png}" alt=""></div>
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                </div>
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                </div>
+            </div>
+            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+        </footer>
+    </div>
+
+    <!-- MODAL EDITAR -->
+    <div id="modalEditar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Usuario</h2>
+                <span class="close" onclick="cerrarModal()">&times;</span>
+            </div>
+            <form id="formEditar" onsubmit="guardarUsuario(event)">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="editNombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Rol:</label>
+                    <select id="editRol" required>
+                        <option value="COMPRADOR">Comprador</option>
+                        <option value="VENDEDOR">Vendedor</option>
+                        <option value="ADMIN">Administrador</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const menu = document.querySelector('#menu-btn');
+        const navbar = document.querySelector('.navbar');
+        if(menu && navbar) {
+            menu.onclick = () => { menu.classList.toggle('fa-times'); navbar.classList.toggle('active'); };
+            window.onscroll = () => { menu.classList.remove('fa-times'); navbar.classList.remove('active'); };
+        }
+
+        const API_URL = '/admin/api/users';
+        let usuarios = [];
+
+        async function cargarUsuarios() {
+            try {
+                const res = await fetch(API_URL);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                usuarios = await res.json();
+                renderTabla(usuarios);
+                document.getElementById('totalCuentas').textContent = usuarios.length;
+            } catch (err) {
+                console.error(err);
+                document.querySelector('#tablaCuentas tbody').innerHTML = 
+                    `<tr><td colspan="6" style="text-align:center;color:red;">Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        function renderTabla(data) {
+            const tbody = document.querySelector('#tablaCuentas tbody');
+            if(data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;">No hay usuarios</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = data.map(u => {
+                const rol = u.rol === 'ADMIN' ? 'Administrador' : u.rol === 'VENDEDOR' ? 'Vendedor' : 'Comprador';
+                const estado = u.activo ? 'Activo' : 'Inactivo';
+                const clase = u.activo ? 'estado-activo' : 'estado-inactivo';
+                const fecha = u.fechaRegistro ? new Date(u.fechaRegistro).toLocaleDateString('es-PE') : '--';
+                const iconToggle = u.activo ? 'fa-toggle-on' : 'fa-toggle-off';
+                
+                return `
+                    <tr data-id="${u.id}" data-rol="${u.rol}" data-activo="${u.activo}">
+                        <td>${u.nombre}</td>
+                        <td>${u.email}</td>
+                        <td>${rol}</td>
+                        <td>${fecha}</td>
+                        <td><span class="estado-badge ${clase}">${estado}</span></td>
+                        <td>
+                            <button class="btn-accion btn-editar" onclick="editarUsuario(${u.id})" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-accion btn-toggle" onclick="toggleUsuario(${u.id}, ${u.activo})" title="${u.activo ? 'Desactivar' : 'Activar'}">
+                                <i class="fas ${iconToggle}"></i>
+                            </button>
+                            <button class="btn-accion btn-eliminar" onclick="eliminarUsuario(${u.id}, '${u.nombre}')" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function editarUsuario(id) {
+            const u = usuarios.find(user => user.id === id);
+            if(!u) return;
+            document.getElementById('editId').value = u.id;
+            document.getElementById('editNombre').value = u.nombre;
+            document.getElementById('editEmail').value = u.email;
+            document.getElementById('editRol').value = u.rol;
+            document.getElementById('modalEditar').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalEditar').style.display = 'none';
+        }
+
+        async function guardarUsuario(e) {
+            e.preventDefault();
+            const id = document.getElementById('editId').value;
+            const data = {
+                nombre: document.getElementById('editNombre').value,
+                email: document.getElementById('editEmail').value,
+                rol: document.getElementById('editRol').value
+            };
+            try {
+                const res = await fetch(`${API_URL}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if(!res.ok) throw new Error('Error al actualizar');
+                alert('✅ Usuario actualizado');
+                cerrarModal();
+                cargarUsuarios();
+            } catch(err) {
+                alert('❌ Error: ' + err.message);
+            }
+        }
+
+        async function toggleUsuario(id, activo) {
+            const accion = activo ? 'desactivar' : 'activar';
+            if(!confirm(`¿${accion.toUpperCase()} este usuario?`)) return;
+            try {
+                const res = await fetch(`${API_URL}/${id}/toggle`, { method: 'PATCH' });
+                if(!res.ok) throw new Error('Error');
+                alert(`✅ Usuario ${accion}do`);
+                cargarUsuarios();
+            } catch(err) {
+                alert('❌ Error: ' + err.message);
+            }
+        }
+
+        async function eliminarUsuario(id, nombre) {
+            if(!confirm(`⚠️ ¿ELIMINAR a "${nombre}"?\nEsta acción NO se puede deshacer.`)) return;
+            try {
+                const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                if(!res.ok) throw new Error('Error');
+                alert('✅ Usuario eliminado');
+                cargarUsuarios();
+            } catch(err) {
+                alert('❌ Error: ' + err.message);
+            }
+        }
+
+        function filtrar() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const rol = document.getElementById('filtroRol').value;
+            const estado = document.getElementById('filtroEstado').value;
+            
+            const filtrados = usuarios.filter(u => {
+                const matchSearch = u.nombre.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
+                const matchRol = rol === 'todos' || u.rol === rol;
+                const matchEstado = estado === 'todos' || u.activo.toString() === estado;
+                return matchSearch && matchRol && matchEstado;
+            });
+            renderTabla(filtrados);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filtrar);
+        document.getElementById('filtroRol').addEventListener('change', filtrar);
+        document.getElementById('filtroEstado').addEventListener('change', filtrar);
+        window.onclick = (e) => { if(e.target.id === 'modalEditar') cerrarModal(); };
+        window.addEventListener('load', cargarUsuarios);
+    </script>
+</body>
+</html>

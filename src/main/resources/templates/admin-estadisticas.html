@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Estadísticas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+</head>
+<body>
+
+    <div class="layout">
+        <div class="admin-bar"><p>Administrador</p></div>
+
+        <header class="header">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            <nav class="navbar">
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
+            </nav>
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <main class="contenedor">
+            <section class="estadisticas">
+                <h1 class="heading-estadisticas">Mis estadísticas</h1>
+                
+                <div class="cards-estadisticas">
+                    <div class="card-estadistica">
+                        <h3>Compras</h3>
+                    </div>
+                    <div class="card-estadistica">
+                        <h3>Usuarios</h3>
+                    </div>
+                    <div class="card-estadistica">
+                        <h3>Productos</h3>
+                    </div>
+                </div>
+
+                <div class="grafico-resumen">
+                    <div class="chart-container">
+                        <canvas id="chart"></canvas>
+                    </div>
+                    <div class="resumen-card">
+                        <h3>RESUMEN</h3>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Total de Usuarios:</span>
+                            <span class="resumen-value">120</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Total de Vendedores:</span>
+                            <span class="resumen-value">60</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Compras este mes:</span>
+                            <span class="resumen-value">$/100</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-label">Ventas acumuladas:</span>
+                            <span class="resumen-value">$/101</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box"><img th:src="@{/images/Logo-artesania.png}" alt=""></div>
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
+                </div>
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
+                </div>
+            </div>
+            <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
+        </footer>
+    </div>
+
+    <script>
+        let menu = document.querySelector('#menu-btn');
+        let navbar = document.querySelector('.navbar');
+        if(menu && navbar) {
+            menu.onclick = () => {
+                menu.classList.toggle('fa-times');
+                navbar.classList.toggle('active');
+            }
+            window.onscroll = () => {
+                menu.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            }
+        }
+
+        const months = ['enero', 'febrero', 'marzo', 'mayo', 'abril', 'junio', 'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
+        const data = [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 700;
+        canvas.height = 450;
+        const padding = 50;
+        const chartWidth = canvas.width - padding * 2;
+        const chartHeight = canvas.height - padding * 2;
+        const barWidth = chartWidth / months.length - 10;
+        const maxValue = Math.max(...data);
+
+        ctx.fillStyle = '#999';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#666';
+        ctx.fillStyle = '#fff';
+        ctx.font = '14px Nunito';
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i++) {
+            const y = padding + (chartHeight / 4) * i;
+            const value = maxValue - (maxValue / 4) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(canvas.width - padding, y);
+            ctx.stroke();
+            ctx.fillText(Math.round(value), 10, y + 5);
+        }
+
+        ctx.fillStyle = '#c8d93b';
+        data.forEach((value, i) => {
+            const barHeight = (value / maxValue) * chartHeight;
+            const x = padding + i * (barWidth + 10) + 5;
+            const y = padding + chartHeight - barHeight;
+            ctx.fillRect(x, y, barWidth, barHeight);
+        });
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '11px Nunito';
+        ctx.save();
+        months.forEach((month, i) => {
+            const x = padding + i * (barWidth + 10) + barWidth / 2;
+            const y = canvas.height - 20;
+            ctx.translate(x, y);
+            ctx.rotate(-Math.PI / 4);
+            ctx.fillText(month, 0, 0);
+            ctx.rotate(Math.PI / 4);
+            ctx.translate(-x, -y);
+        });
+        ctx.restore();
+        ctx.fillStyle = '#fff';
+        ctx.font = '14px Nunito';
+        ctx.fillText('0', 20, canvas.height - padding + 5);
+    </script>
+</body>
+</html>
