@@ -47,10 +47,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario obtenerPorIdDTO(Long id) {
-        return usuarioRepository.findById(id)
+    public UsuarioDTO obtenerPorIdDTO(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return toDTO(usuario);
     }
+
 
     @Override
     public UsuarioDTO crear(CreateUsuarioRequest request) {

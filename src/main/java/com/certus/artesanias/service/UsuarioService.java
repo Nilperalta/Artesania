@@ -11,7 +11,7 @@ public interface UsuarioService {
     void registrarUsuario(Usuario usuario);
     Usuario findByEmail(String email);
     List<Usuario> getAllUsuarios();
-    Usuario obtenerPorIdDTO(Long id);
+    UsuarioDTO obtenerPorIdDTO(Long id);
     UsuarioDTO crear(CreateUsuarioRequest createRequest);
     UsuarioDTO actualizar(Long id, UpdateUsuarioRequest updateRequest);
     void eliminar(Long id);

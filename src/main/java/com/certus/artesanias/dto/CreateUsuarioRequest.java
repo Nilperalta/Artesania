@@ -3,7 +3,8 @@ package com.certus.artesanias.dto;
 public class CreateUsuarioRequest {
     private String nombre;
     private String email;
-    // ... otros campos
+    private String password;
+    private String rol;
 
     // Getters y setters
     public String getNombre() {
@@ -20,5 +21,21 @@ public class CreateUsuarioRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
