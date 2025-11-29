@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+
+
 @RequestMapping("/admin")
 public class AdminController {
     
@@ -17,12 +19,7 @@ public class AdminController {
     @GetMapping("")
     public String dashboard(Model model) {
         model.addAttribute("stats", adminService.getDashboardStatistics());
-        return "dashboard-admin";
-    }
-    
-    @GetMapping("/dashboard")
-    public String dashboardPage(Model model) {
-        model.addAttribute("stats", adminService.getDashboardStatistics());
+
         return "dashboard-admin";
     }
     
@@ -31,15 +28,20 @@ public class AdminController {
         return "admin-controlcuentas";
     }
     
-    @GetMapping("/ajustes")
-    public String ajustes() {
-        return "admin-ajustes";
+    @GetMapping("/alertas")
+    public String alertas() {
+        return "admin-alertas";
     }
     
     @GetMapping("/estadisticas")
     public String estadisticas(Model model) {
         model.addAttribute("stats", adminService.getDashboardStatistics());
         return "admin-estadisticas";
+    }
+    
+    @GetMapping("/ajustes")
+    public String ajustes() {
+        return "admin-ajustes";
     }
     
     @GetMapping("/api/stats")

@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface AlertRepository extends JpaRepository<Alert, Long> {
-    List<Alert> findByActivoOrderByFechaCreacionDesc(Boolean activo);
-    Long countByActivo(Boolean activo);
+    List<Alert> findByLeidaOrderByFechaDesc(Boolean leida);
 }

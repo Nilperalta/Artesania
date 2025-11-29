@@ -11,8 +11,8 @@
     --encabezados:rgba(1, 1, 1, 1);
     --box-color: rgba(236, 236, 236, 1);
     --boton:#c06722;
+    --gris-oscuro: #4a4a4a;
 }
-
 
 *{
     font-family: "Nunito", sans-serif;
@@ -24,29 +24,39 @@
     transition: all .3s ease-out;
 }
 
-
-
 html{
     font-size: 62.5%;
     scroll-behavior: smooth;
     scroll-padding-top: 9rem;
-    /*overflow: hidden;*/
 }
 
+/* LAYOUT FLEXIBLE - Detecta automáticamente si tiene barra admin */
 .layout{
-    /*border: 2px solid red;*/
     display: grid;
-    grid-template-columns: 1fr;  /* Una sola columna */
-    grid-template-rows: auto 1fr auto;  /*auto= la altura se ajusta automáticamente al contenido*/
-    grid-template-areas:  "header"
-                          "main"
-                          "footer";
-    min-height: 100vh; /* para ocupar toda la pantalla 100vh = 100% de la altura visible de la pantalla*/
+    grid-template-columns: 1fr;
+    min-height: 100vh;
 }
 
- /*Los colores de las áreas seleccionadas arriba*/
+/* Cuando hay admin-bar: 4 áreas */
+.admin-bar ~ * .layout,
+.layout:has(.admin-bar) {
+    grid-template-rows: auto auto 1fr auto !important;
+    grid-template-areas: "admin-bar"
+                         "header"
+                         "main"
+                         "footer" !important;
+}
+
+/* Cuando NO hay admin-bar: 3 áreas */
+.layout {
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "header"
+                         "main"
+                         "footer";
+}
+
 .layout .header{
-    background: #ffF;
+    background: #fff;
     grid-area: header;
 }
 
@@ -60,17 +70,12 @@ html{
     grid-area: footer;
 }
 
-/*imágenes*/
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-
-
-
-/*Header*/
 .header{
     /*border: 0.5rem solid black;*/
     position: fixed;
@@ -1801,3 +1806,141 @@ th, td {
   color: #555;
 }
 
+
+/* ==========================================
+   ESTILOS ADMINISTRADOR - Jefferson
+   ========================================== */
+
+/* Barra admin */
+.admin-bar {
+    background: var(--gris-oscuro);
+    grid-area: admin-bar;
+    padding: 0.8rem 9%;
+    color: #fff;
+}
+
+.admin-bar p {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* Header sticky solo para admin */
+.layout .admin-bar ~ .header {
+    position: sticky;
+    top: 0;
+}
+
+/* Panel Admin */
+.panel-admin {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.panel-admin .heading-panel {
+    font-size: 3rem;
+    color: var(--EncabezadoHome);
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin-bottom: 5rem;
+}
+
+.card-admin {
+    background: #fff;
+    padding: 4rem 3rem;
+    border-radius: 0.8rem;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-admin:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
+}
+
+.card-admin .icon-admin {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    color: var(--encabezados);
+}
+
+.card-admin h3 {
+    font-size: 1.8rem;
+    color: var(--encabezados);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.card-admin .btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    background: var(--boton);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.card-admin .btn:hover {
+    background: var(--lineaMarron);
+    transform: scale(1.05);
+}
+
+/* Otros paneles admin */
+.panel-alertas,
+.panel-control,
+.panel-estadisticas,
+.panel-ajustes {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 100px auto 0;
+}
+
+.panel-alertas .heading-panel,
+.panel-control .heading-panel,
+.panel-estadisticas .heading-panel,
+.panel-ajustes .heading-panel {
+    font-size: 3rem;
+    color: var(--EncabezadoHome);
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.panel-control {
+    max-width: 1400px;
+}
+
+/* Responsive admin */
+@media(max-width: 991px){
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 768px){
+    .panel-admin,
+    .panel-alertas,
+    .panel-control,
+    .panel-estadisticas,
+    .panel-ajustes {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+    }
+}
+
+@media(max-width: 450px){
+    .card-admin {
+        padding: 2rem;
+    }
+}

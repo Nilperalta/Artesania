@@ -2,10 +2,13 @@ package com.certus.artesanias.service;
 
 import com.certus.artesanias.dto.CreateUsuarioRequest;
 import com.certus.artesanias.dto.UpdateUsuarioRequest;
+import com.certus.artesanias.dto.UsuarioDTO;
 import com.certus.artesanias.models.Usuario;
 import com.certus.artesanias.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -31,48 +34,64 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario obtenerPorIdDTO(Long id) {
-        return usuarioRepository.findById(id).orElse(null);
+        return usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @Override
-    public Usuario crear(CreateUsuarioRequest createRequest) {
+    public UsuarioDTO crear(CreateUsuarioRequest request) {
         Usuario usuario = new Usuario();
-        // Mapear campos del DTO a la entidad Usuario
-        usuario.setNombre(createRequest.getNombre());
-        usuario.setEmail(createRequest.getEmail());
-        // ... otros campos
-        return usuarioRepository.save(usuario);
+        usuario.setNombre(request.getNombre());
+        usuario.setEmail(request.getEmail());
+        usuario.setPassword(request.getPassword());
+        usuario.setRol(request.getRol());
+        usuario.setActivo(true);
+        
+        Usuario saved = usuarioRepository.save(usuario);
+        return toDTO(saved);
     }
 
     @Override
-    public Usuario actualizar(Long id, UpdateUsuarioRequest updateRequest) {
-        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
-        if (usuarioExistente != null) {
-            // Actualizar campos
-            if (updateRequest.getNombre() != null) {
-                usuarioExistente.setNombre(updateRequest.getNombre());
-            }
-            if (updateRequest.getEmail() != null) {
-                usuarioExistente.setEmail(updateRequest.getEmail());
-            }
-            // ... otros campos
-            return usuarioRepository.save(usuarioExistente);
-        }
-        return null;
+    public UsuarioDTO actualizar(Long id, UpdateUsuarioRequest request) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        if (request.getNombre() != null) usuario.setNombre(request.getNombre());
+        if (request.getEmail() != null) usuario.setEmail(request.getEmail());
+        if (request.getRol() != null) usuario.setRol(request.getRol());
+        
+        Usuario updated = usuarioRepository.save(usuario);
+        return toDTO(updated);
     }
 
     @Override
     public void eliminar(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
         usuarioRepository.deleteById(id);
     }
 
     @Override
-    public Usuario toggleEstado(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElse(null);
-        if (usuario != null) {
-            usuario.setActivo(!usuario.getActivo());
-            return usuarioRepository.save(usuario);
-        }
-        return null;
+    public UsuarioDTO toggleEstado(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        usuario.setActivo(!usuario.getActivo());
+        Usuario updated = usuarioRepository.save(usuario);
+        return toDTO(updated);
+    }
+
+    private UsuarioDTO toDTO(Usuario u) {
+        return new UsuarioDTO(
+            u.getId(),
+            u.getNombre(),
+            u.getEmail(),
+            u.getRol(),
+            u.getActivo(),
+            u.getFechaRegistro() != null 
+                ? u.getFechaRegistro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                : "--"
+        );
     }
 }

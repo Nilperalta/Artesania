@@ -5,397 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Estadísticas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-
-        :root{
-            --lineaMarron:rgba(146, 89, 48, 1);
-            --EncabezadoHome:rgba(120, 198, 189, 1);
-            --black:#555;
-            --light-color:#777;
-            --bg:#fceae9;
-            --border:.1rem solid rgba(0,0,0,.1);
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-            --encabezados:rgba(1, 1, 1, 1);
-            --box-color: rgba(236, 236, 236, 1);
-            --boton:#c06722;
-        }
-
-        *{
-            font-family: "Nunito", sans-serif;
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-            outline: none; border: none;
-            text-decoration: none;
-            text-transform: capitalize;
-            transition: all .3s ease-out;
-        }
-
-        html{
-            font-size: 62.5%;
-            scroll-behavior: smooth;
-            scroll-padding-top: 9rem;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .layout{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr auto;
-            grid-template-areas:  "header"
-                                  "main"
-                                  "footer";
-            min-height: 100vh;
-        }
-
-        .layout .header{
-            background: #fff;
-            grid-area: header;
-        }
-
-        .layout .contenedor{
-            background: #fff;
-            grid-area: main;
-        }
-
-        .layout .footer{
-            background: #ffdcc2;
-            grid-area: footer;
-        }
-
-        /* Header */
-        .header{
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            background: #fff;
-            box-shadow: var(--box-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 9%;
-        }
-
-        .header .logo{
-            height: 7rem;
-        }
-
-        .header .navbar{
-            display: flex;
-            align-items: center;
-        }
-
-        .header .navbar a{
-            font-size: 1.7rem;
-            color: var(--light-color);
-            margin-left: 2rem;
-        }
-
-        .header .navbar a:hover{
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn{
-            cursor: pointer;
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: .5rem;
-            color: var(--main-color);
-            background: #ffdcc2;
-            display: none;
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn:hover{
-            color: #fff;
-            background: var(--EncabezadoHome);
-        }
-
-        /* Contenedor */
-        .contenedor{
-            background: #fff;
-        }
-
-        /* Estadísticas */
-        .estadisticas {
-            margin-top: 8rem;
-            padding: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .estadisticas .heading-estadisticas {
-            font-size: 3.5rem;
-            color: var(--EncabezadoHome);
-            margin-bottom: 3rem;
-            font-weight: 300;
-        }
-
-        /* Tarjetas superiores */
-        .cards-estadisticas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .card-estadistica {
-            background: #fff;
-            padding: 4rem 3rem;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .card-estadistica:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-estadistica h3 {
-            font-size: 2.4rem;
-            font-weight: 400;
-            color: var(--encabezados);
-        }
-
-        /* Sección de gráfico y resumen */
-        .grafico-resumen {
-            display: grid;
-            grid-template-columns: 1fr 35rem;
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
-        /* Contenedor del gráfico */
-        .chart-container {
-            background: #999;
-            border-radius: 0.8rem;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: var(--box-shadow);
-        }
-
-        #chart {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Tarjeta de resumen */
-        .resumen-card {
-            background: #fff;
-            border-radius: 0.8rem;
-            padding: 3rem;
-            box-shadow: var(--box-shadow);
-            align-self: start;
-        }
-
-        .resumen-card h3 {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 2.5rem;
-            color: var(--encabezados);
-        }
-
-        .resumen-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 0.1rem solid #e0e0e0;
-        }
-
-        .resumen-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .resumen-label {
-            color: var(--light-color);
-            font-size: 1.4rem;
-        }
-
-        .resumen-value {
-            color: var(--encabezados);
-            font-weight: 600;
-            font-size: 1.4rem;
-        }
-
-        /* Footer */
-        .footer .box-container{
-            display: flex;
-            justify-content: space-evenly;
-            box-shadow: var(--box-shadow);
-        }
-
-        .footer .box-container .box{
-            display: flex;
-            flex-direction: column;
-            margin: 2rem;
-            padding: 2rem;
-        }
-
-        .footer .box-container .box img{
-            height: 9rem;
-        }
-
-        .footer .box-container .box h3{
-            font-size: 1.5rem;
-        }
-
-        .footer .box-container .box a{
-            font-size: 1.2rem;
-            color: var(--light-color);
-        }
-
-        .footer .box-container .box a i{
-            color: var(--lineaMarron);
-        }
-
-        .footer .box-container .box a:hover{
-            color: var(--lineaMarron);
-        }
-
-        .footer .credit{
-            background: var(--lineaMarron);
-            display: flex;
-            justify-content: center;
-        }
-
-        .footer .credit span{
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        /* Media queries */
-        @media(max-width: 991px){
-            html{
-                font-size: 55%;
-            }
-
-            .grafico-resumen {
-                grid-template-columns: 1fr;
-            }
-            
-            .estadisticas .heading-estadisticas {
-                font-size: 3rem;
-            }
-        }
-
-        @media(max-width: 768px){
-            .cards-estadisticas {
-                grid-template-columns: 1fr;
-            }
-            
-            .chart-container {
-                padding: 1rem;
-            }
-            
-            #chart {
-                width: 100%;
-            }
-            
-            .resumen-card {
-                padding: 2rem;
-            }
-            
-            .estadisticas {
-                padding: 1rem;
-            }
-
-            .footer .box-container{
-                flex-direction: column;
-                align-items: center;
-            }
-
-            #menu-btn{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 2rem;
-            }
-
-            .header .navbar{
-                position: absolute;
-                top:115%; right: 6rem;
-                width: 30rem;
-                opacity:0;
-                display: block;
-                font-size: 2rem;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem; 
-                background: #fff; 
-                transform: scale(0);
-            }
-
-            .header .navbar.active{
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            .header .navbar a{
-                font-size: 2rem;
-                display: block;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem;    
-            }
-        }
-
-        @media(max-width: 450px){
-            html{
-                font-size: 50%;
-            }
-
-            .estadisticas .heading-estadisticas {
-                font-size: 2.5rem;
-            }
-            
-            .card-estadistica {
-                padding: 2rem 1.5rem;
-            }
-            
-            .card-estadistica h3 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
 </head>
 <body>
 
     <div class="layout">
+        <div class="admin-bar"><p>Administrador</p></div>
 
-        <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
-            
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
                 <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/login}">SALIR</a>
             </nav>
-
             <div id="menu-btn" class="fas fa-bars"></div>
         </header>
 
-        <!-- Contenido principal -->
         <main class="contenedor">
-            
             <section class="estadisticas">
                 <h1 class="heading-estadisticas">Mis estadísticas</h1>
                 
-                <!-- Tarjetas superiores -->
                 <div class="cards-estadisticas">
                     <div class="card-estadistica">
                         <h3>Compras</h3>
@@ -408,12 +40,10 @@
                     </div>
                 </div>
 
-                <!-- Sección de gráfico y resumen -->
                 <div class="grafico-resumen">
                     <div class="chart-container">
                         <canvas id="chart"></canvas>
                     </div>
-
                     <div class="resumen-card">
                         <h3>RESUMEN</h3>
                         <div class="resumen-item">
@@ -435,73 +65,56 @@
                     </div>
                 </div>
             </section>
-
         </main>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="box-container">
-                <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
-                </div>
-
+                <div class="box"><img th:src="@{/images/Logo-artesania.png}" alt=""></div>
                 <div class="box">
                     <h3>Síguenos</h3>
                     <a href="#"><i class="fab fa-facebook"></i>facebook</a>
                     <a href="#"><i class="fab fa-instagram"></i>instagram</a>
                 </div>
-
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
-
             <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
         </footer>
     </div>
 
     <script>
-        // Menú móvil
         let menu = document.querySelector('#menu-btn');
         let navbar = document.querySelector('.navbar');
-
         if(menu && navbar) {
             menu.onclick = () => {
                 menu.classList.toggle('fa-times');
                 navbar.classList.toggle('active');
             }
-
             window.onscroll = () => {
                 menu.classList.remove('fa-times');
                 navbar.classList.remove('active');
             }
         }
 
-        // Gráfico de estadísticas
         const months = ['enero', 'febrero', 'marzo', 'mayo', 'abril', 'junio', 'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
         const data = [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
-
         const canvas = document.getElementById('chart');
         const ctx = canvas.getContext('2d');
-        
         canvas.width = 700;
         canvas.height = 450;
-
         const padding = 50;
         const chartWidth = canvas.width - padding * 2;
         const chartHeight = canvas.height - padding * 2;
         const barWidth = chartWidth / months.length - 10;
         const maxValue = Math.max(...data);
 
-        // Fondo gris
         ctx.fillStyle = '#999';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Líneas de guía y valores Y
         ctx.strokeStyle = '#666';
         ctx.fillStyle = '#fff';
         ctx.font = '14px Nunito';
@@ -510,33 +123,27 @@
         for (let i = 0; i <= 4; i++) {
             const y = padding + (chartHeight / 4) * i;
             const value = maxValue - (maxValue / 4) * i;
-            
             ctx.beginPath();
             ctx.moveTo(padding, y);
             ctx.lineTo(canvas.width - padding, y);
             ctx.stroke();
-            
             ctx.fillText(Math.round(value), 10, y + 5);
         }
 
-        // Dibujar barras
         ctx.fillStyle = '#c8d93b';
         data.forEach((value, i) => {
             const barHeight = (value / maxValue) * chartHeight;
             const x = padding + i * (barWidth + 10) + 5;
             const y = padding + chartHeight - barHeight;
-            
             ctx.fillRect(x, y, barWidth, barHeight);
         });
 
-        // Etiquetas X
         ctx.fillStyle = '#fff';
         ctx.font = '11px Nunito';
         ctx.save();
         months.forEach((month, i) => {
             const x = padding + i * (barWidth + 10) + barWidth / 2;
             const y = canvas.height - 20;
-            
             ctx.translate(x, y);
             ctx.rotate(-Math.PI / 4);
             ctx.fillText(month, 0, 0);
@@ -544,12 +151,9 @@
             ctx.translate(-x, -y);
         });
         ctx.restore();
-
-        // Eje Y (label "0")
         ctx.fillStyle = '#fff';
         ctx.font = '14px Nunito';
         ctx.fillText('0', 20, canvas.height - padding + 5);
     </script>
-
 </body>
 </html>

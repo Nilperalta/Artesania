@@ -3,9 +3,10 @@ package com.certus.artesanias.dto;
 public class UpdateUsuarioRequest {
     private String nombre;
     private String email;
-    // ... otros campos
+    private String rol;
 
-    // Getters y setters
+    public UpdateUsuarioRequest() {}
+
     public String getNombre() {
         return nombre;
     }
@@ -20,5 +21,13 @@ public class UpdateUsuarioRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
