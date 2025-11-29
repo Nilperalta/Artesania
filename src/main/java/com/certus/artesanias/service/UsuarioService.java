@@ -4,28 +4,16 @@ import com.certus.artesanias.dto.CreateUsuarioRequest;
 import com.certus.artesanias.dto.UpdateUsuarioRequest;
 import com.certus.artesanias.dto.UsuarioDTO;
 import com.certus.artesanias.models.Usuario;
-import com.certus.artesanias.repository.UsuarioRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.List;
 
-
-@Service
-public class UsuarioService {
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public void registrarUsuario(Usuario usuario) {
-        // encriptar contraseña
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        usuarioRepository.save(usuario);
-    }
-
-    public Usuario findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
-    }
-
-    
+public interface UsuarioService {
+    Usuario login(String email, String password);
+    void registrarUsuario(Usuario usuario);
+    Usuario findByEmail(String email);
+    List<Usuario> getAllUsuarios();
+    Usuario obtenerPorIdDTO(Long id);
+    UsuarioDTO crear(CreateUsuarioRequest createRequest);
+    UsuarioDTO actualizar(Long id, UpdateUsuarioRequest updateRequest);
+    void eliminar(Long id);
+    UsuarioDTO toggleEstado(Long id);
 }

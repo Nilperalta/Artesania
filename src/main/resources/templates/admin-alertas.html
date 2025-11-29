@@ -5,28 +5,427 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Alertas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-        <link rel="stylesheet" th:href="@{/style.css}">
-    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+    <link rel="icon" href="images/Logo-artesania.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+        :root{
+            --lineaMarron:rgba(146, 89, 48, 1);
+            --EncabezadoHome:rgba(120, 198, 189, 1);
+            --black:#555;
+            --light-color:#777;
+            --bg:#fceae9;
+            --border:.1rem solid rgba(0,0,0,.1);
+            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+            --encabezados:rgba(1, 1, 1, 1);
+            --box-color: rgba(236, 236, 236, 1);
+            --boton:#c06722;
+            --pendiente: #f5c6cb;
+            --proceso: #c06722;
+            --resuelto: #5cb85c;
+        }
+
+        *{
+            font-family: "Nunito", sans-serif;
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none; border: none;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all .3s ease-out;
+        }
+
+        html{
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 9rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .layout{
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:  "header"
+                                  "main"
+                                  "footer";
+            min-height: 100vh;
+        }
+
+        .layout .header{
+            background: #fff;
+            grid-area: header;
+        }
+
+        .layout .contenedor{
+            background: #fff;
+            grid-area: main;
+        }
+
+        .layout .footer{
+            background: #ffdcc2;
+            grid-area: footer;
+        }
+
+        /* Header */
+        .header{
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 9%;
+        }
+
+        .header .logo{
+            height: 7rem;
+        }
+
+        .header .navbar{
+            display: flex;
+            align-items: center;
+        }
+
+        .header .navbar a{
+            font-size: 1.7rem;
+            color: var(--light-color);
+            margin-left: 2rem;
+        }
+
+        .header .navbar a:hover{
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn{
+            cursor: pointer;
+            font-size: 2.5rem;
+            padding: 1rem;
+            border-radius: .5rem;
+            color: var(--main-color);
+            background: #ffdcc2;
+            display: none;
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn:hover{
+            color: #fff;
+            background: var(--EncabezadoHome);
+        }
+
+        /* Contenedor */
+        .contenedor{
+            background: #fff;
+        }
+
+        /* Alertas */
+        .alertas {
+            margin-top: 8rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .alertas .heading-alertas {
+            font-size: 3rem;
+            color: var(--EncabezadoHome);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* Filtros y búsqueda */
+        .filtros-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 0.8rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 1rem 1rem 1rem 4rem;
+            font-size: 1.4rem;
+            border: var(--border);
+            border-radius: 0.5rem;
+            width: 25rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-color);
+            font-size: 1.6rem;
+        }
+
+        .filtro-select {
+            padding: 1rem;
+            font-size: 1.4rem;
+            border: var(--border);
+            border-radius: 0.5rem;
+            color: var(--black);
+            cursor: pointer;
+        }
+
+        /* Tabla de alertas */
+        .tabla-alertas {
+            background: #fff;
+            border-radius: 0.8rem;
+            box-shadow: var(--box-shadow);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+        }
+
+        thead th {
+            padding: 1.5rem;
+            text-align: left;
+            font-size: 1.4rem;
+            color: var(--black);
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        tbody td {
+            padding: 1.5rem;
+            font-size: 1.4rem;
+            color: var(--black);
+        }
+
+        /* Estados de alerta */
+        .estado-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 10rem;
+        }
+
+        .estado-pendiente {
+            background: var(--pendiente);
+            color: #721c24;
+        }
+
+        .estado-proceso {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .estado-resuelto {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Paginación */
+        .paginacion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .paginacion button {
+            padding: 0.8rem 1.2rem;
+            font-size: 1.4rem;
+            border: var(--border);
+            border-radius: 0.5rem;
+            background: #fff;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .paginacion button:hover:not(:disabled) {
+            background: var(--EncabezadoHome);
+            color: #fff;
+            border-color: var(--EncabezadoHome);
+        }
+
+        .paginacion button.active {
+            background: var(--lineaMarron);
+            color: #fff;
+            border-color: var(--lineaMarron);
+        }
+
+        .paginacion button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        .footer .box-container{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: var(--box-shadow);
+        }
+
+        .footer .box-container .box{
+            display: flex;
+            flex-direction: column;
+            margin: 2rem;
+            padding: 2rem;
+        }
+
+        .footer .box-container .box img{
+            height: 9rem;
+        }
+
+        .footer .box-container .box h3{
+            font-size: 1.5rem;
+        }
+
+        .footer .box-container .box a{
+            font-size: 1.2rem;
+            color: var(--light-color);
+        }
+
+        .footer .box-container .box a i{
+            color: var(--lineaMarron);
+            margin-right: 0.5rem;
+        }
+
+        .footer .box-container .box a:hover{
+            color: var(--lineaMarron);
+        }
+
+        .footer .credit{
+            background: var(--lineaMarron);
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .footer .credit span{
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Media queries */
+        @media(max-width: 991px){
+            html{
+                font-size: 55%;
+            }
+        }
+
+        @media(max-width: 768px){
+            .filtros-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .tabla-alertas {
+                overflow-x: scroll;
+            }
+
+            table {
+                min-width: 900px;
+            }
+
+            .footer .box-container{
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #menu-btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 2rem;
+            }
+
+            .header .navbar{
+                position: absolute;
+                top:115%; right: 6rem;
+                width: 30rem;
+                opacity:0;
+                display: block;
+                font-size: 2rem;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem; 
+                background: #fff; 
+                transform: scale(0);
+            }
+
+            .header .navbar.active{
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            .header .navbar a{
+                font-size: 2rem;
+                display: block;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem;    
+            }
+        }
+
+        @media(max-width: 450px){
+            html{
+                font-size: 50%;
+            }
+
+            .alertas .heading-alertas {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <div class="layout">
 
-        <!-- Barra de administrador -->
-        <div class="admin-bar">
-            <p>Administrador</p>
-        </div>
-
         <!-- Header -->
         <header class="header">
-            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
             
             <nav class="navbar">
-                <a th:href="@{/}">HOME</a>
-                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="index.html">HOME</a>
+                <a href="index.html#productos">PRODUCTOS</a>
                 <a href="#">VENTAS</a>
-                <a th:href="@{/login}">SALIR</a>
+                <a href="login.html">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -35,11 +434,100 @@
         <!-- Contenido principal -->
         <main class="contenedor">
             
-            <section class="panel-alertas">
-                <h1 class="heading-panel">ALERTAS DEL SISTEMA</h1>
-                
-                <div id="alertas-container">
-                    <p style="text-align: center; font-size: 1.6rem; color: #999;">Cargando alertas...</p>
+            <section class="alertas">
+                <h1 class="heading-alertas">Alertas</h1>
+                <div id="alertas-container"></div>
+                <!-- Filtros y búsqueda -->
+                <div class="filtros-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar" id="searchInput">
+                    </div>
+
+                    <select class="filtro-select" id="filtroEstado">
+                        <option value="todos">Filtrar por:</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="proceso">En Proceso</option>
+                        <option value="resuelto">Resuelto</option>
+                    </select>
+                </div>
+
+                <!-- Tabla de alertas -->
+                <div class="tabla-alertas">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Prioridad</th>
+                                <th>Fecha</th>
+                                <th>Acción</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaAlertas">
+                            <tr>
+                                <td>Seguridad</td>
+                                <td>Intento de acceso sospechoso</td>
+                                <td>Alta</td>
+                                <td>14/09/2025</td>
+                                <td>Perú</td>
+                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Pago</td>
+                                <td>Fallo en pasarela de VISA</td>
+                                <td>Alta</td>
+                                <td>13/09/2025</td>
+                                <td>México</td>
+                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
+                            </tr>
+                            <tr>
+                                <td>Usuario</td>
+                                <td>Reporte de vendedor por fraude</td>
+                                <td>Media</td>
+                                <td>12/09/2025</td>
+                                <td>Colombia</td>
+                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mantenimiento</td>
+                                <td>Actualización de servidores</td>
+                                <td>Baja</td>
+                                <td>10/09/2025</td>
+                                <td>España</td>
+                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
+                            </tr>
+                            <tr>
+                                <td>Sistema</td>
+                                <td>Error en módulo de inventario</td>
+                                <td>Alta</td>
+                                <td>09/09/2025</td>
+                                <td>Argentina</td>
+                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
+                            </tr>
+                            <tr>
+                                <td>Seguridad</td>
+                                <td>Actualización de certificado SSL</td>
+                                <td>Media</td>
+                                <td>08/09/2025</td>
+                                <td>Chile</td>
+                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                <div class="paginacion">
+                    <button id="btnPrev" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>...</button>
+                    <button>40</button>
+                    <button id="btnNext"><i class="fas fa-chevron-right"></i></button>
                 </div>
 
             </section>
@@ -50,7 +538,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img th:src="@{/images/Logo-artesania.png}" alt="">
+                    <img src="images/Logo-artesania.png" alt="">
                 </div>
 
                 <div class="box">
@@ -61,9 +549,9 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
-                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
-                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
                 </div>
             </div>
 
@@ -88,49 +576,78 @@
             }
         }
 
-        // Cargar alertas desde backend
+        // Búsqueda y filtrado
+        const searchInput = document.getElementById('searchInput');
+        const tablaAlertas = document.getElementById('tablaAlertas');
+        const filtroEstado = document.getElementById('filtroEstado');
+
+        searchInput.addEventListener('input', filtrarTabla);
+        filtroEstado.addEventListener('change', filtrarTabla);
+
+        function filtrarTabla() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const estadoFiltro = filtroEstado.value.toLowerCase();
+            const filas = tablaAlertas.getElementsByTagName('tr');
+
+            for (let i = 0; i < filas.length; i++) {
+                const fila = filas[i];
+                const tipo = fila.cells[0].textContent.toLowerCase();
+                const descripcion = fila.cells[1].textContent.toLowerCase();
+                const estadoBadge = fila.querySelector('.estado-badge');
+                let estado = '';
+                
+                if (estadoBadge) {
+                    if (estadoBadge.classList.contains('estado-pendiente')) estado = 'pendiente';
+                    else if (estadoBadge.classList.contains('estado-proceso')) estado = 'proceso';
+                    else if (estadoBadge.classList.contains('estado-resuelto')) estado = 'resuelto';
+                }
+
+                const coincideBusqueda = tipo.includes(searchTerm) || descripcion.includes(searchTerm);
+                const coincideEstado = estadoFiltro === 'todos' || estado === estadoFiltro;
+
+                if (coincideBusqueda && coincideEstado) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            }
+        }
+
+        // Paginación
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const botonesPag = document.querySelectorAll('.paginacion button:not(#btnPrev):not(#btnNext)');
+
+        botonesPag.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                if (!btn.textContent.includes('...')) {
+                    botonesPag.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    <script>
         const apiAlerts = '/admin/api/alerts';
 
         fetch(apiAlerts)
             .then(r => r.json())
             .then(alertas => {
                 const container = document.getElementById('alertas-container');
-                
-                if(alertas.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; font-size: 1.6rem; color: #999;">No hay alertas disponibles</p>';
-                    return;
-                }
-
-                container.innerHTML = alertas.map(a => {
-                    const tipoColor = a.tipo === 'DANGER' ? '#d9534f' : 
-                                     a.tipo === 'WARNING' ? '#f0ad4e' : '#5bc0de';
-                    const tipoTexto = a.tipo === 'DANGER' ? 'Crítico' : 
-                                     a.tipo === 'WARNING' ? 'Advertencia' : 'Información';
-                    
-                    return `
-                        <div class="alert ${a.tipo.toLowerCase()}" style="padding:2rem; margin:2rem 0; border-left:5px solid ${tipoColor}; background: ${a.tipo === 'DANGER' ? '#f8d7da' : a.tipo === 'WARNING' ? '#fff3cd' : '#d1ecf1'}; border-radius: 0.5rem; box-shadow: var(--box-shadow);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong style="font-size: 1.6rem; color: ${tipoColor};">${tipoTexto}</strong>
-                                    <p style="font-size: 1.4rem; margin: 0.5rem 0; color: #333;">${a.mensaje}</p>
-                                    <small style="font-size: 1.2rem; color: #777;">${new Date(a.fecha).toLocaleString('es-PE')}</small>
-                                </div>
-                                ${!a.leida ? `<button onclick="marcarLeida(${a.id})" style="padding: 0.8rem 1.5rem; background: var(--boton); color: #fff; border-radius: 0.4rem; cursor: pointer; font-size: 1.3rem;">Marcar leída</button>` : '<span style="color: #5cb85c; font-size: 1.3rem; font-weight: bold;">✓ Leída</span>'}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('alertas-container').innerHTML = '<p style="text-align: center; font-size: 1.6rem; color: #d9534f;">Error al cargar alertas</p>';
+                container.innerHTML = alertas.map(a => `
+                    <div class="alert ${a.tipo.toLowerCase()}" style="padding:1.5rem; margin:1rem 0; border-left:4px solid ${a.tipo === 'DANGER' ? 'red' : a.tipo === 'WARNING' ? 'orange' : 'blue'}">
+                        <strong>${a.tipo}</strong>: ${a.mensaje}
+                        <button onclick="marcarLeida(${a.id})" style="float:right">Marcar leída</button>
+                    </div>
+                `).join('');
             });
 
         function marcarLeida(id) {
             fetch(`${apiAlerts}/${id}/read`, {method: 'PATCH'})
-                .then(() => location.reload())
-                .catch(error => console.error('Error:', error));
+                .then(() => location.reload());
         }
-    </script>   
+    </script>
+
 </body>
 </html>
