@@ -1,8 +1,11 @@
 package com.certus.artesanias.models;
+
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
@@ -63,4 +66,16 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    @Column(name = "activo")
+    private Boolean activo = true;
+
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
+
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
+    public LocalDateTime getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 }

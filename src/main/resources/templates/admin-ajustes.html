@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Ajustes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+    <style>
+        .cards-ajustes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+        .card-ajuste {
+            background: #fff;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .card-ajuste:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0,0,0,.15);
+            border-color: var(--EncabezadoHome);
+        }
+        .card-ajuste .icono {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--boton);
+        }
+        .card-ajuste h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--encabezados);
+        }
+        .card-ajuste p {
+            font-size: 1.4rem;
+            color: #777;
+            margin-bottom: 1.5rem;
+        }
+        .card-ajuste .btn-config {
+            background: var(--boton);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1.4rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .card-ajuste .btn-config:hover {
+            background: var(--lineaMarron);
+        }
+        
+        /* Modal */
+        .modal-ajustes {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        .modal-contenido-ajustes {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.3);
+            margin: 2rem auto;
+        }
+        .modal-header-ajustes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid var(--EncabezadoHome);
+            padding-bottom: 1.5rem;
+        }
+        .modal-header-ajustes h2 {
+            font-size: 2.8rem;
+            color: var(--EncabezadoHome);
+            margin: 0;
+        }
+        .cerrar-modal {
+            font-size: 3.5rem;
+            cursor: pointer;
+            color: #aaa;
+            line-height: 1;
+        }
+        .cerrar-modal:hover { color: #000; }
+        
+        .form-group-ajuste {
+            margin-bottom: 2rem;
+        }
+        .form-group-ajuste label {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group-ajuste input,
+        .form-group-ajuste select {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 0.5rem;
+            transition: 0.3s;
+        }
+        .form-group-ajuste input:focus,
+        .form-group-ajuste select:focus {
+            border-color: var(--EncabezadoHome);
+            outline: none;
+        }
+        .form-group-ajuste .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .form-group-ajuste input[type="checkbox"] {
+            width: auto;
+            transform: scale(1.5);
+        }
+        
+        .btn-guardar-ajuste {
+            background: var(--EncabezadoHome);
+            color: #fff;
+            padding: 1.2rem 3rem;
+            font-size: 1.6rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-guardar-ajuste:hover {
+            background: var(--boton);
+        }
+        
+        .ayuda-texto {
+            font-size: 1.2rem;
+            color: #999;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+        <div class="admin-bar"><p>Administrador</p></div>
+
+        <header class="header">
+            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            <nav class="navbar">
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="#">VENTAS</a>
+                <a th:href="@{/login}">SALIR</a>
+            </nav>
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </header>
+
+        <main class="contenedor">
+            <section class="panel-ajustes">
+                <h1 class="heading-panel">CONFIGURACIÓN DEL SISTEMA</h1>
+                
+                <div class="cards-ajustes">
+                    
+                    <!-- Parámetros Generales -->
+                    <div class="card-ajuste" onclick="abrirModal('general')">
+                        <i class="fas fa-cog icono"></i>
+                        <h3>Parámetros Generales</h3>
+                        <p>Nombre del sitio, email de contacto y configuración básica</p>
+                        <button class="btn-config">Configurar</button>
+                    </div>
+
+                    <!-- Usuarios y Roles -->
+                    <div class="card-ajuste" onclick="abrirModal('roles')">
+                        <i class="fas fa-users-cog icono"></i>
+                        <h3>Usuarios y Roles</h3>
+                        <p>Gestiona permisos y define accesos por rol</p>
+                        <button class="btn-config">Administrar</button>
+                    </div>
+
+                    <!-- Pagos y Comisiones -->
+                    <div class="card-ajuste" onclick="abrirModal('payments')">
+                        <i class="fas fa-credit-card icono"></i>
+                        <h3>Pagos y Comisiones</h3>
+                        <p>Configura métodos de pago y porcentajes de comisión</p>
+                        <button class="btn-config">Ver más</button>
+                    </div>
+
+                    <!-- Seguridad -->
+                    <div class="card-ajuste" onclick="abrirModal('security')">
+                        <i class="fas fa-shield-alt icono"></i>
+                        <h3>Seguridad</h3>
+                        <p>Políticas de contraseña, sesiones y autenticación</p>
+                        <button class="btn-config">Revisar</button>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="box-container">
+                <div class="box"><img th:src="@{/images/Logo-artesania.png}" alt=""></div>
+                <div class="box">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                </div>
+                <div class="box">
+                    <h3>Servicios</h3>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                </div>
+            </div>
+            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+        </footer>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modalAjustes" class="modal-ajustes">
+        <div class="modal-contenido-ajustes">
+            <div class="modal-header-ajustes">
+                <h2 id="modalTitulo"></h2>
+                <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
+            </div>
+            <div id="modalCuerpo"></div>
+        </div>
+    </div>
+
+    <script>
+        const menu = document.querySelector('#menu-btn');
+        const navbar = document.querySelector('.navbar');
+        if(menu && navbar) {
+            menu.onclick = () => { menu.classList.toggle('fa-times'); navbar.classList.toggle('active'); };
+            window.onscroll = () => { menu.classList.remove('fa-times'); navbar.classList.remove('active'); };
+        }
+
+        const API_SETTINGS = '/admin/api/settings';
+        let configuraciones = [];
+
+        // Cargar configuraciones
+        fetch(API_SETTINGS)
+            .then(r => r.json())
+            .then(data => {
+                configuraciones = data;
+                console.log('Configuraciones cargadas:', data);
+            })
+            .catch(err => console.error('Error cargando configuraciones:', err));
+
+        function abrirModal(tipo) {
+            const modal = document.getElementById('modalAjustes');
+            const titulo = document.getElementById('modalTitulo');
+            const cuerpo = document.getElementById('modalCuerpo');
+            
+            let html = '';
+            
+            if(tipo === 'general') {
+                titulo.textContent = 'Parámetros Generales';
+                const siteName = getSetting('general', 'site_name');
+                const contactEmail = getSetting('general', 'contact_email');
+                
+                html = `
+                    <form onsubmit="guardarGeneral(event)">
+                        <div class="form-group-ajuste">
+                            <label>Nombre del Sitio</label>
+                            <input type="text" id="site_name" value="${siteName}" required>
+                            <p class="ayuda-texto">Nombre que aparecerá en el encabezado del sitio</p>
+                        </div>
+                        <div class="form-group-ajuste">
+                            <label>Email de Contacto</label>
+                            <input type="email" id="contact_email" value="${contactEmail}" required>
+                            <p class="ayuda-texto">Email principal para notificaciones y contacto</p>
+                        </div>
+                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
+                    </form>
+                `;
+            }
+            
+            else if(tipo === 'payments') {
+                titulo.textContent = 'Pagos y Comisiones';
+                const commission = getSetting('payments', 'commission_rate');
+                const paypal = getSetting('payments', 'payment_method_paypal') === 'true';
+                const stripe = getSetting('payments', 'payment_method_stripe') === 'true';
+                const mercadopago = getSetting('payments', 'payment_method_mercadopago') === 'true';
+                
+                html = `
+                    <form onsubmit="guardarPayments(event)">
+                        <div class="form-group-ajuste">
+                            <label>Comisión por Venta (%)</label>
+                            <input type="number" id="commission_rate" value="${commission}" min="0" max="100" required>
+                            <p class="ayuda-texto">Porcentaje que la plataforma cobra por cada venta</p>
+                        </div>
+                        <div class="form-group-ajuste">
+                            <label>Métodos de Pago Activos</label>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="paypal" ${paypal ? 'checked' : ''}>
+                                <label for="paypal" style="margin:0;">PayPal</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="stripe" ${stripe ? 'checked' : ''}>
+                                <label for="stripe" style="margin:0;">Stripe</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="mercadopago" ${mercadopago ? 'checked' : ''}>
+                                <label for="mercadopago" style="margin:0;">Mercado Pago</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
+                    </form>
+                `;
+            }
+            
+            else if(tipo === 'security') {
+                titulo.textContent = 'Configuración de Seguridad';
+                const minLength = getSetting('security', 'password_min_length');
+                const sessionTimeout = getSetting('security', 'session_timeout_minutes');
+                const twoFactor = getSetting('security', 'two_factor_enabled') === 'true';
+                const requireUpper = getSetting('security', 'password_require_uppercase') === 'true';
+                const requireNumbers = getSetting('security', 'password_require_numbers') === 'true';
+                
+                html = `
+                    <form onsubmit="guardarSecurity(event)">
+                        <div class="form-group-ajuste">
+                            <label>Longitud Mínima de Contraseña</label>
+                            <input type="number" id="password_min_length" value="${minLength}" min="6" max="20" required>
+                        </div>
+                        <div class="form-group-ajuste">
+                            <label>Tiempo de Sesión (minutos)</label>
+                            <input type="number" id="session_timeout" value="${sessionTimeout}" min="5" max="120" required>
+                        </div>
+                        <div class="form-group-ajuste">
+                            <label>Políticas de Contraseña</label>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="require_uppercase" ${requireUpper ? 'checked' : ''}>
+                                <label for="require_uppercase" style="margin:0;">Requiere mayúsculas</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="require_numbers" ${requireNumbers ? 'checked' : ''}>
+                                <label for="require_numbers" style="margin:0;">Requiere números</label>
+                            </div>
+                        </div>
+                        <div class="form-group-ajuste">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="two_factor" ${twoFactor ? 'checked' : ''}>
+                                <label for="two_factor" style="margin:0;">Activar autenticación de dos factores (2FA)</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
+                    </form>
+                `;
+            }
+            
+            else if(tipo === 'roles') {
+                titulo.textContent = 'Gestión de Roles y Permisos';
+                html = `
+                    <div style="padding: 2rem; text-align: center;">
+                        <i class="fas fa-tools" style="font-size: 5rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.6rem; color: #777;">Esta funcionalidad estará disponible próximamente.</p>
+                        <p style="font-size: 1.4rem; color: #999; margin-top: 1rem;">Permitirá crear roles personalizados y asignar permisos específicos.</p>
+                    </div>
+                `;
+            }
+            
+            cuerpo.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalAjustes').style.display = 'none';
+        }
+
+        function getSetting(categoria, key) {
+            const setting = configuraciones.find(s => s.categoria === categoria && s.settingKey === key);
+            return setting ? setting.settingValue : '';
+        }
+
+        async function guardarGeneral(e) {
+            e.preventDefault();
+            await actualizarSetting('general', 'site_name', document.getElementById('site_name').value);
+            await actualizarSetting('general', 'contact_email', document.getElementById('contact_email').value);
+            alert('✅ Configuración general guardada');
+            cerrarModal();
+            location.reload();
+        }
+
+        async function guardarPayments(e) {
+            e.preventDefault();
+            await actualizarSetting('payments', 'commission_rate', document.getElementById('commission_rate').value);
+            await actualizarSetting('payments', 'payment_method_paypal', document.getElementById('paypal').checked.toString());
+            await actualizarSetting('payments', 'payment_method_stripe', document.getElementById('stripe').checked.toString());
+            await actualizarSetting('payments', 'payment_method_mercadopago', document.getElementById('mercadopago').checked.toString());
+            alert('✅ Configuración de pagos guardada');
+            cerrarModal();
+            location.reload();
+        }
+
+        async function guardarSecurity(e) {
+            e.preventDefault();
+            await actualizarSetting('security', 'password_min_length', document.getElementById('password_min_length').value);
+            await actualizarSetting('security', 'session_timeout_minutes', document.getElementById('session_timeout').value);
+            await actualizarSetting('security', 'two_factor_enabled', document.getElementById('two_factor').checked.toString());
+            await actualizarSetting('security', 'password_require_uppercase', document.getElementById('require_uppercase').checked.toString());
+            await actualizarSetting('security', 'password_require_numbers', document.getElementById('require_numbers').checked.toString());
+            alert('✅ Configuración de seguridad guardada');
+            cerrarModal();
+            location.reload();
+        }
+
+        async function actualizarSetting(categoria, key, value) {
+            const setting = configuraciones.find(s => s.categoria === categoria && s.settingKey === key);
+            if(!setting) return;
+            
+            try {
+                const res = await fetch(`${API_SETTINGS}/${setting.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ settingValue: value })
+                });
+                if(!res.ok) throw new Error('Error al guardar');
+            } catch(err) {
+                console.error('Error:', err);
+                alert('❌ Error al guardar: ' + err.message);
+            }
+        }
+
+        window.onclick = (e) => {
+            if(e.target.id === 'modalAjustes') cerrarModal();
+        };
+    </script>
+</body>
+</html>
