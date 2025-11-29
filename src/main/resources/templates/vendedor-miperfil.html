@@ -38,42 +38,45 @@
         
         <!-- Imagen del perfil -->
         <div class="perfil-foto">
-          <img src="https://cdn-icons-png.flaticon.com/512/12225/12225881.png" alt="Foto del vendedor">
+          <img th:src="${vendedor.foto}" alt="Foto">
           <button class="btn subir-foto"><i class="fas fa-camera"></i> Cambiar foto</button>
         </div>
 
         <!-- Datos personales -->
         <div class="perfil-datos">
-          <form action="#" class="form-perfil">
+          <form th:action="@{/vendedor/perfil/guardar}" method="post" 
+      th:object="${vendedor}" class="form-perfil">
 
             <div class="campo">
               <label>Nombre:</label>
-              <input type="text" value="Juan Castillo" readonly>
+              <input type="text" name= "nombre"th:field="*{nombre}" readonly>
             </div>
 
             <div class="campo">
               <label>Correo electrónico:</label>
-              <input type="email" value="juanc@gmail.com" readonly>
+              <input type="email" name="correo" th:field="*{correo}" readonly>
             </div>
 
             <div class="campo">
               <label>Teléfono:</label>
-              <input type="text" value="987654321" readonly>
+              <input type="text" name="telefono" th:field="*{telefono}" readonly>
             </div>
 
             <div class="campo">
               <label>Dirección:</label>
-              <input type="text" value="Av. Los Artesanos 123, Arequipa" readonly>
+              <input type="text" name="direccion" th:field="*{direccion}" readonly>
             </div>
 
             <div class="campo">
               <label>Descripción:</label>
-              <textarea readonly>Vendedor de artesanías hechas a mano, especializado en tejidos peruanos.</textarea>
+              <textarea readonly th:field="*{descripcion}"></textarea>
             </div>
 
             <div class="botones">
               <button type="button" id="btn-editar" class="btn editar"><i class="fas fa-edit"></i> Editar</button>
-              <button type="submit" id="btn-guardar" class="btn guardar" disabled><i class="fas fa-save"></i> Guardar</button>
+              <button type="submit" id="btn-guardar" class="btn guardar" disabled>
+                  <i class="fas fa-save"></i> Guardar
+</button>
             </div>
           </form>
         </div>
@@ -119,13 +122,13 @@
         btnGuardar.classList.add('enabled');
         });
 
-        btnGuardar.addEventListener('click', (e) => {
-        e.preventDefault();
-        inputs.forEach(i => i.setAttribute('readonly', true));
-        btnGuardar.setAttribute('disabled', true);
-        btnGuardar.classList.remove('enabled');
-        alert("Cambios guardados correctamente ✅");
-        });
+        btnGuardar.addEventListener('click', () => {
+    // quitar preventDefault para permitir SUBMIT
+    inputs.forEach(i => i.setAttribute('readonly', true));
+    btnGuardar.setAttribute('disabled', true);
+    btnGuardar.classList.remove('enabled');
+});
+
     </script>
 </body>
 </html>

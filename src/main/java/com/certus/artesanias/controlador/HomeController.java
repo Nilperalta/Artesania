@@ -3,8 +3,9 @@ package com.certus.artesanias.controlador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import com.certus.artesanias.models.Usuario;
 import com.certus.artesanias.service.UsuarioService;
 
@@ -22,22 +23,6 @@ public class HomeController {
     @GetMapping("/login")
     public String mostrarLogin() {
         return "login"; 
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
-        Usuario usuario = usuarioService.login(email, password);
-
-        if (usuario != null) {
-            switch (usuario.getRol()) {
-                case "ADMIN": return "redirect:/admin";
-                case "COMPRADOR": return "redirect:/comprador";
-                case "VENDEDOR": return "redirect:/vendedor";
-            }
-        }
-
-        model.addAttribute("error", "Credenciales incorrectas");
-        return "login";
     }
 
     @GetMapping("/seleccion-registro")

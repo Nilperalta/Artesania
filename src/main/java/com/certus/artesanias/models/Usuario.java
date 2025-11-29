@@ -13,6 +13,7 @@ public class Usuario {
     private Long id;
 
     private String nombre;
+    @Column(unique = true)
     private String email;
     private String password;
     private String rol; // ADMIN, COMPRADOR o VENDEDOR
@@ -67,15 +68,14 @@ public class Usuario {
     }
 
     @Column(name = "activo")
-private Boolean activo = true;
+    private Boolean activo = true;
 
-public Boolean getActivo() { return activo; }
-public void setActivo(Boolean activo) { this.activo = activo; }
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
 
-@Column(name = "fecha_registro")
-private LocalDateTime fechaRegistro;
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
 
-public LocalDateTime getFechaRegistro() { return fechaRegistro; }
-public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
-
+    public LocalDateTime getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 }
