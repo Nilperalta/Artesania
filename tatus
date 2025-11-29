@@ -1,0 +1,151 @@
+[33mcommit 2173b56818e47efb42b3b2e76e4e9806545ef3a2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Nilperalta <nildalisset.ll@gmail.com>
+Date:   Thu Nov 27 00:47:28 2025 -0500
+
+    Registro y login por roles funcionando: comprador y vendedor
+
+[33mcommit b5900d2ba929808cb3a2e2c53bd65846dfbd49e1[m
+Author: Nilperalta <nildalisset.ll@gmail.com>
+Date:   Wed Nov 26 22:27:42 2025 -0500
+
+    primera parte del hasheado
+
+[33mcommit 90d3812375b777ffbbf3d676f916846388247fa7[m
+Author: marcos <sonmarcosrivaldo@gmail.com>
+Date:   Wed Nov 26 18:47:49 2025 -0500
+
+    confifuracion de aws
+
+[33mcommit 6cbefc1f7ef20167b018f9f7571226de467546ab[m
+Merge: bac715b 0fc3b1a
+Author: marcos <sonmarcosrivaldo@gmail.com>
+Date:   Wed Nov 26 17:18:13 2025 -0500
+
+    actulizador
+
+[33mcommit bac715bf7eb809d9f25221851953342487ce60a4[m
+Author: marcos <sonmarcosrivaldo@gmail.com>
+Date:   Sun Nov 9 18:37:22 2025 -0500
+
+    bakend
+
+[33mcommit 0fc3b1abd42fd944fc75fea47b8c14524478488a[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Sun Nov 9 18:02:27 2025 -0500
+
+    Mover carpetas y modificar rutas con thymeleaf
+
+[33mcommit ec69df8c8c6ca187dc9edd6a85b9ee596066d186[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Sun Nov 9 17:28:43 2025 -0500
+
+    Agregar rutas para las vistas de vendedor
+
+[33mcommit bbde983cae364a69904822eaeb2e96a07d90e8b8[m
+Merge: 9d596dc 87e4eed
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Fri Nov 7 20:45:43 2025 -0500
+
+    Resolver conflicto entre yamilet y dev
+
+[33mcommit 87e4eed9f2ce6b35fd86fe76fcba5a65206ac904[m[33m ([m[1;31morigin/yamilet[m[33m)[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Fri Nov 7 20:32:55 2025 -0500
+
+    corrección de la ventana mi perfil
+
+[33mcommit 2845914899d0a3cef124fdc9e579f04a7a824b56[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Fri Nov 7 20:31:05 2025 -0500
+
+    Corrigiendo errores
+
+[33mcommit 9d596dc03e589433c27d559fb3d798bd2385865f[m[33m ([m[1;31morigin/nilda-funcionalidadlogin[m[33m, [m[1;32mnilda-funcionalidadlogin[m[33m)[m
+Author: Nilperalta <nildalisset.ll@gmail.com>
+Date:   Thu Nov 6 21:41:33 2025 -0500
+
+    Validación de formularios sin HASH O JWT
+
+[33mcommit d43705e20a87fb9c1e815ee0b9586b70cece78fa[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Thu Oct 9 21:20:20 2025 -0500
+
+    Se implementó la funcionalidad de los botones
+
+[33mcommit aa203c02331bb2735fff2e015b392a46d3dc2699[m
+Author: Noelia Estefani Sabanay Ramos <129292742+noesaba61@users.noreply.github.com>
+Date:   Wed Oct 8 22:14:18 2025 -0500
+
+    Noelia spring (#5)
+    
+    * agrego estructura de spring boot
+    
+    * agrego controlador de home
+    
+    * agrego controller de dashboards
+    
+    * cambio redireccionar a home
+
+[33mcommit 92906d25b4c34efe6fd022f006fe4a024369af4e[m
+Author: Noelia Estefani Sabanay Ramos <129292742+noesaba61@users.noreply.github.com>
+Date:   Wed Oct 8 21:11:39 2025 -0500
+
+    agrego estructura de spring boot (#4)
+    
+    * agrego estructura de spring boot
+    
+    * agrego controlador de home
+
+[33mcommit d2d82378aa26c7c07a9e45731b472a526c5d8245[m
+Merge: 5651b73 59d085d
+Author: Noelia Estefani Sabanay Ramos <129292742+noesaba61@users.noreply.github.com>
+Date:   Wed Oct 8 20:17:43 2025 -0500
+
+    Merge pull request #3 from Nilperalta/jefferson
+    
+    jefferson
+
+[33mcommit 5651b73577c12f34f3458169a9e1c29a7f7474de[m
+Author: Noelia Estefani Sabanay Ramos <129292742+noesaba61@users.noreply.github.com>
+Date:   Wed Oct 8 20:15:50 2025 -0500
+
+    Cambios Marcos
+    
+    * subiendo un html nuevo
+    
+    * BORANDO HTML PROBANDO
+    
+    * di todo de mi
+    
+    * actu
+    
+    ---------
+    
+    Co-authored-by: marcos <sonmarcosrivaldo@gmail.com>
+
+[33mcommit fa066678a16d1510df74f31f8e97fb7c6d5a6cbd[m
+Merge: bd9ecd6 a833d76
+Author: Noelia Estefani Sabanay Ramos <129292742+noesaba61@users.noreply.github.com>
+Date:   Wed Oct 8 20:12:33 2025 -0500
+
+    Merge pull request #1 from Nilperalta/yamilet
+    
+    Rama Yamile
+
+[33mcommit 59d085db718aa55adadd7691ce899ad6f341ecf2[m[33m ([m[1;32mjefferson[m[33m)[m
+Author: JeffSamMP <70217679@certus.edu.pe>
+Date:   Sat Oct 4 22:11:47 2025 -0500
+
+    admin
+
+[33mcommit a833d768cfb6e70e19f822544267dbf5cbf422d8[m
+Author: usernamxxzz <yamiletayamamani92@gmail.com>
+Date:   Sat Oct 4 13:39:27 2025 -0500
+
+    Creación de las ventanas Mis Productos, Mi Perfil y Mis Ventas (Vendedor), complementado con CSS.
+
+[33mcommit bd9ecd6e6709daa00bea38b9a1ca23aef531804a[m
+Author: Nilperalta <nildalisset.ll@gmail.com>
+Date:   Mon Sep 22 20:39:33 2025 -0500
+
+    Primer commit: sitio de artesanía
