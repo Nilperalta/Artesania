@@ -33,7 +33,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // *** MUY IMPORTANTE ***
     // AQUÍ SPRING SECURITY LEE EL USUARIO DESDE LA BD
     @Bean
     public UserDetailsService userDetailsService() {
@@ -47,7 +46,7 @@ public class SecurityConfig {
             return org.springframework.security.core.userdetails.User
                     .withUsername(usuario.getEmail())
                     .password(usuario.getPassword())
-                    .roles(usuario.getRol().replace("ROLE_", ""))  // "ROLE_ADMIN" → "ADMIN"
+                    .roles(usuario.getRol().replace("ROLE_", "")) 
                     .build();
         };
     }
@@ -59,12 +58,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/", "/login", "/registro", "/login.js", "/style.css",
-                    "/SeleccionRegistro.html", "/seleccion-registro",  // ← agregar esta línea
+                    "/SeleccionRegistro.html", "/seleccion-registro",  
                     "/registroEmpresa.html", "/registroPersonal.html",
                     "/carrito.js", "/productos.js", "/registroEmpresa.js", "/registroPersonal.js",
                     "/script.js", "/maqueta.html",
-                    "/images/**", "/registro-empresa","/comprador","/productos",
-                    "/registro-personal"  // ← POST registro personal
+                    "/images/**", "/registro-empresa","/comprador","/productos","vendedor-miperfil.html",
+                    "/registro-personal"
                 ).permitAll()
 
 
@@ -78,7 +77,7 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/login")   // <- NECESARIO
+                .loginProcessingUrl("/login")  
                 .successHandler(successHandler)
                 .failureUrl("/login?error=true")
                 .permitAll()
