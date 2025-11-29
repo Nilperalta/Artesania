@@ -5,450 +5,563 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Ajustes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/style.css}">
-    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
+    <link rel="icon" href="images/Logo-artesania.png">
     <style>
-        .cards-ajustes {
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+        :root{
+            --lineaMarron:rgba(146, 89, 48, 1);
+            --EncabezadoHome:rgba(120, 198, 189, 1);
+            --black:#555;
+            --light-color:#777;
+            --bg:#fceae9;
+            --border:.1rem solid rgba(0,0,0,.1);
+            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+            --encabezados:rgba(1, 1, 1, 1);
+            --box-color: rgba(236, 236, 236, 1);
+            --boton:#c06722;
+        }
+
+        *{
+            font-family: "Nunito", sans-serif;
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            outline: none; border: none;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all .3s ease-out;
+        }
+
+        html{
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 9rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .layout{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin: 3rem 0;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:  "header"
+                                  "main"
+                                  "footer";
+            min-height: 100vh;
         }
-        .card-ajuste {
+
+        .layout .header{
             background: #fff;
-            padding: 3rem 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 2px solid transparent;
+            grid-area: header;
         }
-        .card-ajuste:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 1rem 2rem rgba(0,0,0,.15);
-            border-color: var(--EncabezadoHome);
+
+        .layout .contenedor{
+            background: #fff;
+            grid-area: main;
         }
-        .card-ajuste .icono {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            color: var(--boton);
+
+        .layout .footer{
+            background: #ffdcc2;
+            grid-area: footer;
         }
-        .card-ajuste h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--encabezados);
-        }
-        .card-ajuste p {
-            font-size: 1.4rem;
-            color: #777;
-            margin-bottom: 1.5rem;
-        }
-        .card-ajuste .btn-config {
-            background: var(--boton);
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-size: 1.4rem;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .card-ajuste .btn-config:hover {
-            background: var(--lineaMarron);
-        }
-        
-        /* Modal */
-        .modal-ajustes {
-            display: none;
+
+        /* Header */
+        .header{
             position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: var(--box-shadow);
+            display: flex;
             align-items: center;
-            overflow-y: auto;
+            justify-content: space-between;
+            padding: 0.5rem 9%;
         }
-        .modal-contenido-ajustes {
+
+        .header .logo{
+            height: 7rem;
+        }
+
+        .header .navbar{
+            display: flex;
+            align-items: center;
+        }
+
+        .header .navbar a{
+            font-size: 1.7rem;
+            color: var(--light-color);
+            margin-left: 2rem;
+        }
+
+        .header .navbar a:hover{
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn{
+            cursor: pointer;
+            font-size: 2.5rem;
+            padding: 1rem;
+            border-radius: .5rem;
+            color: var(--main-color);
+            background: #ffdcc2;
+            display: none;
+            color: var(--lineaMarron);
+        }
+
+        #menu-btn:hover{
+            color: #fff;
+            background: var(--EncabezadoHome);
+        }
+
+        /* Contenedor */
+        .contenedor{
+            background: #fff;
+        }
+
+        /* Panel de Control */
+        .panel-control {
+            margin-top: 8rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .panel-control .heading-panel {
+            font-size: 3rem;
+            color: var(--EncabezadoHome);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        /* Grid de tarjetas */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .card-panel {
             background: #fff;
             padding: 3rem;
-            border-radius: 1rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 1rem 3rem rgba(0,0,0,.3);
-            margin: 2rem auto;
+            border-radius: 0.8rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
         }
-        .modal-header-ajustes {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 2px solid var(--EncabezadoHome);
-            padding-bottom: 1.5rem;
+
+        .card-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
         }
-        .modal-header-ajustes h2 {
-            font-size: 2.8rem;
-            color: var(--EncabezadoHome);
-            margin: 0;
+
+        .card-panel h3 {
+            font-size: 2rem;
+            color: var(--encabezados);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
-        .cerrar-modal {
-            font-size: 3.5rem;
-            cursor: pointer;
-            color: #aaa;
-            line-height: 1;
-        }
-        .cerrar-modal:hover { color: #000; }
-        
-        .form-group-ajuste {
+
+        .card-panel p {
+            font-size: 1.4rem;
+            color: var(--light-color);
+            line-height: 1.8;
             margin-bottom: 2rem;
         }
-        .form-group-ajuste label {
-            display: block;
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            color: #333;
-        }
-        .form-group-ajuste input,
-        .form-group-ajuste select {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.5rem;
-            border: 2px solid #ddd;
+
+        .card-panel .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.4rem;
             border-radius: 0.5rem;
-            transition: 0.3s;
-        }
-        .form-group-ajuste input:focus,
-        .form-group-ajuste select:focus {
-            border-color: var(--EncabezadoHome);
-            outline: none;
-        }
-        .form-group-ajuste .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .form-group-ajuste input[type="checkbox"] {
-            width: auto;
-            transform: scale(1.5);
-        }
-        
-        .btn-guardar-ajuste {
-            background: var(--EncabezadoHome);
-            color: #fff;
-            padding: 1.2rem 3rem;
-            font-size: 1.6rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            width: 100%;
-            border: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .btn-guardar-ajuste:hover {
             background: var(--boton);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        
-        .ayuda-texto {
+
+        .card-panel .btn:hover {
+            background: var(--lineaMarron);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer .box-container{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: var(--box-shadow);
+        }
+
+        .footer .box-container .box{
+            display: flex;
+            flex-direction: column;
+            margin: 2rem;
+            padding: 2rem;
+        }
+
+        .footer .box-container .box img{
+            height: 9rem;
+        }
+
+        .footer .box-container .box h3{
+            font-size: 1.5rem;
+        }
+
+        .footer .box-container .box a{
             font-size: 1.2rem;
-            color: #999;
-            margin-top: 0.5rem;
-            font-style: italic;
+            color: var(--light-color);
+        }
+
+        .footer .box-container .box a i{
+            color: var(--lineaMarron);
+            margin-right: 0.5rem;
+        }
+
+        .footer .box-container .box a:hover{
+            color: var(--lineaMarron);
+        }
+
+        .footer .credit{
+            background: var(--lineaMarron);
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .footer .credit span{
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Media queries */
+        @media(max-width: 991px){
+            html{
+                font-size: 55%;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+            }
+        }
+
+        @media(max-width: 768px){
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-control {
+                padding: 1rem;
+            }
+
+            .footer .box-container{
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #menu-btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 2rem;
+            }
+
+            .header .navbar{
+                position: absolute;
+                top:115%; right: 6rem;
+                width: 30rem;
+                opacity:0;
+                display: block;
+                font-size: 2rem;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem; 
+                background: #fff; 
+                transform: scale(0);
+            }
+
+            .header .navbar.active{
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            .header .navbar a{
+                font-size: 2rem;
+                display: block;
+                padding: 1rem;
+                margin: .5rem 1rem;
+                border-radius: .5rem;    
+            }
+        }
+
+        @media(max-width: 450px){
+            html{
+                font-size: 50%;
+            }
+
+            .panel-control .heading-panel {
+                font-size: 2.5rem;
+            }
+
+            .card-panel {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="layout">
-        <div class="admin-bar"><p>Administrador</p></div>
 
+        <!-- Header -->
         <header class="header">
-            <img th:src="@{/images/Logo-artesania.png}" alt="" class="logo">
+            <img src="images/Logo-artesania.png" alt="" class="logo">
+            
             <nav class="navbar">
-                <a th:href="@{/}">HOME</a>
-                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a href="index.html">HOME</a>
+                <a href="index.html#productos">PRODUCTOS</a>
                 <a href="#">VENTAS</a>
-                <a th:href="@{/login}">SALIR</a>
+                <a href="login.html">SALIR</a>
             </nav>
+
             <div id="menu-btn" class="fas fa-bars"></div>
         </header>
 
+        <!-- Contenido principal -->
         <main class="contenedor">
-            <section class="panel-ajustes">
-                <h1 class="heading-panel">CONFIGURACIÓN DEL SISTEMA</h1>
+            
+            <section class="panel-control">
+                <h1 class="heading-panel">TU PANEL DE CONTROL</h1>
                 
-                <div class="cards-ajustes">
-                    
-                    <!-- Parámetros Generales -->
-                    <div class="card-ajuste" onclick="abrirModal('general')">
-                        <i class="fas fa-cog icono"></i>
+                <!-- Grid de tarjetas -->
+                <div class="cards-grid">
+                    <div class="card-panel" onclick="abrirCategoria('general')">
                         <h3>Parámetros Generales</h3>
-                        <p>Nombre del sitio, email de contacto y configuración básica</p>
-                        <button class="btn-config">Configurar</button>
+                        <p>Configura Nombre, Logo, Idioma Y Moneda De La Plataforma.</p>
+                        <a class="btn">Configurar</a>
                     </div>
 
-                    <!-- Usuarios y Roles -->
-                    <div class="card-ajuste" onclick="abrirModal('roles')">
-                        <i class="fas fa-users-cog icono"></i>
-                        <h3>Usuarios y Roles</h3>
-                        <p>Gestiona permisos y define accesos por rol</p>
-                        <button class="btn-config">Administrar</button>
+                    <div class="card-panel" onclick="abrirCategoria('roles')">
+                        <h3>Usuarios Y Roles</h3>
+                        <p>Gestiona Permisos, Crea Nuevos Roles Y Define Accesos.</p>
+                        <a class="btn">Administrar</a>
                     </div>
 
-                    <!-- Pagos y Comisiones -->
-                    <div class="card-ajuste" onclick="abrirModal('payments')">
-                        <i class="fas fa-credit-card icono"></i>
-                        <h3>Pagos y Comisiones</h3>
-                        <p>Configura métodos de pago y porcentajes de comisión</p>
-                        <button class="btn-config">Ver más</button>
+                    <div class="card-panel" onclick="abrirCategoria('payments')">
+                        <h3>Pagos Y Comisiones</h3>
+                        <p>Ajusta Métodos De Pago Y Porcentajes De Comisión.</p>
+                        <a class="btn">Ver más</a>
                     </div>
 
-                    <!-- Seguridad -->
-                    <div class="card-ajuste" onclick="abrirModal('security')">
-                        <i class="fas fa-shield-alt icono"></i>
+                    <div class="card-panel" onclick="abrirCategoria('security')">
                         <h3>Seguridad</h3>
-                        <p>Políticas de contraseña, sesiones y autenticación</p>
-                        <button class="btn-config">Revisar</button>
+                        <p>Define Políticas De Contraseña, Sesiones Y 2FA.</p>
+                        <a class="btn">Revisar</a>
                     </div>
-
                 </div>
             </section>
+
         </main>
 
+        <!-- Footer -->
         <footer class="footer">
             <div class="box-container">
-                <div class="box"><img th:src="@{/images/Logo-artesania.png}" alt=""></div>
+                <div class="box">
+                    <img src="images/Logo-artesania.png" alt="">
+                </div>
+
                 <div class="box">
                     <h3>Síguenos</h3>
                     <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
                     <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
                 </div>
+
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
-                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
-                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
+                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
+                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
                 </div>
             </div>
+
             <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
         </footer>
     </div>
 
-    <!-- MODAL -->
-    <div id="modalAjustes" class="modal-ajustes">
-        <div class="modal-contenido-ajustes">
-            <div class="modal-header-ajustes">
-                <h2 id="modalTitulo"></h2>
-                <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
-            </div>
-            <div id="modalCuerpo"></div>
-        </div>
-    </div>
-
     <script>
-        const menu = document.querySelector('#menu-btn');
-        const navbar = document.querySelector('.navbar');
-        if(menu && navbar) {
-            menu.onclick = () => { menu.classList.toggle('fa-times'); navbar.classList.toggle('active'); };
-            window.onscroll = () => { menu.classList.remove('fa-times'); navbar.classList.remove('active'); };
+    // === MODAL Y CATEGORÍAS ===
+    let configuraciones = [];
+    let categoriaActual = '';
+
+    const API_BASE = 'http://localhost:8081/admin/api/settings'; // Puerto correcto
+
+    // CARGAR CONFIGURACIONES AL INICIAR
+    fetch(API_BASE)
+        .then(r => {
+            if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
+            return r.json();
+        })
+        .then(data => {
+            configuraciones = data;
+            console.log('Configuraciones cargadas:', data); // Para ver en consola
+        })
+        .catch(err => {
+            console.error('Error cargando ajustes:', err);
+            alert('No se pudieron cargar los ajustes. Revisa el backend.');
+        });
+
+    // ABRIR MODAL
+    function abrirCategoria(categoria) {
+        categoriaActual = categoria;
+        const modal = document.getElementById('modalAjustes');
+        const titulo = document.getElementById('modalTitulo');
+        const contenido = document.getElementById('modalContenido');
+
+        let tituloTexto = '';
+        let campos = '';
+
+        if (categoria === 'general') {
+            tituloTexto = 'Parámetros Generales';
+            const siteName = configuraciones.find(c => c.key === 'site_name');
+            const email = configuraciones.find(c => c.key === 'contact_email');
+            campos = `
+                    <label style="font-weight:600;">Nombre de la Plataforma</label>
+                    <input 
+                        type="text" 
+                        id="edit-site_name" 
+                        value="${siteName?.value || ''}" 
+                        data-original="${siteName?.value || ''}"
+                        style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
+                    >
+
+                    <label style="font-weight:600;">Email de Contacto</label>
+                    <input 
+                        type="email" 
+                        id="edit-contact_email" 
+                        value="${email?.value || ''}" 
+                        data-original="${email?.value || ''}"
+                        style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
+                    >
+                `;
         }
 
-        const API_SETTINGS = '/admin/api/settings';
-        let configuraciones = [];
-
-        // Cargar configuraciones
-        fetch(API_SETTINGS)
-            .then(r => r.json())
-            .then(data => {
-                configuraciones = data;
-                console.log('Configuraciones cargadas:', data);
-            })
-            .catch(err => console.error('Error cargando configuraciones:', err));
-
-        function abrirModal(tipo) {
-            const modal = document.getElementById('modalAjustes');
-            const titulo = document.getElementById('modalTitulo');
-            const cuerpo = document.getElementById('modalCuerpo');
-            
-            let html = '';
-            
-            if(tipo === 'general') {
-                titulo.textContent = 'Parámetros Generales';
-                const siteName = getSetting('general', 'site_name');
-                const contactEmail = getSetting('general', 'contact_email');
-                
-                html = `
-                    <form onsubmit="guardarGeneral(event)">
-                        <div class="form-group-ajuste">
-                            <label>Nombre del Sitio</label>
-                            <input type="text" id="site_name" value="${siteName}" required>
-                            <p class="ayuda-texto">Nombre que aparecerá en el encabezado del sitio</p>
-                        </div>
-                        <div class="form-group-ajuste">
-                            <label>Email de Contacto</label>
-                            <input type="email" id="contact_email" value="${contactEmail}" required>
-                            <p class="ayuda-texto">Email principal para notificaciones y contacto</p>
-                        </div>
-                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
-                    </form>
-                `;
-            }
-            
-            else if(tipo === 'payments') {
-                titulo.textContent = 'Pagos y Comisiones';
-                const commission = getSetting('payments', 'commission_rate');
-                const paypal = getSetting('payments', 'payment_method_paypal') === 'true';
-                const stripe = getSetting('payments', 'payment_method_stripe') === 'true';
-                const mercadopago = getSetting('payments', 'payment_method_mercadopago') === 'true';
-                
-                html = `
-                    <form onsubmit="guardarPayments(event)">
-                        <div class="form-group-ajuste">
-                            <label>Comisión por Venta (%)</label>
-                            <input type="number" id="commission_rate" value="${commission}" min="0" max="100" required>
-                            <p class="ayuda-texto">Porcentaje que la plataforma cobra por cada venta</p>
-                        </div>
-                        <div class="form-group-ajuste">
-                            <label>Métodos de Pago Activos</label>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="paypal" ${paypal ? 'checked' : ''}>
-                                <label for="paypal" style="margin:0;">PayPal</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="stripe" ${stripe ? 'checked' : ''}>
-                                <label for="stripe" style="margin:0;">Stripe</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="mercadopago" ${mercadopago ? 'checked' : ''}>
-                                <label for="mercadopago" style="margin:0;">Mercado Pago</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
-                    </form>
-                `;
-            }
-            
-            else if(tipo === 'security') {
-                titulo.textContent = 'Configuración de Seguridad';
-                const minLength = getSetting('security', 'password_min_length');
-                const sessionTimeout = getSetting('security', 'session_timeout_minutes');
-                const twoFactor = getSetting('security', 'two_factor_enabled') === 'true';
-                const requireUpper = getSetting('security', 'password_require_uppercase') === 'true';
-                const requireNumbers = getSetting('security', 'password_require_numbers') === 'true';
-                
-                html = `
-                    <form onsubmit="guardarSecurity(event)">
-                        <div class="form-group-ajuste">
-                            <label>Longitud Mínima de Contraseña</label>
-                            <input type="number" id="password_min_length" value="${minLength}" min="6" max="20" required>
-                        </div>
-                        <div class="form-group-ajuste">
-                            <label>Tiempo de Sesión (minutos)</label>
-                            <input type="number" id="session_timeout" value="${sessionTimeout}" min="5" max="120" required>
-                        </div>
-                        <div class="form-group-ajuste">
-                            <label>Políticas de Contraseña</label>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="require_uppercase" ${requireUpper ? 'checked' : ''}>
-                                <label for="require_uppercase" style="margin:0;">Requiere mayúsculas</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="require_numbers" ${requireNumbers ? 'checked' : ''}>
-                                <label for="require_numbers" style="margin:0;">Requiere números</label>
-                            </div>
-                        </div>
-                        <div class="form-group-ajuste">
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="two_factor" ${twoFactor ? 'checked' : ''}>
-                                <label for="two_factor" style="margin:0;">Activar autenticación de dos factores (2FA)</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-guardar-ajuste">Guardar Cambios</button>
-                    </form>
-                `;
-            }
-            
-            else if(tipo === 'roles') {
-                titulo.textContent = 'Gestión de Roles y Permisos';
-                html = `
-                    <div style="padding: 2rem; text-align: center;">
-                        <i class="fas fa-tools" style="font-size: 5rem; color: #ccc; margin-bottom: 1rem;"></i>
-                        <p style="font-size: 1.6rem; color: #777;">Esta funcionalidad estará disponible próximamente.</p>
-                        <p style="font-size: 1.4rem; color: #999; margin-top: 1rem;">Permitirá crear roles personalizados y asignar permisos específicos.</p>
-                    </div>
-                `;
-            }
-            
-            cuerpo.innerHTML = html;
-            modal.style.display = 'flex';
+       if (categoria === 'payments') {
+            tituloTexto = 'Pagos y Comisiones';
+            const comision = configuraciones.find(c => c.key === 'commission_rate');
+            campos = `
+                <label style="font-weight:600;">Porcentaje de Comisión (%)</label>
+                <input 
+                    type="number" 
+                    id="edit-commission_rate" 
+                    value="${comision?.value || ''}" 
+                    data-original="${comision?.value || ''}"
+                    min="0" max="100" 
+                    style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
+                >
+            `;
         }
 
-        function cerrarModal() {
-            document.getElementById('modalAjustes').style.display = 'none';
+        if (categoria === 'roles') {
+            tituloTexto = 'Usuarios y Roles';
+            campos = `<p style="color:#777; text-align:center; font-style:italic;">Próximamente: gestión de roles</p>`;
         }
 
-        function getSetting(categoria, key) {
-            const setting = configuraciones.find(s => s.categoria === categoria && s.settingKey === key);
-            return setting ? setting.settingValue : '';
+        if (categoria === 'security') {
+            tituloTexto = 'Seguridad';
+            campos = `<p style="color:#777; text-align:center; font-style:italic;">Próximamente: 2FA, políticas de contraseña</p>`;
         }
 
-        async function guardarGeneral(e) {
-            e.preventDefault();
-            await actualizarSetting('general', 'site_name', document.getElementById('site_name').value);
-            await actualizarSetting('general', 'contact_email', document.getElementById('contact_email').value);
-            alert('✅ Configuración general guardada');
+        titulo.textContent = tituloTexto;
+        contenido.innerHTML = campos;
+        modal.style.display = 'flex';
+    }
+
+    // CERRAR MODAL
+    function cerrarModal() {
+        document.getElementById('modalAjustes').style.display = 'none';
+    }
+
+    // GUARDAR CAMBIOS
+    async function guardarModal() {
+        const updates = [];
+
+        if (categoriaActual === 'general') {
+            const siteName = document.getElementById('edit-site_name').value.trim();
+            const email = document.getElementById('edit-contact_email').value.trim();
+            const siteConfig = configuraciones.find(c => c.key === 'site_name');
+            const emailConfig = configuraciones.find(c => c.key === 'contact_email');
+
+            if (siteConfig && siteName !== siteConfig.value) {
+                updates.push({ id: siteConfig.id, value: siteName });
+            }
+            if (emailConfig && email !== emailConfig.value) {
+                updates.push({ id: emailConfig.id, value: email });
+            }
+        }
+
+        if (categoriaActual === 'payments') {
+            const comision = document.getElementById('edit-commission_rate').value;
+            const config = configuraciones.find(c => c.key === 'commission_rate');
+            if (config && comision !== config.value) {
+                updates.push({ id: config.id, value: comision });
+            }
+        }
+
+        if (updates.length === 0) {
+            alert('No hay cambios para guardar');
             cerrarModal();
-            location.reload();
+            return;
         }
 
-        async function guardarPayments(e) {
-            e.preventDefault();
-            await actualizarSetting('payments', 'commission_rate', document.getElementById('commission_rate').value);
-            await actualizarSetting('payments', 'payment_method_paypal', document.getElementById('paypal').checked.toString());
-            await actualizarSetting('payments', 'payment_method_stripe', document.getElementById('stripe').checked.toString());
-            await actualizarSetting('payments', 'payment_method_mercadopago', document.getElementById('mercadopago').checked.toString());
-            alert('✅ Configuración de pagos guardada');
-            cerrarModal();
-            location.reload();
-        }
-
-        async function guardarSecurity(e) {
-            e.preventDefault();
-            await actualizarSetting('security', 'password_min_length', document.getElementById('password_min_length').value);
-            await actualizarSetting('security', 'session_timeout_minutes', document.getElementById('session_timeout').value);
-            await actualizarSetting('security', 'two_factor_enabled', document.getElementById('two_factor').checked.toString());
-            await actualizarSetting('security', 'password_require_uppercase', document.getElementById('require_uppercase').checked.toString());
-            await actualizarSetting('security', 'password_require_numbers', document.getElementById('require_numbers').checked.toString());
-            alert('✅ Configuración de seguridad guardada');
-            cerrarModal();
-            location.reload();
-        }
-
-        async function actualizarSetting(categoria, key, value) {
-            const setting = configuraciones.find(s => s.categoria === categoria && s.settingKey === key);
-            if(!setting) return;
-            
-            try {
-                const res = await fetch(`${API_SETTINGS}/${setting.id}`, {
+        try {
+            for (const update of updates) {
+                const res = await fetch(`${API_BASE}/${update.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ settingValue: value })
+                    body: JSON.stringify({ value: update.value })
                 });
-                if(!res.ok) throw new Error('Error al guardar');
-            } catch(err) {
-                console.error('Error:', err);
-                alert('❌ Error al guardar: ' + err.message);
+                if (!res.ok) throw new Error('Error al guardar');
             }
+            alert('Cambios guardados correctamente');
+            location.reload();
+        } catch (err) {
+            alert('Error al guardar: ' + err.message);
         }
+    }
 
-        window.onclick = (e) => {
-            if(e.target.id === 'modalAjustes') cerrarModal();
-        };
-    </script>
+    // Cerrar con ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') cerrarModal();
+    });
+</script>
+
+            <!-- MODAL DE EDICIÓN -->
+            <div id="modalAjustes" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+                <div style="background:#fff; padding:3rem; border-radius:1rem; width:90%; max-width:500px; max-height:80vh; overflow-y:auto;">
+                    <h2 id="modalTitulo" style="margin-bottom:2rem; color:var(--EncabezadoHome); text-align:center;"></h2>
+                    <div id="modalContenido"></div>
+                    <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem;">
+                        <button class="btn" onclick="cerrarModal()">Cancelar</button>
+                        <button class="btn" style="background:var(--EncabezadoHome);" onclick="guardarModal()">Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL DE EDICIÓN -->
+            <div id="modalAjustes" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; font-family: 'Nunito', sans-serif;">
+                <div style="background:#fff; padding:3rem; border-radius:1rem; width:90%; max-width:500px; max-height:80vh; overflow-y:auto; box-shadow: 0 1rem 3rem rgba(0,0,0,.3);">
+                    <h2 id="modalTitulo" style="margin-bottom:2rem; color:#78c6bd; text-align:center; font-size:2.5rem;"></h2>
+                    <div id="modalContenido" style="display:flex; flex-direction:column; gap:1.5rem;"></div>
+                    <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem;">
+                        <button class="btn" style="background:#ccc;" onclick="cerrarModal()">Cancelar</button>
+                        <button class="btn" style="background:#78c6bd;" onclick="guardarModal()">Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+
 </body>
 </html>
