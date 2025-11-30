@@ -62,7 +62,7 @@ public class SecurityConfig {
                     "/registroEmpresa.html", "/registroPersonal.html",
                     "/carrito.js", "/productos.js", "/registroEmpresa.js", "/registroPersonal.js",
                     "/script.js", "/maqueta.html",
-                    "/images/**", "/registro-empresa","/comprador","/productos","vendedor-miperfil.html",
+                    "/images/**", "/registro-empresa","/productos","/vendedor-miperfil.html",
                     "/registro-personal"
                 ).permitAll()
 
