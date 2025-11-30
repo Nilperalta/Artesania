@@ -19,11 +19,11 @@
     <description>Proyecto de artesanias</description>
     
     <properties>
-        <java.version>21</java.version>
+        <!-- CAMBIADO A JAVA 17 -->
+        <java.version>17</java.version>
     </properties>
     
     <dependencies>
-        <!-- DEPENDENCIAS EXISTENTES -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -57,7 +57,6 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- NUEVA DEPENDENCIA DE SPRING SECURITY -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
