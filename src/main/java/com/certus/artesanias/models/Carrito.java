@@ -32,20 +32,40 @@ public class Carrito {
     private BigDecimal subtotal;
 
     // ===== Getters y Setters =====
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { 
+        return id; 
+    }
+    public void setId(Long id) { 
+        this.id = id; 
+    }
 
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Usuario getUsuario() { 
+        return usuario; 
+    }
+    public void setUsuario(Usuario usuario) { 
+        this.usuario = usuario; 
+    }
 
-    public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
+    public Producto getProducto() { 
+        return producto; 
+    }
+    public void setProducto(Producto producto) { 
+        this.producto = producto; 
+    }
 
-    public int getCantidad() { return cantidad; }
-    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
+    public int getCantidad() { 
+        return cantidad; 
+    }
+    public void setCantidad(int cantidad) { 
+        this.cantidad = cantidad; 
+    }
 
-    public BigDecimal getSubtotal() { return subtotal; }
-    public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
+    public BigDecimal getSubtotal() { 
+        return subtotal; 
+    }
+    public void setSubtotal(BigDecimal subtotal) { 
+        this.subtotal = subtotal; 
+    }
 
     // ===== Método para calcular subtotal automáticamente =====
     public void calcularSubtotal() {
