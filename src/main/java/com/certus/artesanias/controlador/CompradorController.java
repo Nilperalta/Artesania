@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.certus.artesanias.models.Carrito;
 import com.certus.artesanias.models.Producto;
 import com.certus.artesanias.models.Usuario;
-import com.certus.artesanias.service.CarritoService;
+import com.certus.artesanias.service.CarritoCliente;
 import com.certus.artesanias.service.ProductoCliente;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,11 +24,11 @@ import jakarta.servlet.http.HttpSession;
 public class CompradorController {
 
     private final ProductoCliente productoCliente;
-    private final CarritoService carritoService;
+    private final CarritoCliente carritoCliente;
 
-    public CompradorController(ProductoCliente productoCliente, CarritoService carritoService) {
+    public CompradorController(ProductoCliente productoCliente, CarritoCliente carritoCliente) {
         this.productoCliente = productoCliente;
-        this.carritoService = carritoService;
+        this.carritoCliente = carritoCliente;
     }
 
     // ====================== DASHBOARD ======================
@@ -83,7 +83,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoService.obtenerPorUsuario(usuario.getId());
+        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
         carrito.forEach(Carrito::calcularSubtotal);
 
         BigDecimal total = carrito.stream()
@@ -106,7 +106,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        carritoService.agregarProducto(usuario.getId(), productoId, cantidad);
+        carritoCliente.agregarAlCarrito(usuario.getId(), productoId, cantidad);
 
         return "redirect:/comprador/productos?agregado=true";
     }
@@ -117,7 +117,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        carritoService.eliminar(id);
+        carritoCliente.eliminarDelCarrito(id);
 
         return "redirect:/comprador/carrito";
     }
@@ -129,7 +129,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoService.obtenerPorUsuario(usuario.getId());
+        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
         carrito.forEach(Carrito::calcularSubtotal);
 
         BigDecimal total = carrito.stream()
@@ -153,7 +153,7 @@ public class CompradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoService.obtenerPorUsuario(usuario.getId());
+        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
 
         if (carrito.isEmpty()) {
             model.addAttribute("mensajeError", "Tu carrito está vacío.");
@@ -168,7 +168,7 @@ public class CompradorController {
         model.addAttribute("total", total);
         model.addAttribute("carritoItems", carrito);
 
-        carritoService.vaciar(usuario.getId());
+        carritoCliente.vaciarCarrito(usuario.getId());
 
         return "comprador/checkout";
     }
