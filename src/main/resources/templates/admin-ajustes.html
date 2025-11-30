@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Ajustes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}" href="images/Logo-artesania.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
@@ -153,6 +153,7 @@
             box-shadow: var(--box-shadow);
             text-align: center;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .card-panel:hover {
@@ -230,12 +231,76 @@
             background: var(--lineaMarron);
             display: flex;
             justify-content: center;
-            padding: 1.5rem;
         }
 
         .footer .credit span{
             color: white;
             font-size: 1.2rem;
+            padding: 1rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.3);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 2rem;
+            color: var(--EncabezadoHome);
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .modal-content label {
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .modal-buttons .btn-cancel {
+            background: #ccc;
+        }
+
+        .modal-buttons .btn-save {
+            background: var(--EncabezadoHome);
         }
 
         /* Media queries */
@@ -243,19 +308,11 @@
             html{
                 font-size: 55%;
             }
-
-            .cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-            }
         }
 
         @media(max-width: 768px){
             .cards-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .panel-control {
-                padding: 1rem;
             }
 
             .footer .box-container{
@@ -302,14 +359,6 @@
             html{
                 font-size: 50%;
             }
-
-            .panel-control .heading-panel {
-                font-size: 2.5rem;
-            }
-
-            .card-panel {
-                padding: 2rem;
-            }
         }
     </style>
 </head>
@@ -319,13 +368,13 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+            <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="" class="logo">
             
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
-                <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a th:href="@{/ventas}">VENTAS</a>
+                <a th:href="@{/logout}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -335,8 +384,8 @@
         <main class="contenedor">
             
             <section class="panel-control">
-                <h1 class="heading-panel">TU PANEL DE CONTROL</h1>
-                
+                <h1 class="heading-panel">Panel de Control</h1>
+
                 <!-- Grid de tarjetas -->
                 <div class="cards-grid">
                     <div class="card-panel" onclick="abrirCategoria('general')">
@@ -371,7 +420,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="">
                 </div>
 
                 <div class="box">
@@ -382,9 +431,9 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
                 </div>
             </div>
 
@@ -392,176 +441,171 @@
         </footer>
     </div>
 
+    <!-- MODAL DE EDICIÓN -->
+    <div id="modalAjustes" class="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modalTitulo"></h2>
+            <div id="modalContenido"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn btn-save" onclick="guardarModal()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú móvil -->
     <script>
-    // === MODAL Y CATEGORÍAS ===
-    let configuraciones = [];
-    let categoriaActual = '';
+        let menu = document.querySelector('#menu-btn');
+        let navbar = document.querySelector('.navbar');
 
-    const API_BASE = 'http://localhost:8081/admin/api/settings'; // Puerto correcto
+        if(menu && navbar) {
+            menu.onclick = () => {
+                menu.classList.toggle('fa-times');
+                navbar.classList.toggle('active');
+            }
 
-    // CARGAR CONFIGURACIONES AL INICIAR
-    fetch(API_BASE)
-        .then(r => {
-            if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
-            return r.json();
-        })
-        .then(data => {
-            configuraciones = data;
-            console.log('Configuraciones cargadas:', data); // Para ver en consola
-        })
-        .catch(err => {
-            console.error('Error cargando ajustes:', err);
-            alert('No se pudieron cargar los ajustes. Revisa el backend.');
+            window.onscroll = () => {
+                menu.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            }
+        }
+    </script>
+
+    <!-- Configuración de API con contexto Thymeleaf -->
+    <script th:inline="javascript">
+        const API_BASE = /*[[@{/admin/api/settings}]]*/ '/admin/api/settings';
+    </script>
+
+    <script>
+        // === MODAL Y CATEGORÍAS ===
+        let configuraciones = [];
+        let categoriaActual = '';
+
+        // CARGAR CONFIGURACIONES AL INICIAR
+        fetch(API_BASE)
+            .then(r => {
+                if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
+                return r.json();
+            })
+            .then(data => {
+                configuraciones = data;
+                console.log('Configuraciones cargadas:', data);
+            })
+            .catch(err => {
+                console.error('Error cargando ajustes:', err);
+                alert('No se pudieron cargar los ajustes. Revisa el backend.');
+            });
+
+        // ABRIR MODAL
+        function abrirCategoria(categoria) {
+            categoriaActual = categoria;
+            const modal = document.getElementById('modalAjustes');
+            const titulo = document.getElementById('modalTitulo');
+            const contenido = document.getElementById('modalContenido');
+
+            let tituloTexto = '';
+            let campos = '';
+
+            if (categoria === 'general') {
+                tituloTexto = 'Parámetros Generales';
+                const siteName = configuraciones.find(c => c.key === 'site_name');
+                const email = configuraciones.find(c => c.key === 'contact_email');
+                campos = `
+                    <label>Nombre de la Plataforma</label>
+                    <input type="text" id="edit-site_name" value="${siteName?.value || ''}" data-original="${siteName?.value || ''}">
+                    
+                    <label>Email de Contacto</label>
+                    <input type="email" id="edit-contact_email" value="${email?.value || ''}" data-original="${email?.value || ''}">
+                `;
+            }
+
+            if (categoria === 'payments') {
+                tituloTexto = 'Pagos y Comisiones';
+                const comision = configuraciones.find(c => c.key === 'commission_rate');
+                campos = `
+                    <label>Porcentaje de Comisión (%)</label>
+                    <input type="number" id="edit-commission_rate" value="${comision?.value || ''}" data-original="${comision?.value || ''}" min="0" max="100">
+                `;
+            }
+
+            if (categoria === 'roles') {
+                tituloTexto = 'Usuarios y Roles';
+                campos = `<p style="color:#777; text-align:center; font-style:italic; font-size:1.4rem;">Próximamente: gestión de roles</p>`;
+            }
+
+            if (categoria === 'security') {
+                tituloTexto = 'Seguridad';
+                campos = `<p style="color:#777; text-align:center; font-style:italic; font-size:1.4rem;">Próximamente: 2FA, políticas de contraseña</p>`;
+            }
+
+            titulo.textContent = tituloTexto;
+            contenido.innerHTML = campos;
+            modal.style.display = 'flex';
+        }
+
+        // CERRAR MODAL
+        function cerrarModal() {
+            document.getElementById('modalAjustes').style.display = 'none';
+        }
+
+        // GUARDAR CAMBIOS
+        async function guardarModal() {
+            const updates = [];
+
+            if (categoriaActual === 'general') {
+                const siteName = document.getElementById('edit-site_name').value.trim();
+                const email = document.getElementById('edit-contact_email').value.trim();
+                const siteConfig = configuraciones.find(c => c.key === 'site_name');
+                const emailConfig = configuraciones.find(c => c.key === 'contact_email');
+
+                if (siteConfig && siteName !== siteConfig.value) {
+                    updates.push({ id: siteConfig.id, value: siteName });
+                }
+                if (emailConfig && email !== emailConfig.value) {
+                    updates.push({ id: emailConfig.id, value: email });
+                }
+            }
+
+            if (categoriaActual === 'payments') {
+                const comision = document.getElementById('edit-commission_rate').value;
+                const config = configuraciones.find(c => c.key === 'commission_rate');
+                if (config && comision !== config.value) {
+                    updates.push({ id: config.id, value: comision });
+                }
+            }
+
+            if (updates.length === 0) {
+                alert('No hay cambios para guardar');
+                cerrarModal();
+                return;
+            }
+
+            try {
+                for (const update of updates) {
+                    const res = await fetch(`${API_BASE}/${update.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ value: update.value })
+                    });
+                    if (!res.ok) throw new Error('Error al guardar');
+                }
+                alert('Cambios guardados correctamente');
+                location.reload();
+            } catch (err) {
+                alert('Error al guardar: ' + err.message);
+            }
+        }
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') cerrarModal();
         });
 
-    // ABRIR MODAL
-    function abrirCategoria(categoria) {
-        categoriaActual = categoria;
-        const modal = document.getElementById('modalAjustes');
-        const titulo = document.getElementById('modalTitulo');
-        const contenido = document.getElementById('modalContenido');
+        // Cerrar al hacer clic fuera del modal
+        document.getElementById('modalAjustes').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModal();
+        });
+    </script>
 
-        let tituloTexto = '';
-        let campos = '';
-
-        if (categoria === 'general') {
-            tituloTexto = 'Parámetros Generales';
-            const siteName = configuraciones.find(c => c.key === 'site_name');
-            const email = configuraciones.find(c => c.key === 'contact_email');
-            campos = `
-                    <label style="font-weight:600;">Nombre de la Plataforma</label>
-                    <input 
-                        type="text" 
-                        id="edit-site_name" 
-                        value="${siteName?.value || ''}" 
-                        data-original="${siteName?.value || ''}"
-                        style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
-                    >
-
-                    <label style="font-weight:600;">Email de Contacto</label>
-                    <input 
-                        type="email" 
-                        id="edit-contact_email" 
-                        value="${email?.value || ''}" 
-                        data-original="${email?.value || ''}"
-                        style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
-                    >
-                `;
-        }
-
-       if (categoria === 'payments') {
-            tituloTexto = 'Pagos y Comisiones';
-            const comision = configuraciones.find(c => c.key === 'commission_rate');
-            campos = `
-                <label style="font-weight:600;">Porcentaje de Comisión (%)</label>
-                <input 
-                    type="number" 
-                    id="edit-commission_rate" 
-                    value="${comision?.value || ''}" 
-                    data-original="${comision?.value || ''}"
-                    min="0" max="100" 
-                    style="width:100%; padding:1rem; margin:0.5rem 0; font-size:1.4rem; border:1px solid #ddd; border-radius:0.5rem;"
-                >
-            `;
-        }
-
-        if (categoria === 'roles') {
-            tituloTexto = 'Usuarios y Roles';
-            campos = `<p style="color:#777; text-align:center; font-style:italic;">Próximamente: gestión de roles</p>`;
-        }
-
-        if (categoria === 'security') {
-            tituloTexto = 'Seguridad';
-            campos = `<p style="color:#777; text-align:center; font-style:italic;">Próximamente: 2FA, políticas de contraseña</p>`;
-        }
-
-        titulo.textContent = tituloTexto;
-        contenido.innerHTML = campos;
-        modal.style.display = 'flex';
-    }
-
-    // CERRAR MODAL
-    function cerrarModal() {
-        document.getElementById('modalAjustes').style.display = 'none';
-    }
-
-    // GUARDAR CAMBIOS
-    async function guardarModal() {
-        const updates = [];
-
-        if (categoriaActual === 'general') {
-            const siteName = document.getElementById('edit-site_name').value.trim();
-            const email = document.getElementById('edit-contact_email').value.trim();
-            const siteConfig = configuraciones.find(c => c.key === 'site_name');
-            const emailConfig = configuraciones.find(c => c.key === 'contact_email');
-
-            if (siteConfig && siteName !== siteConfig.value) {
-                updates.push({ id: siteConfig.id, value: siteName });
-            }
-            if (emailConfig && email !== emailConfig.value) {
-                updates.push({ id: emailConfig.id, value: email });
-            }
-        }
-
-        if (categoriaActual === 'payments') {
-            const comision = document.getElementById('edit-commission_rate').value;
-            const config = configuraciones.find(c => c.key === 'commission_rate');
-            if (config && comision !== config.value) {
-                updates.push({ id: config.id, value: comision });
-            }
-        }
-
-        if (updates.length === 0) {
-            alert('No hay cambios para guardar');
-            cerrarModal();
-            return;
-        }
-
-        try {
-            for (const update of updates) {
-                const res = await fetch(`${API_BASE}/${update.id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ value: update.value })
-                });
-                if (!res.ok) throw new Error('Error al guardar');
-            }
-            alert('Cambios guardados correctamente');
-            location.reload();
-        } catch (err) {
-            alert('Error al guardar: ' + err.message);
-        }
-    }
-
-    // Cerrar con ESC
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') cerrarModal();
-    });
-</script>
-
-            <!-- MODAL DE EDICIÓN -->
-            <div id="modalAjustes" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
-                <div style="background:#fff; padding:3rem; border-radius:1rem; width:90%; max-width:500px; max-height:80vh; overflow-y:auto;">
-                    <h2 id="modalTitulo" style="margin-bottom:2rem; color:var(--EncabezadoHome); text-align:center;"></h2>
-                    <div id="modalContenido"></div>
-                    <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem;">
-                        <button class="btn" onclick="cerrarModal()">Cancelar</button>
-                        <button class="btn" style="background:var(--EncabezadoHome);" onclick="guardarModal()">Guardar Cambios</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MODAL DE EDICIÓN -->
-            <div id="modalAjustes" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; font-family: 'Nunito', sans-serif;">
-                <div style="background:#fff; padding:3rem; border-radius:1rem; width:90%; max-width:500px; max-height:80vh; overflow-y:auto; box-shadow: 0 1rem 3rem rgba(0,0,0,.3);">
-                    <h2 id="modalTitulo" style="margin-bottom:2rem; color:#78c6bd; text-align:center; font-size:2.5rem;"></h2>
-                    <div id="modalContenido" style="display:flex; flex-direction:column; gap:1.5rem;"></div>
-                    <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem;">
-                        <button class="btn" style="background:#ccc;" onclick="cerrarModal()">Cancelar</button>
-                        <button class="btn" style="background:#78c6bd;" onclick="guardarModal()">Guardar Cambios</button>
-                    </div>
-                </div>
-            </div>
-
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a67655abcf6d575',t:'MTc2NDQ3NDc4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

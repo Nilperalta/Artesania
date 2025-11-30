@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Estadísticas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}" href="images/Logo-artesania.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
@@ -163,6 +163,13 @@
             font-size: 2.4rem;
             font-weight: 400;
             color: var(--encabezados);
+        }
+
+        .card-estadistica .valor {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--EncabezadoHome);
+            margin-top: 1rem;
         }
 
         /* Sección de gráfico y resumen */
@@ -377,13 +384,13 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+            <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="" class="logo">
             
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
-                <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a th:href="@{/ventas}">VENTAS</a>
+                <a th:href="@{/logout}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -399,12 +406,15 @@
                 <div class="cards-estadisticas">
                     <div class="card-estadistica">
                         <h3>Compras</h3>
+                        <p class="valor" th:text="${totalCompras != null ? totalCompras : 0}">0</p>
                     </div>
                     <div class="card-estadistica">
                         <h3>Usuarios</h3>
+                        <p class="valor" th:text="${totalUsuarios != null ? totalUsuarios : 0}">0</p>
                     </div>
                     <div class="card-estadistica">
                         <h3>Productos</h3>
+                        <p class="valor" th:text="${totalProductos != null ? totalProductos : 0}">0</p>
                     </div>
                 </div>
 
@@ -418,19 +428,19 @@
                         <h3>RESUMEN</h3>
                         <div class="resumen-item">
                             <span class="resumen-label">Total de Usuarios:</span>
-                            <span class="resumen-value">120</span>
+                            <span class="resumen-value" th:text="${totalUsuarios != null ? totalUsuarios : 0}">120</span>
                         </div>
                         <div class="resumen-item">
                             <span class="resumen-label">Total de Vendedores:</span>
-                            <span class="resumen-value">60</span>
+                            <span class="resumen-value" th:text="${totalVendedores != null ? totalVendedores : 0}">60</span>
                         </div>
                         <div class="resumen-item">
                             <span class="resumen-label">Compras este mes:</span>
-                            <span class="resumen-value">$/100</span>
+                            <span class="resumen-value" th:text="'S/ ' + ${comprasMes != null ? comprasMes : 0}">S/100</span>
                         </div>
                         <div class="resumen-item">
                             <span class="resumen-label">Ventas acumuladas:</span>
-                            <span class="resumen-value">$/101</span>
+                            <span class="resumen-value" th:text="'S/ ' + ${ventasAcumuladas != null ? ventasAcumuladas : 0}">S/101</span>
                         </div>
                     </div>
                 </div>
@@ -442,7 +452,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="">
                 </div>
 
                 <div class="box">
@@ -453,16 +463,21 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
             <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
         </footer>
     </div>
+
+    <!-- Datos dinámicos del backend para el gráfico -->
+    <script th:inline="javascript">
+        const datosGrafico = /*[[${datosGrafico}]]*/ [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
+    </script>
 
     <script>
         // Menú móvil
@@ -483,7 +498,7 @@
 
         // Gráfico de estadísticas
         const months = ['enero', 'febrero', 'marzo', 'mayo', 'abril', 'junio', 'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
-        const data = [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
+        const data = datosGrafico || [8, 12, 16, 15, 20, 19, 12, 14, 17, 9, 11, 10];
 
         const canvas = document.getElementById('chart');
         const ctx = canvas.getContext('2d');
@@ -551,5 +566,5 @@
         ctx.fillText('0', 20, canvas.height - padding + 5);
     </script>
 
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a6766677cb9d575',t:'MTc2NDQ3NDgzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

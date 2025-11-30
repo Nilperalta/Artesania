@@ -5,356 +5,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Administrador</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
         :root{
-            --lineaMarron:rgba(146, 89, 48, 1);
-            --EncabezadoHome:rgba(120, 198, 189, 1);
-            --black:#555;
-            --light-color:#777;
-            --bg:#fceae9;
-            --border:.1rem solid rgba(0,0,0,.1);
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-            --encabezados:rgba(1, 1, 1, 1);
-            --box-color: rgba(236, 236, 236, 1);
-            --boton:#c06722;
-            --gris-oscuro: #4a4a4a;
+            --lineaMarron: #924f30;
+            --EncabezadoHome: #78c6bd;
+            --boton: #c06722;
+            --boton-hover: #a0551d;
+            --gris-oscuro: #2c2c2c;
+            --light-color: #666;
+            --box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.1);
         }
 
         *{
             font-family: "Nunito", sans-serif;
             margin: 0; padding: 0;
             box-sizing: border-box;
-            outline: none; border: none;
             text-decoration: none;
-            text-transform: capitalize;
-            transition: all .3s ease-out;
+            outline: none; border: none;
         }
 
         html{
             font-size: 62.5%;
             scroll-behavior: smooth;
-            scroll-padding-top: 9rem;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .layout{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto 1fr auto;
-            grid-template-areas:  "admin-bar"
-                                  "header"
-                                  "main"
-                                  "footer";
+        body {
+            background: #f8f9fa;
             min-height: 100vh;
         }
 
-        /* Barra de administrador */
+        /* Layout */
+        .layout{
+            display: grid;
+            grid-template-areas: 
+                "admin-bar"
+                "header"
+                "main"
+                "footer";
+            grid-template-rows: auto auto 1fr auto;
+            min-height: 100vh;
+        }
+
         .admin-bar {
-            background: var(--gris-oscuro);
             grid-area: admin-bar;
-            padding: 0.8rem 9%;
-            color: #fff;
+            background: var(--gris-oscuro);
+            color: white;
+            padding: 1rem 9%;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
-        .admin-bar p {
-            font-size: 1.4rem;
-            margin: 0;
-        }
-
-        .layout .header{
-            background: #fff;
-            grid-area: header;
-        }
-
-        .layout .contenedor{
-            background: #fff;
-            grid-area: main;
-        }
-
-        .layout .footer{
-            background: #ffdcc2;
-            grid-area: footer;
-        }
-
-        /* Header */
         .header{
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: #fff;
+            background: white;
+            grid-area: header;
             box-shadow: var(--box-shadow);
+            padding: 1rem 9%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 9%;
         }
 
-        .header .logo{
-            height: 7rem;
-        }
-
-        .header .navbar{
-            display: flex;
-            align-items: center;
-        }
+        .header .logo { height: 6.5rem; }
 
         .header .navbar a{
             font-size: 1.7rem;
             color: var(--light-color);
-            margin-left: 2rem;
+            margin-left: 2.5rem;
+            font-weight: 600;
         }
 
-        .header .navbar a:hover{
-            color: var(--lineaMarron);
-        }
+        .header .navbar a:hover { color: var(--lineaMarron); }
 
         #menu-btn{
-            cursor: pointer;
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: .5rem;
-            color: var(--main-color);
-            background: #ffdcc2;
             display: none;
+            font-size: 2.8rem;
             color: var(--lineaMarron);
+            cursor: pointer;
         }
 
-        #menu-btn:hover{
-            color: #fff;
-            background: var(--EncabezadoHome);
-        }
-
-        /* Contenedor */
-        .contenedor{
-            background: #fff;
-        }
-
-        /* Panel de Control Admin */
+        /* Panel Principal */
         .panel-admin {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
-        .panel-admin .heading-panel {
-            font-size: 3rem;
-            color: var(--EncabezadoHome);
-            margin-bottom: 4rem;
+        .heading-panel {
             text-align: center;
+            font-size: 3.8rem;
+            color: var(--EncabezadoHome);
+            margin-bottom: 5rem;
+            font-weight: 800;
         }
 
-        /* Grid de tarjetas 2x2 */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3rem;
-            margin-bottom: 5rem;
         }
 
         .card-admin {
-            background: #fff;
-            padding: 4rem 3rem;
-            border-radius: 0.8rem;
+            background: white;
+            padding: 4rem 2.5rem;
+            border-radius: 1.5rem;
             box-shadow: var(--box-shadow);
             text-align: center;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            transition: all 0.4s ease;
+            border: 1px solid #eee;
         }
 
         .card-admin:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
+            transform: translateY(-12px);
+            box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.15);
         }
 
         .card-admin .icon-admin {
-            font-size: 6rem;
-            margin-bottom: 2rem;
-            color: var(--encabezados);
-        }
-
-        .card-admin .icon-admin i {
-            font-size: 6rem;
-        }
-
-        /* Íconos personalizados con imágenes */
-        .icon-users {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-chart {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-settings {
-            width: 8rem;
-            height: 8rem;
-            margin-bottom: 2rem;
-        }
-
-        .icon-bell {
-            width: 8rem;
-            height: 8rem;
+            font-size: 6.5rem;
+            color: var(--lineaMarron);
             margin-bottom: 2rem;
         }
 
         .card-admin h3 {
-            font-size: 1.8rem;
-            color: var(--encabezados);
+            font-size: 2.2rem;
+            color: #333;
             margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
+        }
+
+        .card-admin p {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--boton);
+            margin: 1.5rem 0;
         }
 
         .card-admin .btn {
             display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.4rem;
-            border-radius: 0.5rem;
+            padding: 1.3rem 3.5rem;
             background: var(--boton);
-            color: #fff;
-            cursor: pointer;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            border-radius: 50px;
+            margin-top: 2rem;
+            box-shadow: 0 6px 20px rgba(192, 103, 34, 0.4);
             transition: all 0.3s ease;
-            margin-top: 1rem;
         }
 
         .card-admin .btn:hover {
-            background: var(--lineaMarron);
-            transform: scale(1.05);
+            background: var(--boton-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(192, 103, 34, 0.6);
         }
 
         /* Footer */
-        .footer .box-container{
-            display: flex;
-            justify-content: space-evenly;
-            box-shadow: var(--box-shadow);
+        .footer {
+            background: #2c2c2c;
+            color: white;
+            padding: 4rem 9% 2rem;
+            margin-top: 5rem;
         }
 
-        .footer .box-container .box{
-            display: flex;
-            flex-direction: column;
-            margin: 2rem;
-            padding: 2rem;
+        .footer .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
-        .footer .box-container .box img{
-            height: 9rem;
-        }
+        .footer .box h3 { font-size: 2rem; margin-bottom: 1.5rem; color: #78c6bd; }
+        .footer .box a { display: block; color: #ccc; margin: 1rem 0; font-size: 1.5rem; }
+        .footer .box a:hover { color: white; }
 
-        .footer .box-container .box h3{
+        .footer .credit {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
             font-size: 1.5rem;
         }
 
-        .footer .box-container .box a{
-            font-size: 1.2rem;
-            color: var(--light-color);
-        }
-
-        .footer .box-container .box a i{
-            color: var(--lineaMarron);
-            margin-right: 0.5rem;
-        }
-
-        .footer .box-container .box a:hover{
-            color: var(--lineaMarron);
-        }
-
-        .footer .credit{
-            background: var(--lineaMarron);
-            display: flex;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .footer .credit span{
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        /* Media queries */
-        @media(max-width: 991px){
-            html{
-                font-size: 55%;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media(max-width: 768px){
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .panel-admin {
-                padding: 2rem 1rem;
-            }
-
-            .footer .box-container{
-                flex-direction: column;
-                align-items: center;
-            }
-
-            #menu-btn{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 2rem;
-            }
-
-            .header .navbar{
+        /* Responsive */
+        @media (max-width: 768px) {
+            #menu-btn { display: block; }
+            .header .navbar {
                 position: absolute;
-                top:115%; right: 6rem;
+                top: 100%; right: 2rem;
+                background: white;
                 width: 30rem;
-                opacity:0;
-                display: block;
-                font-size: 2rem;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem; 
-                background: #fff; 
+                border-radius: 1rem;
+                box-shadow: var(--box-shadow);
+                padding: 2rem;
                 transform: scale(0);
+                transform-origin: top right;
+                opacity: 0;
             }
-
-            .header .navbar.active{
+            .header .navbar.active {
                 transform: scale(1);
                 opacity: 1;
             }
-
-            .header .navbar a{
-                font-size: 2rem;
+            .header .navbar a {
                 display: block;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem;    
-            }
-        }
-
-        @media(max-width: 450px){
-            html{
-                font-size: 50%;
-            }
-
-            .panel-admin .heading-panel {
-                font-size: 2.5rem;
-            }
-
-            .card-admin {
-                padding: 2rem;
+                margin: 2rem 0;
+                font-size: 2rem;
             }
         }
     </style>
@@ -362,124 +220,97 @@
 <body>
 
     <div class="layout">
-
-        <!-- Barra de administrador -->
-        <div class="admin-bar">
-            <p>Administrador</p>
-        </div>
-
-        <!-- Header -->
+        <div class="admin-bar"><p>Administrador</p></div>
+        
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
-            
+            <img th:src="@{/images/Logo-artesania.png}" alt="Logo" class="logo">
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
                 <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/admin/salir}">SALIR</a>
             </nav>
-
             <div id="menu-btn" class="fas fa-bars"></div>
         </header>
 
-        <!-- Contenido principal -->
-        <main class="contenedor">
-            
+        <main>
             <section class="panel-admin">
                 <h1 class="heading-panel">TU PANEL DE CONTROL</h1>
                 
-                <!-- Grid de tarjetas 2x2 -->
                 <div class="cards-grid">
-                    
-                    <!-- Control de Cuentas -->
                     <div class="card-admin">
                         <i class="fas fa-users icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-users" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-controlcuentas.html" class="btn">Ver Más</a>
+                        <h3>Control de Cuentas</h3>
+                        <p id="total-users">0</p>
+                        <a th:href="@{/admin/controlcuentas}" class="btn">Ver Más</a>
                     </div>
 
-                    <!-- Estadísticas -->
                     <div class="card-admin">
                         <i class="fas fa-chart-line icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-compradores" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-estadisticas.html" class="btn">Ver Más</a>
+                        <h3>Estadísticas</h3>
+                        <p id="total-compradores">0</p>
+                        <a th:href="@{/admin/estadisticas}" class="btn">Ver Más</a>
                     </div>
 
-                    <!-- Ajustes -->
                     <div class="card-admin">
                         <i class="fas fa-cog icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-vendedores" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>                        <a href="admin-ajustes.html" class="btn">Configurar</a>
+                        <h3>Ajustes</h3>
+                        <p id="total-vendedores">0</p>
+                        <a th:href="@{/admin/ajustes}" class="btn">Configurar</a>
                     </div>
 
-                    <!-- Alertas -->
                     <div class="card-admin">
                         <i class="fas fa-bell icon-admin"></i>
-                        <h3>Control de Cuentas de Compradores y Vendedores</h3>
-                        <p id="total-admins" style="font-size: 2rem; color: var(--boton); font-weight: bold;">0</p>
-                        <a href="admin-alertas.html" class="btn">Revisar</a>
+                        <h3>Alertas</h3>
+                        <p id="total-admins">0</p>
+                        <a th:href="@{/admin/alertas}" class="btn">Revisar</a>
                     </div>
-
                 </div>
             </section>
-
         </main>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" alt="Logo" style="height: 9rem;">
                 </div>
-
                 <div class="box">
                     <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
                 </div>
-
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i> Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i> Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i> Registro</a>
                 </div>
             </div>
-
-            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+            <div class="credit">
+                <span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span>
+            </div>
         </footer>
     </div>
 
     <script>
         // Menú móvil
-        let menu = document.querySelector('#menu-btn');
-        let navbar = document.querySelector('.navbar');
+        const menuBtn = document.getElementById('menu-btn');
+        const navbar = document.querySelector('.navbar');
+        menuBtn.onclick = () => {
+            menuBtn.classList.toggle('fa-times');
+            navbar.classList.toggle('active');
+        };
 
-        if(menu && navbar) {
-            menu.onclick = () => {
-                menu.classList.toggle('fa-times');
-                navbar.classList.toggle('active');
-            }
-
-            window.onscroll = () => {
-                menu.classList.remove('fa-times');
-                navbar.classList.remove('active');
-            }
-        }
+        // Cargar estadísticas
+        fetch('/admin/api/stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('total-users').textContent = data.totalUsuarios || 0;
+                document.getElementById('total-compradores').textContent = data.totalCompradores || 0;
+                document.getElementById('total-vendedores').textContent = data.totalVendedores || 0;
+                document.getElementById('total-admins').textContent = data.totalAdmins || 0;
+            })
+            .catch(err => console.error('Error cargando stats:', err));
     </script>
-
-
-   <script>
-fetch('/admin/api/stats')
-    .then(response => response.json())
-    .then(stats => {
-        document.getElementById('total-users').textContent = stats.totalUsers;
-        document.getElementById('total-compradores').textContent = stats.totalCompradores;
-        document.getElementById('total-vendedores').textContent = stats.totalVendedores;
-        document.getElementById('total-admins').textContent = stats.totalAdmins;
-    });
-</script>   
 </body>
 </html>

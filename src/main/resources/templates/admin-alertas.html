@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Alertas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}" href="images/Logo-artesania.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
@@ -141,6 +141,49 @@
             text-align: center;
         }
 
+        /* Contenedor de alertas dinámicas */
+        #alertas-container {
+            margin-bottom: 2rem;
+        }
+
+        .alert-item {
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4rem;
+        }
+
+        .alert-item.danger {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert-item.warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .alert-item.info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-item button {
+            padding: 0.5rem 1rem;
+            background: var(--boton);
+            color: #fff;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .alert-item button:hover {
+            background: var(--lineaMarron);
+        }
+
         /* Filtros y búsqueda */
         .filtros-container {
             background: #fff;
@@ -233,8 +276,6 @@
             border-radius: 0.5rem;
             font-size: 1.2rem;
             font-weight: 600;
-            text-align: center;
-            min-width: 10rem;
         }
 
         .estado-pendiente {
@@ -256,32 +297,25 @@
         .paginacion {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin: 3rem 0;
+            gap: 0.5rem;
+            margin-top: 3rem;
         }
 
         .paginacion button {
-            padding: 0.8rem 1.2rem;
-            font-size: 1.4rem;
+            padding: 1rem 1.5rem;
             border: var(--border);
-            border-radius: 0.5rem;
             background: #fff;
-            color: var(--black);
             cursor: pointer;
+            border-radius: 0.5rem;
+            font-size: 1.4rem;
+            color: var(--black);
             transition: all 0.3s ease;
         }
 
-        .paginacion button:hover:not(:disabled) {
+        .paginacion button:hover,
+        .paginacion button.active {
             background: var(--EncabezadoHome);
             color: #fff;
-            border-color: var(--EncabezadoHome);
-        }
-
-        .paginacion button.active {
-            background: var(--lineaMarron);
-            color: #fff;
-            border-color: var(--lineaMarron);
         }
 
         .paginacion button:disabled {
@@ -329,12 +363,12 @@
             background: var(--lineaMarron);
             display: flex;
             justify-content: center;
-            padding: 1.5rem;
         }
 
         .footer .credit span{
             color: white;
             font-size: 1.2rem;
+            padding: 1rem;
         }
 
         /* Media queries */
@@ -347,19 +381,10 @@
         @media(max-width: 768px){
             .filtros-container {
                 flex-direction: column;
-                align-items: stretch;
             }
 
             .search-box input {
                 width: 100%;
-            }
-
-            .tabla-alertas {
-                overflow-x: scroll;
-            }
-
-            table {
-                min-width: 900px;
             }
 
             .footer .box-container{
@@ -407,8 +432,9 @@
                 font-size: 50%;
             }
 
-            .alertas .heading-alertas {
-                font-size: 2.5rem;
+            .paginacion button {
+                padding: 0.8rem 1rem;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -419,13 +445,13 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
+            <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="" class="logo">
             
             <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
-                <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
+                <a th:href="@{/}">HOME</a>
+                <a th:href="@{/#productos}">PRODUCTOS</a>
+                <a th:href="@{/ventas}">VENTAS</a>
+                <a th:href="@{/logout}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -436,7 +462,10 @@
             
             <section class="alertas">
                 <h1 class="heading-alertas">Alertas</h1>
+                
+                <!-- Contenedor para alertas dinámicas de la API -->
                 <div id="alertas-container"></div>
+                
                 <!-- Filtros y búsqueda -->
                 <div class="filtros-container">
                     <div class="search-box">
@@ -461,12 +490,29 @@
                                 <th>Descripción</th>
                                 <th>Prioridad</th>
                                 <th>Fecha</th>
-                                <th>Acción</th>
+                                <th>Ubicación</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody id="tablaAlertas">
-                            <tr>
+                            <!-- Opción 1: Renderizado con Thymeleaf desde el backend -->
+                            <tr th:each="alerta : ${alertasTabla}" th:if="${alertasTabla != null}">
+                                <td th:text="${alerta.tipo}">Tipo</td>
+                                <td th:text="${alerta.descripcion}">Descripción</td>
+                                <td th:text="${alerta.prioridad}">Prioridad</td>
+                                <td th:text="${#temporals.format(alerta.fecha, 'dd/MM/yyyy')}">00/00/0000</td>
+                                <td th:text="${alerta.ubicacion}">País</td>
+                                <td>
+                                    <span class="estado-badge"
+                                          th:classappend="${alerta.estado == 'PENDIENTE'} ? 'estado-pendiente' : (${alerta.estado == 'EN_PROCESO'} ? 'estado-proceso' : 'estado-resuelto')"
+                                          th:text="${alerta.estado == 'EN_PROCESO'} ? 'En Proceso' : ${alerta.estado}">
+                                        Estado
+                                    </span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Opción 2: Datos estáticos de ejemplo (se pueden eliminar si usas solo backend) -->
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Seguridad</td>
                                 <td>Intento de acceso sospechoso</td>
                                 <td>Alta</td>
@@ -474,7 +520,7 @@
                                 <td>Perú</td>
                                 <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
                             </tr>
-                            <tr>
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Pago</td>
                                 <td>Fallo en pasarela de VISA</td>
                                 <td>Alta</td>
@@ -482,7 +528,7 @@
                                 <td>México</td>
                                 <td><span class="estado-badge estado-proceso">En Proceso</span></td>
                             </tr>
-                            <tr>
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Usuario</td>
                                 <td>Reporte de vendedor por fraude</td>
                                 <td>Media</td>
@@ -490,7 +536,7 @@
                                 <td>Colombia</td>
                                 <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
                             </tr>
-                            <tr>
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Mantenimiento</td>
                                 <td>Actualización de servidores</td>
                                 <td>Baja</td>
@@ -498,7 +544,7 @@
                                 <td>España</td>
                                 <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
                             </tr>
-                            <tr>
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Sistema</td>
                                 <td>Error en módulo de inventario</td>
                                 <td>Alta</td>
@@ -506,7 +552,7 @@
                                 <td>Argentina</td>
                                 <td><span class="estado-badge estado-proceso">En Proceso</span></td>
                             </tr>
-                            <tr>
+                            <tr th:if="${alertasTabla == null}">
                                 <td>Seguridad</td>
                                 <td>Actualización de certificado SSL</td>
                                 <td>Media</td>
@@ -538,7 +584,7 @@
         <footer class="footer">
             <div class="box-container">
                 <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
+                    <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="">
                 </div>
 
                 <div class="box">
@@ -549,9 +595,9 @@
 
                 <div class="box">
                     <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
+                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
+                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
                 </div>
             </div>
 
@@ -628,26 +674,34 @@
         });
     </script>
 
-    <script>
-        const apiAlerts = '/admin/api/alerts';
+    <!-- API de Alertas con Thymeleaf -->
+    <script th:inline="javascript">
+        const apiAlerts = /*[[@{/admin/api/alerts}]]*/ '/admin/api/alerts';
+    </script>
 
+    <script>
+        // Cargar alertas dinámicas desde la API
         fetch(apiAlerts)
             .then(r => r.json())
             .then(alertas => {
                 const container = document.getElementById('alertas-container');
-                container.innerHTML = alertas.map(a => `
-                    <div class="alert ${a.tipo.toLowerCase()}" style="padding:1.5rem; margin:1rem 0; border-left:4px solid ${a.tipo === 'DANGER' ? 'red' : a.tipo === 'WARNING' ? 'orange' : 'blue'}">
-                        <strong>${a.tipo}</strong>: ${a.mensaje}
-                        <button onclick="marcarLeida(${a.id})" style="float:right">Marcar leída</button>
-                    </div>
-                `).join('');
-            });
+                if (alertas && alertas.length > 0) {
+                    container.innerHTML = alertas.map(a => `
+                        <div class="alert-item ${a.tipo.toLowerCase()}">
+                            <span><strong>${a.tipo}</strong>: ${a.mensaje}</span>
+                            <button onclick="marcarLeida(${a.id})">Marcar leída</button>
+                        </div>
+                    `).join('');
+                }
+            })
+            .catch(err => console.error('Error cargando alertas:', err));
 
         function marcarLeida(id) {
             fetch(`${apiAlerts}/${id}/read`, {method: 'PATCH'})
-                .then(() => location.reload());
+                .then(() => location.reload())
+                .catch(err => console.error('Error:', err));
         }
     </script>
 
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a6765ee6dd7d575',t:'MTc2NDQ3NDgxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Alertas</title>
+    <title>Admin - Control de Cuentas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <link rel="icon" href="images/Logo-artesania.png">
     <style>
@@ -20,9 +20,9 @@
             --encabezados:rgba(1, 1, 1, 1);
             --box-color: rgba(236, 236, 236, 1);
             --boton:#c06722;
-            --pendiente: #f5c6cb;
-            --proceso: #c06722;
-            --resuelto: #5cb85c;
+            --activo: #5cb85c;
+            --pendiente: #c06722;
+            --suspendido: #d9534f;
         }
 
         *{
@@ -125,8 +125,8 @@
             background: #fff;
         }
 
-        /* Alertas */
-        .alertas {
+        /* Control de Cuentas */
+        .control-cuentas {
             margin-top: 8rem;
             padding: 2rem;
             max-width: 1400px;
@@ -134,7 +134,7 @@
             margin-right: auto;
         }
 
-        .alertas .heading-alertas {
+        .control-cuentas .heading-control {
             font-size: 3rem;
             color: var(--EncabezadoHome);
             margin-bottom: 3rem;
@@ -153,6 +153,29 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1.5rem;
+        }
+
+        .info-cuentas {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-cuentas h3 {
+            font-size: 1.6rem;
+            color: var(--encabezados);
+        }
+
+        .info-cuentas span {
+            color: var(--EncabezadoHome);
+            font-weight: bold;
+        }
+
+        .filtros-derecha {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .search-box {
@@ -181,224 +204,178 @@
             font-size: 1.4rem;
             border: var(--border);
             border-radius: 0.5rem;
+            background: #fff;
             color: var(--black);
             cursor: pointer;
+            min-width: 15rem;
         }
 
-        /* Tabla de alertas */
-        .tabla-alertas {
+        /* Tabla */
+        .tabla-container {
             background: #fff;
+            padding: 2rem;
             border-radius: 0.8rem;
             box-shadow: var(--box-shadow);
-            overflow-x: auto;
         }
 
-        table {
+        .table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 1.4rem;
         }
 
-        thead {
+        .table th {
             background: #f8f9fa;
-        }
-
-        thead th {
             padding: 1.5rem;
             text-align: left;
-            font-size: 1.4rem;
-            color: var(--black);
             font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
+            color: var(--encabezados);
+            border-bottom: var(--border);
+            font-size: 1.5rem;
         }
 
-        tbody tr {
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.3s ease;
+        .table td {
+            padding: 1.5rem;
+            border-bottom: var(--border);
+            color: var(--black);
         }
 
-        tbody tr:hover {
+        .table tr:hover {
             background: #f8f9fa;
         }
 
-        tbody td {
-            padding: 1.5rem;
-            font-size: 1.4rem;
-            color: var(--black);
+        .estado-badge {
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
-        /* Estados de alerta */
-        .estado-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            min-width: 10rem;
+        .estado-activo {
+            background: var(--activo);
+            color: #fff;
         }
 
         .estado-pendiente {
             background: var(--pendiente);
-            color: #721c24;
+            color: #fff;
         }
 
-        .estado-proceso {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .estado-resuelto {
-            background: #d4edda;
-            color: #155724;
+        .estado-suspendido {
+            background: var(--suspendido);
+            color: #fff;
         }
 
         /* Paginación */
         .paginacion {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin: 3rem 0;
+            margin-top: 2rem;
+            gap: 0.5rem;
         }
 
         .paginacion button {
-            padding: 0.8rem 1.2rem;
+            padding: 1rem 1.5rem;
             font-size: 1.4rem;
-            border: var(--border);
-            border-radius: 0.5rem;
             background: #fff;
+            border: var(--border);
             color: var(--black);
             cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 0.5rem;
         }
 
-        .paginacion button:hover:not(:disabled) {
+        .paginacion button:hover {
             background: var(--EncabezadoHome);
             color: #fff;
-            border-color: var(--EncabezadoHome);
         }
 
-        .paginacion button.active {
-            background: var(--lineaMarron);
+        .paginacion .active {
+            background: var(--EncabezadoHome);
             color: #fff;
-            border-color: var(--lineaMarron);
+            font-weight: bold;
         }
 
         .paginacion button:disabled {
-            opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        /* Footer */
-        .footer .box-container{
-            display: flex;
-            justify-content: space-evenly;
-            box-shadow: var(--box-shadow);
-        }
-
-        .footer .box-container .box{
-            display: flex;
-            flex-direction: column;
-            margin: 2rem;
-            padding: 2rem;
-        }
-
-        .footer .box-container .box img{
-            height: 9rem;
-        }
-
-        .footer .box-container .box h3{
-            font-size: 1.5rem;
-        }
-
-        .footer .box-container .box a{
-            font-size: 1.2rem;
             color: var(--light-color);
         }
 
-        .footer .box-container .box a i{
-            color: var(--lineaMarron);
-            margin-right: 0.5rem;
-        }
-
-        .footer .box-container .box a:hover{
-            color: var(--lineaMarron);
-        }
-
-        .footer .credit{
-            background: var(--lineaMarron);
-            display: flex;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .footer .credit span{
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        /* Media queries */
+        /* Responsive */
         @media(max-width: 991px){
             html{
                 font-size: 55%;
             }
+
+            .header{
+                padding: 2rem;
+            }
+
+            .control-cuentas {
+                padding: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media(max-width: 768px){
+            #menu-btn{
+                display: inline-block;
+            }
+
+            .header .navbar{
+                position: absolute;
+                top: 99%; left: 0; right: 0;
+                background: #fff;
+                border-top: var(--border);
+                border-bottom: var(--border);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            .header .navbar.active{
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .header .navbar a{
+                display: block;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+                font-size: 2rem;
+                background: var(--bg);
+                width: 100%;
+                text-align: center;
+            }
+
+            .control-cuentas {
+                padding: 1.5rem;
+            }
+
             .filtros-container {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 2rem;
+            }
+
+            .filtros-derecha {
+                width: 100%;
+                justify-content: center;
             }
 
             .search-box input {
                 width: 100%;
             }
 
-            .tabla-alertas {
-                overflow-x: scroll;
+            .filtro-select {
+                width: 100%;
             }
 
-            table {
-                min-width: 900px;
-            }
-
-            .footer .box-container{
-                flex-direction: column;
-                align-items: center;
-            }
-
-            #menu-btn{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 2rem;
-            }
-
-            .header .navbar{
-                position: absolute;
-                top:115%; right: 6rem;
-                width: 30rem;
-                opacity:0;
-                display: block;
-                font-size: 2rem;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem; 
-                background: #fff; 
-                transform: scale(0);
-            }
-
-            .header .navbar.active{
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            .header .navbar a{
-                font-size: 2rem;
-                display: block;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem;    
+            .tabla-container {
+                overflow-x: auto;
             }
         }
 
@@ -407,7 +384,7 @@
                 font-size: 50%;
             }
 
-            .alertas .heading-alertas {
+            .heading-control {
                 font-size: 2.5rem;
             }
         }
@@ -434,86 +411,44 @@
         <!-- Contenido principal -->
         <main class="contenedor">
             
-            <section class="alertas">
-                <h1 class="heading-alertas">Alertas</h1>
-                <div id="alertas-container"></div>
-                <!-- Filtros y búsqueda -->
+            <section class="control-cuentas">
+                <h1 class="heading-control">CONTROL DE CUENTAS</h1>
+
+                <!-- Filtros -->
                 <div class="filtros-container">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar" id="searchInput">
+                    <div class="info-cuentas">
+                        <h3>Todas Las Cuentas: <span>0</span></h3>
                     </div>
 
-                    <select class="filtro-select" id="filtroEstado">
-                        <option value="todos">Filtrar por:</option>
-                        <option value="pendiente">Pendiente</option>
-                        <option value="proceso">En Proceso</option>
-                        <option value="resuelto">Resuelto</option>
-                    </select>
+                    <div class="filtros-derecha">
+                        <div class="search-box">
+                            <input type="text" placeholder="Buscar..." id="searchInput">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select class="filtro-select" id="filtroEstado">
+                            <option value="todos">Todos</option>
+                            <option value="activo">Activo</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="suspendido">Suspendido</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Tabla de alertas -->
-                <div class="tabla-alertas">
-                    <table>
-                        <thead>
+                <!-- Tabla -->
+                <div class="tabla-container">
+                    <table class="table table-hover" id="tablaCuentas">
+                        <thead class="table-light">
                             <tr>
-                                <th>Tipo</th>
-                                <th>Descripción</th>
-                                <th>Prioridad</th>
-                                <th>Fecha</th>
-                                <th>Acción</th>
-                                <th>Estado</th>
+                                <th>Nombre Del Usuario</th>
+                                <th>Rol</th>
+                                <th>Última Actividad</th>
+                                <th>Email</th>
+                                <th>País</th>
+                                <th>Estado De Cuenta</th>
                             </tr>
                         </thead>
-                        <tbody id="tablaAlertas">
-                            <tr>
-                                <td>Seguridad</td>
-                                <td>Intento de acceso sospechoso</td>
-                                <td>Alta</td>
-                                <td>14/09/2025</td>
-                                <td>Perú</td>
-                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
-                            </tr>
-                            <tr>
-                                <td>Pago</td>
-                                <td>Fallo en pasarela de VISA</td>
-                                <td>Alta</td>
-                                <td>13/09/2025</td>
-                                <td>México</td>
-                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
-                            </tr>
-                            <tr>
-                                <td>Usuario</td>
-                                <td>Reporte de vendedor por fraude</td>
-                                <td>Media</td>
-                                <td>12/09/2025</td>
-                                <td>Colombia</td>
-                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mantenimiento</td>
-                                <td>Actualización de servidores</td>
-                                <td>Baja</td>
-                                <td>10/09/2025</td>
-                                <td>España</td>
-                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
-                            </tr>
-                            <tr>
-                                <td>Sistema</td>
-                                <td>Error en módulo de inventario</td>
-                                <td>Alta</td>
-                                <td>09/09/2025</td>
-                                <td>Argentina</td>
-                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
-                            </tr>
-                            <tr>
-                                <td>Seguridad</td>
-                                <td>Actualización de certificado SSL</td>
-                                <td>Media</td>
-                                <td>08/09/2025</td>
-                                <td>Chile</td>
-                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
-                            </tr>
+                        <tbody>
+                            <!-- Aquí se llenará con JS -->
                         </tbody>
                     </table>
                 </div>
@@ -526,7 +461,7 @@
                     <button>3</button>
                     <button>4</button>
                     <button>...</button>
-                    <button>40</button>
+                    <button>89</button>
                     <button id="btnNext"><i class="fas fa-chevron-right"></i></button>
                 </div>
 
@@ -543,8 +478,8 @@
 
                 <div class="box">
                     <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
+                    <a href="#"><i class="fab fa-facebook"></i>facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
                 </div>
 
                 <div class="box">
@@ -552,102 +487,110 @@
                     <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
                     <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
                     <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
+                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
-            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
+            <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
         </footer>
     </div>
 
     <script>
         // Menú móvil
-        let menu = document.querySelector('#menu-btn');
-        let navbar = document.querySelector('.navbar');
+        const menu = document.querySelector('#menu-btn');
+        const navbar = document.querySelector('.navbar');
 
         if(menu && navbar) {
             menu.onclick = () => {
                 menu.classList.toggle('fa-times');
                 navbar.classList.toggle('active');
-            }
-
+            };
             window.onscroll = () => {
                 menu.classList.remove('fa-times');
                 navbar.classList.remove('active');
-            }
+            };
         }
 
-        // Búsqueda y filtrado
+        // === CARGA DE USUARIOS ===
+        const API_URL = '/admin/api/users';
+        const tablaCuentas = document.getElementById('tablaCuentas');
         const searchInput = document.getElementById('searchInput');
-        const tablaAlertas = document.getElementById('tablaAlertas');
         const filtroEstado = document.getElementById('filtroEstado');
 
-        searchInput.addEventListener('input', filtrarTabla);
-        filtroEstado.addEventListener('change', filtrarTabla);
+        async function cargarUsuarios() {
+            try {
+                console.log("Cargando desde:", API_URL);
+                const res = await fetch(API_URL);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        function filtrarTabla() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const estadoFiltro = filtroEstado.value.toLowerCase();
-            const filas = tablaAlertas.getElementsByTagName('tr');
+                const usuarios = await res.json();
+                console.log("Usuarios recibidos:", usuarios);
 
-            for (let i = 0; i < filas.length; i++) {
-                const fila = filas[i];
-                const tipo = fila.cells[0].textContent.toLowerCase();
-                const descripcion = fila.cells[1].textContent.toLowerCase();
-                const estadoBadge = fila.querySelector('.estado-badge');
-                let estado = '';
-                
-                if (estadoBadge) {
-                    if (estadoBadge.classList.contains('estado-pendiente')) estado = 'pendiente';
-                    else if (estadoBadge.classList.contains('estado-proceso')) estado = 'proceso';
-                    else if (estadoBadge.classList.contains('estado-resuelto')) estado = 'resuelto';
-                }
+                const tbody = tablaCuentas.querySelector('tbody');
+                tbody.innerHTML = '';
 
-                const coincideBusqueda = tipo.includes(searchTerm) || descripcion.includes(searchTerm);
-                const coincideEstado = estadoFiltro === 'todos' || estado === estadoFiltro;
+                usuarios.forEach(u => {
+                  const rol = 
+                    u.rol === 'ADMIN' ? 'Administrador' :
+                    u.rol === 'VENDEDOR' ? 'Vendedor' :
+                    u.rol === 'COMPRADOR' ? 'Comprador' :
+                    u.rol === 'MODERATOR' ? 'Vendedor' :
+                    u.rol === 'USER' ? 'Comprador' : u.rol;
 
-                if (coincideBusqueda && coincideEstado) {
-                    fila.style.display = '';
-                } else {
-                    fila.style.display = 'none';
-                }
+                    const estado = u.activo ? 'Activo' : 'Inactivo';
+                    const clase = u.activo ? 'estado-activo' : 'estado-inactivo';
+                    const fecha = u.fechaRegistro ? new Date(u.fechaRegistro).toLocaleDateString('es-PE') : '--';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${u.nombre}</td>
+                            <td>${rol}</td>
+                            <td>${fecha}</td>
+                            <td>${u.email}</td>
+                            <td>--</td>
+                            <td><span class="estado-badge ${clase}">${estado}</span></td>
+                        </tr>
+                    `;
+                });
+
+                // Actualizar contador
+                const span = document.querySelector('.info-cuentas span');
+                if (span) span.textContent = usuarios.length;
+
+            } catch (err) {
+                console.error(err);
+                const tbody = tablaCuentas.querySelector('tbody');
+                tbody.innerHTML = `<tr><td colspan="6" style="color:red;">Error: ${err.message}</td></tr>`;
             }
         }
 
-        // Paginación
-        const btnPrev = document.getElementById('btnPrev');
-        const btnNext = document.getElementById('btnNext');
-        const botonesPag = document.querySelectorAll('.paginacion button:not(#btnPrev):not(#btnNext)');
+        // === FILTRO Y BÚSQUEDA ===
+        function filtrarTabla() {
+            const term = (searchInput?.value || '').toLowerCase();
+            const estado = (filtroEstado?.value || 'todos').toLowerCase();
+            const filas = tablaCuentas.querySelectorAll('tbody tr');
 
-        botonesPag.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                if (!btn.textContent.includes('...')) {
-                    botonesPag.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                }
+            filas.forEach(fila => {
+                const nombre = fila.cells[0].textContent.toLowerCase();
+                const email = fila.cells[3].textContent.toLowerCase();
+                const badge = fila.querySelector('.estado-badge');
+                const estadoTexto = badge ? badge.textContent.toLowerCase() : '';
+
+                const matchSearch = nombre.includes(term) || email.includes(term);
+                const matchEstado = estado === 'todos' || estadoTexto.includes(estado);
+
+                fila.style.display = matchSearch && matchEstado ? '' : 'none';
             });
+        }
+
+        if (searchInput) searchInput.addEventListener('input', filtrarTabla);
+        if (filtroEstado) filtroEstado.addEventListener('change', filtrarTabla);
+
+        // === INICIAR ===
+        window.addEventListener('load', () => {
+            console.log("Página cargada. Iniciando carga de usuarios...");
+            cargarUsuarios();
         });
     </script>
-
-    <script>
-        const apiAlerts = '/admin/api/alerts';
-
-        fetch(apiAlerts)
-            .then(r => r.json())
-            .then(alertas => {
-                const container = document.getElementById('alertas-container');
-                container.innerHTML = alertas.map(a => `
-                    <div class="alert ${a.tipo.toLowerCase()}" style="padding:1.5rem; margin:1rem 0; border-left:4px solid ${a.tipo === 'DANGER' ? 'red' : a.tipo === 'WARNING' ? 'orange' : 'blue'}">
-                        <strong>${a.tipo}</strong>: ${a.mensaje}
-                        <button onclick="marcarLeida(${a.id})" style="float:right">Marcar leída</button>
-                    </div>
-                `).join('');
-            });
-
-        function marcarLeida(id) {
-            fetch(`${apiAlerts}/${id}/read`, {method: 'PATCH'})
-                .then(() => location.reload());
-        }
-    </script>
-
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a6764a98ffcd575',t:'MTc2NDQ3NDc1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -2,6 +2,9 @@ package com.certus.artesanias.controlador;
 
 import com.certus.artesanias.dto.DashboardStatsDTO;
 import com.certus.artesanias.service.AdminService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,4 +52,12 @@ public class AdminController {
     public DashboardStatsDTO getStats() {
         return adminService.getDashboardStatistics();
     }
+
+        @GetMapping("/salir")
+    public String salir(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 }
+
+
