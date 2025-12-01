@@ -21,7 +21,7 @@
         <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
         <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
         <a th:href="@{/vendedor/ventas}">VENTAS</a>
-        <a th:href="@{/login}">SALIR</a>
+        <a th:href="@{/vendedor/salir}">SALIR</a>
       </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -36,47 +36,44 @@
 
       <div class="perfil-container">
         
-        <!-- Imagen del perfil -->
-        <div class="perfil-foto">
-          <img th:src="${vendedor.foto}" alt="Foto">
-          <button class="btn subir-foto"><i class="fas fa-camera"></i> Cambiar foto</button>
-        </div>
-
+  
         <!-- Datos personales -->
         <div class="perfil-datos">
-          <form th:action="@{/vendedor/perfil/guardar}" method="post" 
-      th:object="${vendedor}" class="form-perfil">
+          <form th:action="@{/vendedor/perfil/guardar}" method="post" th:object="${vendedor}" class="form-perfil">
+
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div th:if="${param.success}" class="mensaje-exito" style="margin-bottom:12px;padding:8px;background:#e6ffed;border:1px solid #b6f2c9;color:#2a7a3a;border-radius:6px;">Perfil guardado correctamente ✅</div>
 
             <div class="campo">
               <label>Nombre:</label>
-              <input type="text" name= "nombre"th:field="*{nombre}" readonly>
+              <input type="text" th:field="*{nombre}" readonly>
             </div>
 
             <div class="campo">
               <label>Correo electrónico:</label>
-              <input type="email" name="correo" th:field="*{correo}" readonly>
+              <input type="email" th:field="*{correo}" readonly>
             </div>
 
             <div class="campo">
               <label>Teléfono:</label>
-              <input type="text" name="telefono" th:field="*{telefono}" readonly>
+              <input type="text" th:field="*{telefono}" readonly>
             </div>
 
             <div class="campo">
               <label>Dirección:</label>
-              <input type="text" name="direccion" th:field="*{direccion}" readonly>
+              <input type="text" th:field="*{direccion}" readonly>
             </div>
 
             <div class="campo">
               <label>Descripción:</label>
-              <textarea readonly th:field="*{descripcion}"></textarea>
+              <textarea th:field="*{descripcion}" readonly></textarea>
             </div>
 
             <div class="botones">
               <button type="button" id="btn-editar" class="btn editar"><i class="fas fa-edit"></i> Editar</button>
-              <button type="submit" id="btn-guardar" class="btn guardar" disabled>
-                  <i class="fas fa-save"></i> Guardar
-</button>
+              <button type="submit" id="btn-guardar" class="btn guardar" disabled><i class="fas fa-save"></i> Guardar</button>
             </div>
           </form>
         </div>
@@ -122,13 +119,15 @@
         btnGuardar.classList.add('enabled');
         });
 
-        btnGuardar.addEventListener('click', () => {
-    // quitar preventDefault para permitir SUBMIT
-    inputs.forEach(i => i.setAttribute('readonly', true));
-    btnGuardar.setAttribute('disabled', true);
-    btnGuardar.classList.remove('enabled');
-});
-
+        // Submit handler: marcar campos readonly y desactivar el botón para evitar doble envío
+        const formPerfil = document.querySelector('.form-perfil');
+        if (formPerfil) {
+          formPerfil.addEventListener('submit', () => {
+            inputs.forEach(i => i.setAttribute('readonly', true));
+            btnGuardar.setAttribute('disabled', true);
+            btnGuardar.classList.remove('enabled');
+          });
+        }
     </script>
 </body>
 </html>

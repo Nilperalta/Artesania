@@ -21,7 +21,7 @@
                 <a th:href="@{/vendedor/perfil}">MI PERFIL</a>
                 <a th:href="@{/vendedor/productos}">MIS PRODUCTOS</a>
                 <a th:href="@{/vendedor/ventas}">VENTAS</a>
-                <a th:href="@{/login}">SALIR</a>
+                <a th:href="@{/vendedor/salir}">SALIR</a>
             </nav>
 
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -34,7 +34,7 @@
                 <h1 class="heading">Bienvenido, Vendedor 👋</h1>
                 
                  <section class="productos-vendedor">
-                    <h2 class="subtitulo">Mis Productos <span class="cantidad">(2 productos)</span></h2>
+                    <h2 class="subtitulo">Mis Productos <span class="cantidad">(<span th:text="${#lists.size(productos)}">0</span> productos)</span></h2>
                     <button class="btn-agregar">Agregar Productos</button>
 
                     <!-- Modal para agregar producto -->
@@ -42,18 +42,19 @@
                             <div class="modal-contenido">
                                 <span id="cerrar-modal" class="cerrar">&times;</span>
                                 <h2>Agregar Producto</h2>
-                                <form id="form-producto">
+                                <form id="form-producto" th:action="@{/vendedor/productos/guardar}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <label>Nombre:</label>
-                                    <input type="text" id="nombre" required>
+                                    <input type="text" id="nombre" name="nombre" required>
 
-                                    <label>Color:</label>
-                                    <input type="text" id="color" required>
+                                    <label>Descripción:</label>
+                                    <input type="text" id="color" name="descripcion" required>
 
                                     <label>Precio (S/.):</label>
-                                    <input type="number" id="precio" required step="0.01">
+                                    <input type="number" id="precio" name="precio" required step="0.01">
 
                                     <label>Imagen (URL o ruta):</label>
-                                    <input type="text" id="imagen" placeholder="images/producto-3.png" required>
+                                    <input type="text" id="imagen" name="imagen" placeholder="images/producto-3.png" required>
 
                                     <button type="submit" class="btn-guardar">Guardar</button>
                                 </form>
@@ -62,8 +63,8 @@
 
 
                 <div class="lista-productos" th:if="${productos.size() > 0}">
-                    <div class="producto" th:each="p : ${productos}">
-                            <img th:src="@{${p.imagen}}" class="producto-img">
+                        <div class="producto" th:each="p : ${productos}" th:attr="data-id=${p.id}, data-nombre=${p.nombre}, data-descripcion=${p.descripcion}, data-precio=${p.precio}, data-imagen=${p.imagen}, data-stock=${p.stock}">
+                            <img th:src="${p.imagen}" class="producto-img">
 
                         <div class="producto-info">
                                 <h3 th:text="${p.nombre}"></h3>
@@ -74,8 +75,11 @@
                                 <span th:text="'Stock: ' + ${p.stock}"></span>
                             </div>
 
-                            <button class="btn-editar">Editar</button>
-                            <button class="btn-eliminar">Eliminar</button>
+                            <button class="btn-editar" type="button" onclick="abrirModalEditar(this)">Editar</button>
+                            <form th:action="@{/vendedor/productos/{id}/eliminar(id=${p.id})}" method="post" style="display:inline-block">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button class="btn-eliminar" type="submit">Eliminar</button>
+                            </form>
                         </div>
 
                         <p class="precio" th:text="'S/. ' + ${p.precio}"></p>
@@ -110,7 +114,7 @@
                     <a th:href="@{/index.html#home}"><i class="fas fa-check"></i>Home</a>
                     <a th:href="@{/index.html#productos}"><i class="fas fa-check"></i>Productos</a>
                     <a th:href="@{/SeleccionRegistro.html}"><i class="fas fa-check"></i>Registro</a>
-                    <a th:href="@{/login}"><i class="fas fa-check"></i>Login</a>
+                    <a th:href="@{/vendedor/salir}"><i class="fas fa-check"></i>Login</a>
                 </div>
             </div>
 
@@ -153,41 +157,9 @@
     cerrar.onclick = () => modal.style.display = "none";
     window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
 
-    // --- Agregar producto dinámicamente ---
-    const form = document.getElementById("form-producto");
+    // --- Agregar producto: La forma se envía al servidor (no se maneja dinámicamente aquí) ---
     const lista = document.querySelector(".lista-productos");
     const contador = document.querySelector(".cantidad");
-
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const nombre = document.getElementById("nombre").value;
-        const color = document.getElementById("color").value;
-        const precio = document.getElementById("precio").value;
-        const imagen = document.getElementById("imagen").value;
-
-        const nuevoProducto = document.createElement("div");
-        nuevoProducto.classList.add("producto");
-        nuevoProducto.innerHTML = `
-            <img src="${imagen}" alt="${nombre}" class="producto-img">
-            <div class="producto-info">
-                <h3>${nombre}</h3>
-                <p><strong>Color:</strong> ${color}</p>
-                <div class="cantidad">
-                    <button class="btn-cantidad" onclick="cambiarCantidad(this, -1)">−</button>
-                    <span>1</span>
-                    <button class="btn-cantidad" onclick="cambiarCantidad(this, 1)">+</button>
-                </div>
-                 <button class="btn-editar" onclick="editarProducto(this)">Editar Producto</button>
-                <button class="btn-eliminar" onclick="eliminarProducto(this)">Eliminar Producto</button>
-            </div>
-            <p class="precio">S/. ${parseFloat(precio).toFixed(2)}</p>
-        `;
-        
-        lista.appendChild(nuevoProducto);
-        form.reset();
-        modal.style.display = "none";
-        actualizarContador();
-    });
 
     // --- Actualizar contador de productos ---
     function actualizarContador() {
@@ -208,15 +180,19 @@
   <div class="modal-contenido">
     <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
     <h2>Editar Producto</h2>
-    <form id="formEditar">
-      <label>Nombre:</label>
-      <input type="text" id="editarNombre" required>
+        <form id="formEditar" th:action="@{/vendedor/productos/guardar}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" id="editarId" name="id" />
+    <label>Nombre:</label>
+    <input type="text" id="editarNombre" name="nombre" required>
 
-      <label>Color:</label>
-      <input type="text" id="editarColor" required>
+    <label>Color:</label>
+    <input type="text" id="editarColor" name="descripcion" required>
 
-      <label>Precio (S/.):</label>
-      <input type="number" id="editarPrecio" step="0.01" required>
+    <label>Precio (S/.):</label>
+    <input type="number" id="editarPrecio" name="precio" step="0.01" required>
+    <label>Imagen (URL o ruta):</label>
+    <input type="text" id="editarImagen" name="imagen" placeholder="images/producto-3.png">
 
       <button type="submit" class="btn-guardar">Guardar cambios</button>
     </form>
@@ -226,27 +202,31 @@
 <script>
       let productoEditando = null;
 
-      function editarProducto(btn) {
-        const producto = btn.closest('.producto');
-        productoEditando = producto;
-        document.getElementById('editarNombre').value = producto.querySelector('h3').textContent;
-        document.getElementById('editarColor').value = producto.querySelector('p').textContent.replace('Color: ', '');
-        document.getElementById('editarPrecio').value = producto.querySelector('.precio').textContent.replace('S/. ', '');
-        document.getElementById('modalEditar').style.display = 'flex';
-      }
+            function abrirModalEditar(btn) {
+                const productoEl = btn.closest('.producto');
+                productoEditando = productoEl;
+                document.getElementById('editarId').value = productoEl.getAttribute('data-id');
+                document.getElementById('editarNombre').value = productoEl.getAttribute('data-nombre');
+                document.getElementById('editarColor').value = productoEl.getAttribute('data-descripcion');
+                document.getElementById('editarPrecio').value = productoEl.getAttribute('data-precio');
+                document.getElementById('editarImagen').value = productoEl.getAttribute('data-imagen');
+                document.getElementById('modalEditar').style.display = 'flex';
+            }
 
       function cerrarModalEditar() {
         document.getElementById('modalEditar').style.display = 'none';
       }
 
-      document.getElementById('formEditar').addEventListener('submit', function(e) {
+            document.getElementById('formEditar').addEventListener('submit', function(e) {
         e.preventDefault();
-        if (productoEditando) {
-          productoEditando.querySelector('h3').textContent = document.getElementById('editarNombre').value;
-          productoEditando.querySelector('p').innerHTML = '<strong>Color:</strong> ' + document.getElementById('editarColor').value;
-          productoEditando.querySelector('.precio').textContent = 'S/. ' + parseFloat(document.getElementById('editarPrecio').value).toFixed(2);
-        }
-        cerrarModalEditar();
+                // si hay un producto editando actualizamos visualmente; el formulario se envía al servidor
+                if (productoEditando) {
+                    productoEditando.querySelector('h3').textContent = document.getElementById('editarNombre').value;
+                    productoEditando.querySelector('p').innerHTML = '<strong>Color:</strong> ' + document.getElementById('editarColor').value;
+                    productoEditando.querySelector('.precio').textContent = 'S/. ' + parseFloat(document.getElementById('editarPrecio').value).toFixed(2);
+                }
+                // permitir envío real del formulario
+                this.submit();
       });
     </script>
 </body>

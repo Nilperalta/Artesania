@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.certus.artesanias.models.Vendedor;
 
 public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
-   Optional<Vendedor> findByUsuarioId(Long id);
+   Optional<Vendedor> findByUsuario_Id(Long id);
 }
