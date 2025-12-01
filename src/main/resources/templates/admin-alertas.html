@@ -4,704 +4,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Alertas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" th:href="@{/images/Logo-artesania.png}" href="images/Logo-artesania.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
 
-        :root{
-            --lineaMarron:rgba(146, 89, 48, 1);
-            --EncabezadoHome:rgba(120, 198, 189, 1);
-            --black:#555;
-            --light-color:#777;
-            --bg:#fceae9;
-            --border:.1rem solid rgba(0,0,0,.1);
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-            --encabezados:rgba(1, 1, 1, 1);
-            --box-color: rgba(236, 236, 236, 1);
-            --boton:#c06722;
-            --pendiente: #f5c6cb;
-            --proceso: #c06722;
-            --resuelto: #5cb85c;
+        :root {
+            --primary: #c06722;
+            --bg: #f8f9fa;
+            --dark: #2c3e50;
         }
 
-        *{
-            font-family: "Nunito", sans-serif;
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-            outline: none; border: none;
-            text-decoration: none;
-            text-transform: capitalize;
-            transition: all .3s ease-out;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Nunito',sans-serif; }
+        body { background:var(--bg); padding-top: 100px; min-height:100vh; }
 
-        html{
-            font-size: 62.5%;
-            scroll-behavior: smooth;
-            scroll-padding-top: 9rem;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .layout{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr auto;
-            grid-template-areas:  "header"
-                                  "main"
-                                  "footer";
-            min-height: 100vh;
-        }
-
-        .layout .header{
-            background: #fff;
-            grid-area: header;
-        }
-
-        .layout .contenedor{
-            background: #fff;
-            grid-area: main;
-        }
-
-        .layout .footer{
-            background: #ffdcc2;
-            grid-area: footer;
-        }
-
-        /* Header */
-        .header{
+        /* HEADER LIMPIO EXACTAMENTE COMO QUIERES */
+        header {
             position: fixed;
             top: 0; left: 0; right: 0;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             z-index: 1000;
-            background: #fff;
-            box-shadow: var(--box-shadow);
+            padding: 18px 40px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 9%;
-        }
-
-        .header .logo{
-            height: 7rem;
-        }
-
-        .header .navbar{
-            display: flex;
             align-items: center;
         }
-
-        .header .navbar a{
-            font-size: 1.7rem;
-            color: var(--light-color);
-            margin-left: 2rem;
+        .logo-preview {
+            height: 68px;
+            object-fit: contain;
+        }
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            padding: 14px 34px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .3s;
+        }
+        .back-btn:hover {
+            background: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(192,103,34,0.4);
         }
 
-        .header .navbar a:hover{
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn{
-            cursor: pointer;
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: .5rem;
-            color: var(--main-color);
-            background: #ffdcc2;
-            display: none;
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn:hover{
-            color: #fff;
-            background: var(--EncabezadoHome);
-        }
-
-        /* Contenedor */
-        .contenedor{
-            background: #fff;
-        }
-
-        /* Alertas */
-        .alertas {
-            margin-top: 8rem;
-            padding: 2rem;
+        .container {
             max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-
-        .alertas .heading-alertas {
-            font-size: 3rem;
-            color: var(--EncabezadoHome);
-            margin-bottom: 3rem;
+        h1 {
             text-align: center;
+            color: var(--primary);
+            font-size: 3.8rem;
+            margin-bottom: 40px;
+            font-weight: 800;
         }
 
-        /* Contenedor de alertas dinámicas */
-        #alertas-container {
-            margin-bottom: 2rem;
-        }
-
-        .alert-item {
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-radius: 0.5rem;
+        /* Tu tabla hermosa queda 100% igual */
+        .controls {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 1.4rem;
-        }
-
-        .alert-item.danger {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-        }
-
-        .alert-item.warning {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-        }
-
-        .alert-item.info {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-        }
-
-        .alert-item button {
-            padding: 0.5rem 1rem;
-            background: var(--boton);
-            color: #fff;
-            border-radius: 0.3rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .alert-item button:hover {
-            background: var(--lineaMarron);
-        }
-
-        /* Filtros y búsqueda */
-        .filtros-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
-            margin-bottom: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 15px;
         }
-
         .search-box {
             position: relative;
+            width: 300px;
         }
-
         .search-box input {
-            padding: 1rem 1rem 1rem 4rem;
-            font-size: 1.4rem;
-            border: var(--border);
-            border-radius: 0.5rem;
-            width: 25rem;
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1.1rem;
         }
-
         .search-box i {
             position: absolute;
-            left: 1.5rem;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--light-color);
-            font-size: 1.6rem;
+            color: #999;
         }
-
-        .filtro-select {
-            padding: 1rem;
-            font-size: 1.4rem;
-            border: var(--border);
-            border-radius: 0.5rem;
-            color: var(--black);
-            cursor: pointer;
-        }
-
-        /* Tabla de alertas */
-        .tabla-alertas {
-            background: #fff;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
-            overflow-x: auto;
+        select {
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1.1rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
-
-        thead {
-            background: #f8f9fa;
-        }
-
-        thead th {
-            padding: 1.5rem;
+        th {
+            background: #f1f1f1;
+            padding: 18px;
             text-align: left;
-            font-size: 1.4rem;
-            color: var(--black);
             font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
+            color: var(--dark);
         }
-
-        tbody tr {
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.3s ease;
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
         }
-
-        tbody tr:hover {
-            background: #f8f9fa;
+        tr:hover {
+            background: #fdf2e9;
         }
-
-        tbody td {
-            padding: 1.5rem;
-            font-size: 1.4rem;
-            color: var(--black);
-        }
-
-        /* Estados de alerta */
-        .estado-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 1.2rem;
+        .status {
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.95rem;
             font-weight: 600;
         }
+        .pendiente { background:#fce4e4; color:#c33; }
+        .en-proceso { background:#fef9e7; color:#c06722; }
+        .resuelta { background:#e6f7ed; color:#27ae60; }
 
-        .estado-pendiente {
-            background: var(--pendiente);
-            color: #721c24;
-        }
-
-        .estado-proceso {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .estado-resuelto {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        /* Paginación */
-        .paginacion {
+        .pagination {
             display: flex;
             justify-content: center;
-            gap: 0.5rem;
-            margin-top: 3rem;
+            align-items: center;
+            gap: 10px;
+            margin-top: 50px;
+            font-size: 1.1rem;
         }
-
-        .paginacion button {
-            padding: 1rem 1.5rem;
-            border: var(--border);
-            background: #fff;
-            cursor: pointer;
-            border-radius: 0.5rem;
-            font-size: 1.4rem;
-            color: var(--black);
-            transition: all 0.3s ease;
+        .pagination a {
+            padding: 10px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--dark);
         }
-
-        .paginacion button:hover,
-        .paginacion button.active {
-            background: var(--EncabezadoHome);
-            color: #fff;
-        }
-
-        .paginacion button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Footer */
-        .footer .box-container{
-            display: flex;
-            justify-content: space-evenly;
-            box-shadow: var(--box-shadow);
-        }
-
-        .footer .box-container .box{
-            display: flex;
-            flex-direction: column;
-            margin: 2rem;
-            padding: 2rem;
-        }
-
-        .footer .box-container .box img{
-            height: 9rem;
-        }
-
-        .footer .box-container .box h3{
-            font-size: 1.5rem;
-        }
-
-        .footer .box-container .box a{
-            font-size: 1.2rem;
-            color: var(--light-color);
-        }
-
-        .footer .box-container .box a i{
-            color: var(--lineaMarron);
-            margin-right: 0.5rem;
-        }
-
-        .footer .box-container .box a:hover{
-            color: var(--lineaMarron);
-        }
-
-        .footer .credit{
-            background: var(--lineaMarron);
-            display: flex;
-            justify-content: center;
-        }
-
-        .footer .credit span{
+        .pagination a.active {
+            background: var(--primary);
             color: white;
-            font-size: 1.2rem;
-            padding: 1rem;
-        }
-
-        /* Media queries */
-        @media(max-width: 991px){
-            html{
-                font-size: 55%;
-            }
-        }
-
-        @media(max-width: 768px){
-            .filtros-container {
-                flex-direction: column;
-            }
-
-            .search-box input {
-                width: 100%;
-            }
-
-            .footer .box-container{
-                flex-direction: column;
-                align-items: center;
-            }
-
-            #menu-btn{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 2rem;
-            }
-
-            .header .navbar{
-                position: absolute;
-                top:115%; right: 6rem;
-                width: 30rem;
-                opacity:0;
-                display: block;
-                font-size: 2rem;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem; 
-                background: #fff; 
-                transform: scale(0);
-            }
-
-            .header .navbar.active{
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            .header .navbar a{
-                font-size: 2rem;
-                display: block;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem;    
-            }
-        }
-
-        @media(max-width: 450px){
-            html{
-                font-size: 50%;
-            }
-
-            .paginacion button {
-                padding: 0.8rem 1rem;
-                font-size: 1.2rem;
-            }
+            border-color: var(--primary);
         }
     </style>
 </head>
 <body>
 
-    <div class="layout">
+<!-- HEADER LIMPIO: SOLO LOGO + VOLVER AL DASHBOARD -->
+<header>
+    <img src="/images/Logo-artesania.png" class="logo-preview" alt="Logo">
+    <a th:href="@{/admin}" class="back-btn">
+        Volver al Dashboard
+    </a>
+</header>
 
-        <!-- Header -->
-        <header class="header">
-            <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="" class="logo">
-            
-            <nav class="navbar">
-                <a th:href="@{/}">HOME</a>
-                <a th:href="@{/#productos}">PRODUCTOS</a>
-                <a th:href="@{/ventas}">VENTAS</a>
-                <a th:href="@{/logout}">SALIR</a>
-            </nav>
+<div class="container">
+    <h1>Alertas</h1>
 
-            <div id="menu-btn" class="fas fa-bars"></div>
-        </header>
-
-        <!-- Contenido principal -->
-        <main class="contenedor">
-            
-            <section class="alertas">
-                <h1 class="heading-alertas">Alertas</h1>
-                
-                <!-- Contenedor para alertas dinámicas de la API -->
-                <div id="alertas-container"></div>
-                
-                <!-- Filtros y búsqueda -->
-                <div class="filtros-container">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar" id="searchInput">
-                    </div>
-
-                    <select class="filtro-select" id="filtroEstado">
-                        <option value="todos">Filtrar por:</option>
-                        <option value="pendiente">Pendiente</option>
-                        <option value="proceso">En Proceso</option>
-                        <option value="resuelto">Resuelto</option>
-                    </select>
-                </div>
-
-                <!-- Tabla de alertas -->
-                <div class="tabla-alertas">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Descripción</th>
-                                <th>Prioridad</th>
-                                <th>Fecha</th>
-                                <th>Ubicación</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaAlertas">
-                            <!-- Opción 1: Renderizado con Thymeleaf desde el backend -->
-                            <tr th:each="alerta : ${alertasTabla}" th:if="${alertasTabla != null}">
-                                <td th:text="${alerta.tipo}">Tipo</td>
-                                <td th:text="${alerta.descripcion}">Descripción</td>
-                                <td th:text="${alerta.prioridad}">Prioridad</td>
-                                <td th:text="${#temporals.format(alerta.fecha, 'dd/MM/yyyy')}">00/00/0000</td>
-                                <td th:text="${alerta.ubicacion}">País</td>
-                                <td>
-                                    <span class="estado-badge"
-                                          th:classappend="${alerta.estado == 'PENDIENTE'} ? 'estado-pendiente' : (${alerta.estado == 'EN_PROCESO'} ? 'estado-proceso' : 'estado-resuelto')"
-                                          th:text="${alerta.estado == 'EN_PROCESO'} ? 'En Proceso' : ${alerta.estado}">
-                                        Estado
-                                    </span>
-                                </td>
-                            </tr>
-                            
-                            <!-- Opción 2: Datos estáticos de ejemplo (se pueden eliminar si usas solo backend) -->
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Seguridad</td>
-                                <td>Intento de acceso sospechoso</td>
-                                <td>Alta</td>
-                                <td>14/09/2025</td>
-                                <td>Perú</td>
-                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
-                            </tr>
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Pago</td>
-                                <td>Fallo en pasarela de VISA</td>
-                                <td>Alta</td>
-                                <td>13/09/2025</td>
-                                <td>México</td>
-                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
-                            </tr>
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Usuario</td>
-                                <td>Reporte de vendedor por fraude</td>
-                                <td>Media</td>
-                                <td>12/09/2025</td>
-                                <td>Colombia</td>
-                                <td><span class="estado-badge estado-pendiente">Pendiente</span></td>
-                            </tr>
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Mantenimiento</td>
-                                <td>Actualización de servidores</td>
-                                <td>Baja</td>
-                                <td>10/09/2025</td>
-                                <td>España</td>
-                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
-                            </tr>
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Sistema</td>
-                                <td>Error en módulo de inventario</td>
-                                <td>Alta</td>
-                                <td>09/09/2025</td>
-                                <td>Argentina</td>
-                                <td><span class="estado-badge estado-proceso">En Proceso</span></td>
-                            </tr>
-                            <tr th:if="${alertasTabla == null}">
-                                <td>Seguridad</td>
-                                <td>Actualización de certificado SSL</td>
-                                <td>Media</td>
-                                <td>08/09/2025</td>
-                                <td>Chile</td>
-                                <td><span class="estado-badge estado-resuelto">Resuelto</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-                <div class="paginacion">
-                    <button id="btnPrev" disabled><i class="fas fa-chevron-left"></i></button>
-                    <button class="active">1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>...</button>
-                    <button>40</button>
-                    <button id="btnNext"><i class="fas fa-chevron-right"></i></button>
-                </div>
-
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="box-container">
-                <div class="box">
-                    <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="">
-                </div>
-
-                <div class="box">
-                    <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
-                </div>
-
-                <div class="box">
-                    <h3>Servicios</h3>
-                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
-                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
-                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
-                </div>
-            </div>
-
-            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
-        </footer>
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar...">
+            <i class="fas fa-search"></i>
+        </div>
+        <select>
+            <option>Filtrar Por:</option>
+            <option>Pendiente</option>
+            <option>En Proceso</option>
+            <option>Resuelta</option>
+        </select>
     </div>
 
-    <script>
-        // Menú móvil
-        let menu = document.querySelector('#menu-btn');
-        let navbar = document.querySelector('.navbar');
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Prioridad</th>
+                <th>Fecha</th>
+                <th>Ubicación</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Seguridad</td><td>Intento De Acceso Sospechoso</td><td>Alta</td><td>14/09/2025</td><td>Perú</td><td><span class="status pendiente">Pendiente</span></td></tr>
+            <tr><td>Pago</td><td>Fallo En Pasarela De VISA</td><td>Alta</td><td>13/09/2025</td><td>México</td><td><span class="status en-proceso">En Proceso</span></td></tr>
+            <tr><td>Usuario</td><td>Reporte De Vendedor Por Fraude</td><td>Media</td><td>12/09/2025</td><td>Colombia</td><td><span class="status pendiente">Pendiente</span></td></tr>
+            <tr><td>Mantenimiento</td><td>Actualización De Servidores</td><td>Baja</td><td>10/09/2025</td><td>España</td><td><span class="status resuelta">Resuelta</span></td></tr>
+            <tr><td>Sistema</td><td>Error En Módulo De Inventario</td><td>Alta</td><td>09/09/2025</td><td>Argentina</td><td><span class="status en-proceso">En Proceso</span></td></tr>
+            <tr><td>Seguridad</td><td>Actualización De Certificado SSL</td><td>Media</td><td>08/09/2025</td><td>Chile</td><td><span class="status resuelta">Resuelta</span></td></tr>
+        </tbody>
+    </table>
 
-        if(menu && navbar) {
-            menu.onclick = () => {
-                menu.classList.toggle('fa-times');
-                navbar.classList.toggle('active');
-            }
+    <div class="pagination">
+        < </span><a href="#" class="active">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a> ... <a href="#">40</a> >
+    </div>
+</div>
 
-            window.onscroll = () => {
-                menu.classList.remove('fa-times');
-                navbar.classList.remove('active');
-            }
-        }
-
-        // Búsqueda y filtrado
-        const searchInput = document.getElementById('searchInput');
-        const tablaAlertas = document.getElementById('tablaAlertas');
-        const filtroEstado = document.getElementById('filtroEstado');
-
-        searchInput.addEventListener('input', filtrarTabla);
-        filtroEstado.addEventListener('change', filtrarTabla);
-
-        function filtrarTabla() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const estadoFiltro = filtroEstado.value.toLowerCase();
-            const filas = tablaAlertas.getElementsByTagName('tr');
-
-            for (let i = 0; i < filas.length; i++) {
-                const fila = filas[i];
-                const tipo = fila.cells[0].textContent.toLowerCase();
-                const descripcion = fila.cells[1].textContent.toLowerCase();
-                const estadoBadge = fila.querySelector('.estado-badge');
-                let estado = '';
-                
-                if (estadoBadge) {
-                    if (estadoBadge.classList.contains('estado-pendiente')) estado = 'pendiente';
-                    else if (estadoBadge.classList.contains('estado-proceso')) estado = 'proceso';
-                    else if (estadoBadge.classList.contains('estado-resuelto')) estado = 'resuelto';
-                }
-
-                const coincideBusqueda = tipo.includes(searchTerm) || descripcion.includes(searchTerm);
-                const coincideEstado = estadoFiltro === 'todos' || estado === estadoFiltro;
-
-                if (coincideBusqueda && coincideEstado) {
-                    fila.style.display = '';
-                } else {
-                    fila.style.display = 'none';
-                }
-            }
-        }
-
-        // Paginación
-        const btnPrev = document.getElementById('btnPrev');
-        const btnNext = document.getElementById('btnNext');
-        const botonesPag = document.querySelectorAll('.paginacion button:not(#btnPrev):not(#btnNext)');
-
-        botonesPag.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                if (!btn.textContent.includes('...')) {
-                    botonesPag.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                }
-            });
-        });
-    </script>
-
-    <!-- API de Alertas con Thymeleaf -->
-    <script th:inline="javascript">
-        const apiAlerts = /*[[@{/admin/api/alerts}]]*/ '/admin/api/alerts';
-    </script>
-
-    <script>
-        // Cargar alertas dinámicas desde la API
-        fetch(apiAlerts)
-            .then(r => r.json())
-            .then(alertas => {
-                const container = document.getElementById('alertas-container');
-                if (alertas && alertas.length > 0) {
-                    container.innerHTML = alertas.map(a => `
-                        <div class="alert-item ${a.tipo.toLowerCase()}">
-                            <span><strong>${a.tipo}</strong>: ${a.mensaje}</span>
-                            <button onclick="marcarLeida(${a.id})">Marcar leída</button>
-                        </div>
-                    `).join('');
-                }
-            })
-            .catch(err => console.error('Error cargando alertas:', err));
-
-        function marcarLeida(id) {
-            fetch(`${apiAlerts}/${id}/read`, {method: 'PATCH'})
-                .then(() => location.reload())
-                .catch(err => console.error('Error:', err));
-        }
-    </script>
-
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a6765ee6dd7d575',t:'MTc2NDQ3NDgxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
