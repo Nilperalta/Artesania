@@ -1,7 +1,5 @@
 package com.certus.artesanias.config;
 
-import com.certus.artesanias.models.Usuario;
-import com.certus.artesanias.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.certus.artesanias.models.Usuario;
+import com.certus.artesanias.repository.UsuarioRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -72,7 +73,8 @@ public class SecurityConfig {
                     "/registro-personal"
                 ).permitAll()
 
-                .requestMatchers("/comprador/**").hasRole("COMPRADOR")
+
+                .requestMatchers("/comprador/**").permitAll()
                 .requestMatchers("/vendedor/**").hasRole("VENDEDOR")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
