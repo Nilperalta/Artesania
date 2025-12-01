@@ -18,6 +18,13 @@ public class Usuario {
     private String password;
     private String rol; // ADMIN, COMPRADOR o VENDEDOR
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
+    // ==================== CONSTRUCTORES ====================
     public Usuario() {}
 
     public Usuario(String nombre, String email, String password, String rol) {
@@ -27,6 +34,7 @@ public class Usuario {
         this.rol = rol;
     }
 
+    // ==================== GETTERS Y SETTERS ====================
     public Long getId() {
         return id;
     }
@@ -67,15 +75,19 @@ public class Usuario {
         this.rol = rol;
     }
 
-    @Column(name = "activo")
-    private Boolean activo = true;
+    public Boolean getActivo() {
+        return activo;
+    }
 
-    public Boolean getActivo() { return activo; }
-    public void setActivo(Boolean activo) { this.activo = activo; }
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 
-    @Column(name = "fecha_registro")
-    private LocalDateTime fechaRegistro;
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
 
-    public LocalDateTime getFechaRegistro() { return fechaRegistro; }
-    public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
 }

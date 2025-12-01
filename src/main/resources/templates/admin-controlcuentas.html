@@ -4,593 +4,688 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Control de Cuentas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" href="images/Logo-artesania.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" th:href="@{/images/Logo-artesania.png}">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-        :root{
-            --lineaMarron:rgba(146, 89, 48, 1);
-            --EncabezadoHome:rgba(120, 198, 189, 1);
-            --black:#555;
-            --light-color:#777;
-            --bg:#fceae9;
-            --border:.1rem solid rgba(0,0,0,.1);
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-            --encabezados:rgba(1, 1, 1, 1);
-            --box-color: rgba(236, 236, 236, 1);
-            --boton:#c06722;
-            --activo: #5cb85c;
-            --pendiente: #c06722;
-            --suspendido: #d9534f;
+        :root {
+            --primary: #c06722;
+            --primary-dark: #a85a1e;
+            --success: #5cb85c;
+            --info: #5bc0de;
+            --warning: #f0ad4e;
+            --danger: #d9534f;
+            --gray: #6c757d;
+            --light-gray: #999;
+            --bg: #f8f9fa;
+            --white: #fff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --border: 1px solid #ddd;
         }
 
-        *{
-            font-family: "Nunito", sans-serif;
-            margin: 0; padding: 0;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            outline: none; border: none;
-            text-decoration: none;
-            text-transform: capitalize;
-            transition: all .3s ease-out;
+            font-family: 'Nunito', sans-serif;
         }
 
-        html{
-            font-size: 62.5%;
-            scroll-behavior: smooth;
-            scroll-padding-top: 9rem;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .layout{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr auto;
-            grid-template-areas:  "header"
-                                  "main"
-                                  "footer";
+        body {
+            background: var(--bg);
             min-height: 100vh;
-        }
-
-        .layout .header{
-            background: #fff;
-            grid-area: header;
-        }
-
-        .layout .contenedor{
-            background: #fff;
-            grid-area: main;
-        }
-
-        .layout .footer{
-            background: #ffdcc2;
-            grid-area: footer;
+            padding-top: 100px;
+            padding-bottom: 80px;
         }
 
         /* Header */
-        .header{
+        header {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: var(--shadow);
             z-index: 1000;
-            background: #fff;
-            box-shadow: var(--box-shadow);
+            padding: 15px 40px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 9%;
-        }
-
-        .header .logo{
-            height: 7rem;
-        }
-
-        .header .navbar{
-            display: flex;
             align-items: center;
         }
 
-        .header .navbar a{
-            font-size: 1.7rem;
-            color: var(--light-color);
-            margin-left: 2rem;
+        .logo-preview {
+            height: 60px;
+            object-fit: contain;
         }
 
-        .header .navbar a:hover{
-            color: var(--lineaMarron);
+        .back-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
 
-        #menu-btn{
-            cursor: pointer;
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: .5rem;
-            color: var(--main-color);
-            background: #ffdcc2;
-            display: none;
-            color: var(--lineaMarron);
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(192,103,34,0.3);
         }
 
-        #menu-btn:hover{
-            color: #fff;
-            background: var(--EncabezadoHome);
-        }
-
-        /* Contenedor */
-        .contenedor{
-            background: #fff;
-        }
-
-        /* Control de Cuentas */
-        .control-cuentas {
-            margin-top: 8rem;
-            padding: 2rem;
+        /* Container */
+        .container {
             max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            padding: 30px 20px;
         }
 
-        .control-cuentas .heading-control {
-            font-size: 3rem;
-            color: var(--EncabezadoHome);
-            margin-bottom: 3rem;
+        h1 {
             text-align: center;
+            color: #78c6bd;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
-        /* Filtros y búsqueda */
-        .filtros-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
-            margin-bottom: 3rem;
+        /* Filtros */
+        .filters {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .info-cuentas {
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 1rem;
         }
 
-        .info-cuentas h3 {
-            font-size: 1.6rem;
-            color: var(--encabezados);
-        }
-
-        .info-cuentas span {
-            color: var(--EncabezadoHome);
-            font-weight: bold;
-        }
-
-        .filtros-derecha {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box input {
-            padding: 1rem 1rem 1rem 4rem;
-            font-size: 1.4rem;
+        .filters input,
+        .filters select {
+            padding: 12px 20px;
             border: var(--border);
-            border-radius: 0.5rem;
-            width: 25rem;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 200px;
+            background: var(--white);
         }
 
-        .search-box i {
-            position: absolute;
-            left: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--light-color);
-            font-size: 1.6rem;
-        }
-
-        .filtro-select {
-            padding: 1rem;
-            font-size: 1.4rem;
-            border: var(--border);
-            border-radius: 0.5rem;
-            background: #fff;
-            color: var(--black);
-            cursor: pointer;
-            min-width: 15rem;
+        .filters input:focus,
+        .filters select:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
         /* Tabla */
-        .tabla-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
         }
 
-        .table {
+        table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-size: 1.4rem;
+            border-collapse: collapse;
         }
 
-        .table th {
-            background: #f8f9fa;
-            padding: 1.5rem;
+        th {
+            background: #ececec;
+            padding: 18px 15px;
             text-align: left;
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        td {
+            padding: 15px;
+            font-size: 14px;
+            color: #555;
+            border-bottom: var(--border);
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        /* Estados */
+        .estado {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .estado.activo {
+            background: var(--success);
+        }
+
+        .estado.inactivo {
+            background: var(--gray);
+        }
+
+        /* Botones de acción */
+        .acciones {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--encabezados);
-            border-bottom: var(--border);
+            cursor: pointer;
+            color: var(--white);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-editar {
+            background: var(--info);
+        }
+
+        .btn-editar:hover {
+            background: #46b8da;
+        }
+
+        .btn-estado {
+            background: var(--warning);
+        }
+
+        .btn-estado:hover {
+            background: #ec971f;
+        }
+
+        .btn-eliminar {
+            background: var(--light-gray);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h2 {
             font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #78c6bd;
+            text-align: center;
         }
 
-        .table td {
-            padding: 1.5rem;
-            border-bottom: var(--border);
-            color: var(--black);
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        .table tr:hover {
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: var(--border);
+            border-radius: 6px;
             background: #f8f9fa;
         }
 
-        .estado-badge {
-            padding: 0.8rem 1.5rem;
-            border-radius: 2rem;
-            font-size: 1.3rem;
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-cancelar {
+            padding: 10px 20px;
+            background: var(--gray);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: 600;
         }
 
-        .estado-activo {
-            background: var(--activo);
-            color: #fff;
-        }
-
-        .estado-pendiente {
-            background: var(--pendiente);
-            color: #fff;
-        }
-
-        .estado-suspendido {
-            background: var(--suspendido);
-            color: #fff;
-        }
-
-        /* Paginación */
-        .paginacion {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            gap: 0.5rem;
-        }
-
-        .paginacion button {
-            padding: 1rem 1.5rem;
-            font-size: 1.4rem;
-            background: #fff;
-            border: var(--border);
-            color: var(--black);
+        .btn-guardar {
+            padding: 10px 20px;
+            background: #78c6bd;
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 0.5rem;
+            font-weight: 600;
         }
 
-        .paginacion button:hover {
-            background: var(--EncabezadoHome);
-            color: #fff;
+        .btn-cancelar:hover {
+            background: #5a6268;
         }
 
-        .paginacion .active {
-            background: var(--EncabezadoHome);
-            color: #fff;
-            font-weight: bold;
+        .btn-guardar:hover {
+            background: #5fb3a7;
         }
 
-        .paginacion button:disabled {
-            cursor: not-allowed;
-            color: var(--light-color);
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 3000;
+            display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
-        /* Responsive */
-        @media(max-width: 991px){
-            html{
-                font-size: 55%;
-            }
-
-            .header{
-                padding: 2rem;
-            }
-
-            .control-cuentas {
-                padding: 2rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
+        .toast.show {
+            display: block;
+            animation: slideIn 0.3s ease;
         }
 
-        @media(max-width: 768px){
-            #menu-btn{
-                display: inline-block;
-            }
+        .toast.success {
+            background: var(--success);
+        }
 
-            .header .navbar{
-                position: absolute;
-                top: 99%; left: 0; right: 0;
-                background: #fff;
-                border-top: var(--border);
-                border-bottom: var(--border);
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-                display: flex;
+        .toast.error {
+            background: var(--danger);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: var(--primary);
+        }
+
+        /* Email sin capitalize */
+        .email-cell {
+            text-transform: lowercase !important;
+        }
+
+        @media (max-width: 768px) {
+            .filters {
                 flex-direction: column;
-                align-items: center;
-                padding: 1rem;
+                align-items: stretch;
             }
-
-            .header .navbar.active{
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            }
-
-            .header .navbar a{
-                display: block;
-                padding: 1.5rem;
-                margin: 1.5rem 0;
-                font-size: 2rem;
-                background: var(--bg);
+            .filters input,
+            .filters select {
                 width: 100%;
-                text-align: center;
             }
-
-            .control-cuentas {
-                padding: 1.5rem;
-            }
-
-            .filtros-container {
+            .acciones {
                 flex-direction: column;
-                gap: 2rem;
-            }
-
-            .filtros-derecha {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .search-box input {
-                width: 100%;
-            }
-
-            .filtro-select {
-                width: 100%;
-            }
-
-            .tabla-container {
-                overflow-x: auto;
-            }
-        }
-
-        @media(max-width: 450px){
-            html{
-                font-size: 50%;
-            }
-
-            .heading-control {
-                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="layout">
+<!-- Header -->
+<header>
+    <img th:src="@{/images/Logo-artesania.png}" class="logo-preview" alt="Logo">
+    <a th:href="@{/admin}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Volver al Dashboard
+    </a>
+</header>
 
-        <!-- Header -->
-        <header class="header">
-            <img src="images/Logo-artesania.png" alt="" class="logo">
-            
-            <nav class="navbar">
-                <a href="index.html">HOME</a>
-                <a href="index.html#productos">PRODUCTOS</a>
-                <a href="#">VENTAS</a>
-                <a href="login.html">SALIR</a>
-            </nav>
+<!-- Contenido -->
+<div class="container">
+    <h1>Control De Cuentas</h1>
 
-            <div id="menu-btn" class="fas fa-bars"></div>
-        </header>
-
-        <!-- Contenido principal -->
-        <main class="contenedor">
-            
-            <section class="control-cuentas">
-                <h1 class="heading-control">CONTROL DE CUENTAS</h1>
-
-                <!-- Filtros -->
-                <div class="filtros-container">
-                    <div class="info-cuentas">
-                        <h3>Todas Las Cuentas: <span>0</span></h3>
-                    </div>
-
-                    <div class="filtros-derecha">
-                        <div class="search-box">
-                            <input type="text" placeholder="Buscar..." id="searchInput">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <select class="filtro-select" id="filtroEstado">
-                            <option value="todos">Todos</option>
-                            <option value="activo">Activo</option>
-                            <option value="pendiente">Pendiente</option>
-                            <option value="suspendido">Suspendido</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Tabla -->
-                <div class="tabla-container">
-                    <table class="table table-hover" id="tablaCuentas">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Nombre Del Usuario</th>
-                                <th>Rol</th>
-                                <th>Última Actividad</th>
-                                <th>Email</th>
-                                <th>País</th>
-                                <th>Estado De Cuenta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se llenará con JS -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-                <div class="paginacion">
-                    <button id="btnPrev" disabled><i class="fas fa-chevron-left"></i></button>
-                    <button class="active">1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>...</button>
-                    <button>89</button>
-                    <button id="btnNext"><i class="fas fa-chevron-right"></i></button>
-                </div>
-
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="box-container">
-                <div class="box">
-                    <img src="images/Logo-artesania.png" alt="">
-                </div>
-
-                <div class="box">
-                    <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>instagram</a>
-                </div>
-
-                <div class="box">
-                    <h3>Servicios</h3>
-                    <a href="index.html#home"><i class="fas fa-check"></i>Home</a>
-                    <a href="index.html#productos"><i class="fas fa-check"></i>Productos</a>
-                    <a href="SeleccionRegistro.html"><i class="fas fa-check"></i>Registro</a>
-                    <a href="login.html"><i class="fas fa-check"></i>Login</a>
-                </div>
-            </div>
-
-            <div class="credit"><span>creado por mr.Grupo | todos los derechos reservados</span></div>
-        </footer>
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Buscar por nombre o email...">
+        <select id="filtroEstado">
+            <option value="todos">Filtrar Estado</option>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+        </select>
+        <select id="filtroRol">
+            <option value="todos">Filtrar Rol</option>
+            <option value="ADMIN">Administrador</option>
+            <option value="VENDEDOR">Vendedor</option>
+            <option value="COMPRADOR">Comprador</option>
+        </select>
     </div>
 
-    <script>
-        // Menú móvil
-        const menu = document.querySelector('#menu-btn');
-        const navbar = document.querySelector('.navbar');
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre Del Usuario</th>
+                    <th>Rol</th>
+                    <th>Última Actividad</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-body">
+                <!-- Se carga dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        if(menu && navbar) {
-            menu.onclick = () => {
-                menu.classList.toggle('fa-times');
-                navbar.classList.toggle('active');
-            };
-            window.onscroll = () => {
-                menu.classList.remove('fa-times');
-                navbar.classList.remove('active');
-            };
-        }
+<!-- Footer -->
+<footer>
+    Creado por <span>Mr. Group</span> | Todos los derechos reservados © 2025
+</footer>
 
-        // === CARGA DE USUARIOS ===
-        const API_URL = '/admin/api/users';
-        const tablaCuentas = document.getElementById('tablaCuentas');
-        const searchInput = document.getElementById('searchInput');
-        const filtroEstado = document.getElementById('filtroEstado');
+<!-- Modal Editar -->
+<div class="modal-overlay" id="modalEditar">
+    <div class="modal-content">
+        <h2><i class="fas fa-user-edit"></i> Editar Usuario</h2>
+        <form id="formEditar">
+            <input type="hidden" id="editUserId">
+            <div class="form-group">
+                <label for="editNombre">Nombre</label>
+                <input type="text" id="editNombre" required>
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="editRol">Rol</label>
+                <select id="editRol">
+                    <option value="COMPRADOR">Comprador</option>
+                    <option value="VENDEDOR">Vendedor</option>
+                    <option value="ADMIN">Administrador</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editEstado">Estado</label>
+                <select id="editEstado">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-        async function cargarUsuarios() {
-            try {
-                console.log("Cargando desde:", API_URL);
-                const res = await fetch(API_URL);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-                const usuarios = await res.json();
-                console.log("Usuarios recibidos:", usuarios);
+<script>
+    // =============================================
+    // VARIABLES GLOBALES
+    // =============================================
+    const API_URL = '/admin/api/users';
+    let usuariosData = [];
 
-                const tbody = tablaCuentas.querySelector('tbody');
-                tbody.innerHTML = '';
+    // =============================================
+    // FUNCIONES UTILITARIAS
+    // =============================================
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = 'toast show ' + type;
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
 
-                usuarios.forEach(u => {
-                  const rol = 
-                    u.rol === 'ADMIN' ? 'Administrador' :
-                    u.rol === 'VENDEDOR' ? 'Vendedor' :
-                    u.rol === 'COMPRADOR' ? 'Comprador' :
-                    u.rol === 'MODERATOR' ? 'Vendedor' :
-                    u.rol === 'USER' ? 'Comprador' : u.rol;
-
-                    const estado = u.activo ? 'Activo' : 'Inactivo';
-                    const clase = u.activo ? 'estado-activo' : 'estado-inactivo';
-                    const fecha = u.fechaRegistro ? new Date(u.fechaRegistro).toLocaleDateString('es-PE') : '--';
-
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${u.nombre}</td>
-                            <td>${rol}</td>
-                            <td>${fecha}</td>
-                            <td>${u.email}</td>
-                            <td>--</td>
-                            <td><span class="estado-badge ${clase}">${estado}</span></td>
-                        </tr>
-                    `;
-                });
-
-                // Actualizar contador
-                const span = document.querySelector('.info-cuentas span');
-                if (span) span.textContent = usuarios.length;
-
-            } catch (err) {
-                console.error(err);
-                const tbody = tablaCuentas.querySelector('tbody');
-                tbody.innerHTML = `<tr><td colspan="6" style="color:red;">Error: ${err.message}</td></tr>`;
-            }
-        }
-
-        // === FILTRO Y BÚSQUEDA ===
-        function filtrarTabla() {
-            const term = (searchInput?.value || '').toLowerCase();
-            const estado = (filtroEstado?.value || 'todos').toLowerCase();
-            const filas = tablaCuentas.querySelectorAll('tbody tr');
-
-            filas.forEach(fila => {
-                const nombre = fila.cells[0].textContent.toLowerCase();
-                const email = fila.cells[3].textContent.toLowerCase();
-                const badge = fila.querySelector('.estado-badge');
-                const estadoTexto = badge ? badge.textContent.toLowerCase() : '';
-
-                const matchSearch = nombre.includes(term) || email.includes(term);
-                const matchEstado = estado === 'todos' || estadoTexto.includes(estado);
-
-                fila.style.display = matchSearch && matchEstado ? '' : 'none';
-            });
-        }
-
-        if (searchInput) searchInput.addEventListener('input', filtrarTabla);
-        if (filtroEstado) filtroEstado.addEventListener('change', filtrarTabla);
-
-        // === INICIAR ===
-        window.addEventListener('load', () => {
-            console.log("Página cargada. Iniciando carga de usuarios...");
-            cargarUsuarios();
+    function formatearFecha(fechaRaw) {
+        if (!fechaRaw) return 'Sin registro';
+        const date = new Date(fechaRaw);
+        if (isNaN(date)) return 'Sin registro';
+        return date.toLocaleDateString('es-PE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
         });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a6764a98ffcd575',t:'MTc2NDQ3NDc1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    }
+
+    // =============================================
+    // RENDERIZAR TABLA
+    // =============================================
+    function renderizarTabla(usuarios) {
+        const tbody = document.getElementById('tabla-body');
+        
+        if (usuarios.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;">No se encontraron usuarios</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = usuarios.map(u => {
+            const estadoClass = u.activo ? 'activo' : 'inactivo';
+            const estadoTexto = u.activo ? 'Activo' : 'Inactivo';
+            const btnEstadoTexto = u.activo ? 'Desactivar' : 'Activar';
+            const btnEstadoIcon = u.activo ? 'fa-toggle-on' : 'fa-toggle-off';
+
+            return `
+                <tr>
+                    <td>${u.nombre || 'Sin nombre'}</td>
+                    <td>${u.rol || 'Sin rol'}</td>
+                    <td>${formatearFecha(u.fechaRegistro)}</td>
+                    <td class="email-cell">${u.email || 'Sin email'}</td>
+                    <td><span class="estado ${estadoClass}">${estadoTexto}</span></td>
+                    <td class="acciones">
+                        <button class="btn btn-editar" onclick="abrirModalEditar(${u.id})">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn btn-estado" onclick="cambiarEstado(${u.id})">
+                            <i class="fas ${btnEstadoIcon}"></i> ${btnEstadoTexto}
+                        </button>
+                        <button class="btn btn-eliminar" disabled title="Próximamente">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // =============================================
+    // CARGAR USUARIOS DESDE API
+    // =============================================
+    async function cargarUsuarios() {
+        try {
+            console.log('Cargando usuarios desde:', API_URL);
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) {
+                throw new Error('Error HTTP: ' + response.status);
+            }
+            
+            usuariosData = await response.json();
+            console.log('Usuarios cargados:', usuariosData);
+            renderizarTabla(usuariosData);
+            
+        } catch (error) {
+            console.error('Error al cargar usuarios:', error);
+            showToast('Error al cargar usuarios', 'error');
+        }
+    }
+
+    // =============================================
+    // FILTRAR TABLA
+    // =============================================
+    function filtrarTabla() {
+        const busqueda = document.getElementById('searchInput').value.toLowerCase().trim();
+        const estado = document.getElementById('filtroEstado').value;
+        const rol = document.getElementById('filtroRol').value;
+
+        const filtrados = usuariosData.filter(u => {
+            const nombre = (u.nombre || '').toLowerCase();
+            const email = (u.email || '').toLowerCase();
+            const rolUsuario = (u.rol || '').toUpperCase();
+            const estadoUsuario = u.activo ? 'activo' : 'inactivo';
+
+            const matchBusqueda = nombre.includes(busqueda) || email.includes(busqueda);
+            const matchEstado = estado === 'todos' || estadoUsuario === estado;
+            const matchRol = rol === 'todos' || rolUsuario === rol;
+
+            return matchBusqueda && matchEstado && matchRol;
+        });
+
+        renderizarTabla(filtrados);
+    }
+
+    // =============================================
+    // MODAL EDITAR
+    // =============================================
+    function abrirModalEditar(id) {
+        const usuario = usuariosData.find(u => u.id === id);
+        
+        if (!usuario) {
+            showToast('Usuario no encontrado', 'error');
+            return;
+        }
+
+        document.getElementById('editUserId').value = usuario.id;
+        document.getElementById('editNombre').value = usuario.nombre || '';
+        document.getElementById('editEmail').value = usuario.email || '';
+        document.getElementById('editRol').value = usuario.rol || 'COMPRADOR';
+        document.getElementById('editEstado').value = (usuario.activo === true).toString();
+
+        document.getElementById('modalEditar').classList.add('active');
+    }
+
+    function cerrarModal() {
+        document.getElementById('modalEditar').classList.remove('active');
+    }
+
+    // =============================================
+    // GUARDAR EDICIÓN
+    // =============================================
+    document.getElementById('formEditar').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const id = document.getElementById('editUserId').value;
+        const datos = {
+            nombre: document.getElementById('editNombre').value,
+            email: document.getElementById('editEmail').value,
+            rol: document.getElementById('editRol').value
+        };
+
+        try {
+            const response = await fetch(API_URL + '/' + id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al actualizar');
+            }
+
+            showToast('Usuario actualizado correctamente', 'success');
+            cerrarModal();
+            cargarUsuarios();
+
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('Error al actualizar usuario', 'error');
+        }
+    });
+
+    // =============================================
+    // CAMBIAR ESTADO (ACTIVAR/DESACTIVAR)
+    // =============================================
+    async function cambiarEstado(id) {
+        try {
+            const response = await fetch(API_URL + '/' + id + '/toggle', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al cambiar estado');
+            }
+
+            showToast('Estado actualizado correctamente', 'success');
+            cargarUsuarios();
+
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('Error al cambiar estado', 'error');
+        }
+    }
+
+    // =============================================
+    // EVENT LISTENERS
+    // =============================================
+    document.getElementById('searchInput').addEventListener('input', filtrarTabla);
+    document.getElementById('filtroEstado').addEventListener('change', filtrarTabla);
+    document.getElementById('filtroRol').addEventListener('change', filtrarTabla);
+
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('modalEditar').addEventListener('click', function(e) {
+        if (e.target === this) {
+            cerrarModal();
+        }
+    });
+
+    // =============================================
+    // INICIAR
+    // =============================================
+    window.addEventListener('DOMContentLoaded', function() {
+        console.log('Página Control de Cuentas cargada');
+        cargarUsuarios();
+    });
+</script>
+
+</body>
 </html>

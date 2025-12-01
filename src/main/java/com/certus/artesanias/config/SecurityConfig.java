@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -46,7 +47,8 @@ public class SecurityConfig {
             return org.springframework.security.core.userdetails.User
                     .withUsername(usuario.getEmail())
                     .password(usuario.getPassword())
-                    .roles(usuario.getRol().replace("ROLE_", "")) 
+                    .roles(usuario.getRol().replace("ROLE_", ""))
+                    .disabled(usuario.getActivo() == null || !usuario.getActivo())
                     .build();
         };
     }
@@ -55,6 +57,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            // Deshabilitar CSRF para rutas de API
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/admin/api/**"))
+            )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/", "/login", "/registro", "/login.js", "/style.css",
@@ -65,9 +71,6 @@ public class SecurityConfig {
                     "/images/**", "/registro-empresa","/productos","/vendedor-miperfil.html",
                     "/registro-personal"
                 ).permitAll()
-
-
-
 
                 .requestMatchers("/comprador/**").hasRole("COMPRADOR")
                 .requestMatchers("/vendedor/**").hasRole("VENDEDOR")

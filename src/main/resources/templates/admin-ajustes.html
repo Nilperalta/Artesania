@@ -4,608 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Ajustes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="icon" th:href="@{/images/Logo-artesania.png}" href="images/Logo-artesania.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-
-        :root{
-            --lineaMarron:rgba(146, 89, 48, 1);
-            --EncabezadoHome:rgba(120, 198, 189, 1);
-            --black:#555;
-            --light-color:#777;
-            --bg:#fceae9;
-            --border:.1rem solid rgba(0,0,0,.1);
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-            --encabezados:rgba(1, 1, 1, 1);
-            --box-color: rgba(236, 236, 236, 1);
-            --boton:#c06722;
+        :root { --primary: #c06722; --bg: #f8f9fa; --dark: #2c3e50; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Nunito',sans-serif; }
+        body { background:var(--bg); padding-top:90px; min-height:100vh; }
+        
+        /* HEADER LIMPIO */
+        header {
+            position:fixed; top:0; left:0; right:0; background:white;
+            box-shadow:0 4px 20px rgba(0,0,0,0.1); z-index:1000;
+            padding:18px 40px; display:flex; justify-content:space-between; align-items:center;
+        }
+        .logo-preview { height:62px; object-fit:contain; }
+        
+        .back-btn {
+            background:var(--primary); color:white; padding:14px 32px;
+            border-radius:50px; text-decoration:none; font-weight:700; font-size:1.2rem;
+            display:flex; align-items:center; gap:10px; transition:.3s;
+        }
+        .back-btn:hover {
+            background:#d35400; transform:translateY(-3px);
+            box-shadow:0 10px 30px rgba(192,103,34,0.35);
         }
 
-        *{
-            font-family: "Nunito", sans-serif;
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-            outline: none; border: none;
-            text-decoration: none;
-            text-transform: capitalize;
-            transition: all .3s ease-out;
+        .container { max-width:1000px; margin:40px auto; padding:30px; }
+        h1 { text-align:center; color:var(--primary); font-size:3.6rem; margin-bottom:50px; font-weight:800; }
+        .card { background:white; padding:45px; border-radius:22px; box-shadow:0 15px 45px rgba(0,0,0,0.12); }
+        .card h2 { color:var(--primary); font-size:2.5rem; margin-bottom:35px; display:flex; align-items:center; gap:14px; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:32px; }
+        .field { margin-bottom:28px; }
+        label { display:block; margin-bottom:10px; font-weight:600; color:var(--dark); font-size:1.15rem; }
+        input, textarea {
+            width:100%; padding:15px 18px; border:2px solid #e0e0e0; border-radius:14px;
+            font-size:1.05rem; background:#fafafa; transition:.3s;
         }
-
-        html{
-            font-size: 62.5%;
-            scroll-behavior: smooth;
-            scroll-padding-top: 9rem;
+        input:focus, textarea:focus {
+            border-color:var(--primary); outline:none;
+            box-shadow:0 0 0 4px rgba(192,103,34,0.18); background:white;
         }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        .preview { text-align:center; margin-top:18px; }
+        .preview img { max-height:130px; border-radius:14px; box-shadow:0 8px 30px rgba(0,0,0,0.15); }
+        .btn-save {
+            background:var(--primary); color:white; padding:20px 80px; font-size:1.5rem;
+            font-weight:700; border:none; border-radius:16px; cursor:pointer;
+            display:block; margin:60px auto 20px; transition:.4s;
         }
-
-        .layout{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr auto;
-            grid-template-areas:  "header"
-                                  "main"
-                                  "footer";
-            min-height: 100vh;
-        }
-
-        .layout .header{
-            background: #fff;
-            grid-area: header;
-        }
-
-        .layout .contenedor{
-            background: #fff;
-            grid-area: main;
-        }
-
-        .layout .footer{
-            background: #ffdcc2;
-            grid-area: footer;
-        }
-
-        /* Header */
-        .header{
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            background: #fff;
-            box-shadow: var(--box-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 9%;
-        }
-
-        .header .logo{
-            height: 7rem;
-        }
-
-        .header .navbar{
-            display: flex;
-            align-items: center;
-        }
-
-        .header .navbar a{
-            font-size: 1.7rem;
-            color: var(--light-color);
-            margin-left: 2rem;
-        }
-
-        .header .navbar a:hover{
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn{
-            cursor: pointer;
-            font-size: 2.5rem;
-            padding: 1rem;
-            border-radius: .5rem;
-            color: var(--main-color);
-            background: #ffdcc2;
-            display: none;
-            color: var(--lineaMarron);
-        }
-
-        #menu-btn:hover{
-            color: #fff;
-            background: var(--EncabezadoHome);
-        }
-
-        /* Contenedor */
-        .contenedor{
-            background: #fff;
-        }
-
-        /* Panel de Control */
-        .panel-control {
-            margin-top: 8rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .panel-control .heading-panel {
-            font-size: 3rem;
-            color: var(--EncabezadoHome);
-            margin-bottom: 4rem;
-            text-align: center;
-        }
-
-        /* Grid de tarjetas */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-            gap: 3rem;
-            margin-bottom: 5rem;
-        }
-
-        .card-panel {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 0.8rem;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card-panel:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 .8rem 2rem rgba(0,0,0,.15);
-        }
-
-        .card-panel h3 {
-            font-size: 2rem;
-            color: var(--encabezados);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .card-panel p {
-            font-size: 1.4rem;
-            color: var(--light-color);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .card-panel .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.4rem;
-            border-radius: 0.5rem;
-            background: var(--boton);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .card-panel .btn:hover {
-            background: var(--lineaMarron);
-            transform: scale(1.05);
-        }
-
-        /* Footer */
-        .footer .box-container{
-            display: flex;
-            justify-content: space-evenly;
-            box-shadow: var(--box-shadow);
-        }
-
-        .footer .box-container .box{
-            display: flex;
-            flex-direction: column;
-            margin: 2rem;
-            padding: 2rem;
-        }
-
-        .footer .box-container .box img{
-            height: 9rem;
-        }
-
-        .footer .box-container .box h3{
-            font-size: 1.5rem;
-        }
-
-        .footer .box-container .box a{
-            font-size: 1.2rem;
-            color: var(--light-color);
-        }
-
-        .footer .box-container .box a i{
-            color: var(--lineaMarron);
-            margin-right: 0.5rem;
-        }
-
-        .footer .box-container .box a:hover{
-            color: var(--lineaMarron);
-        }
-
-        .footer .credit{
-            background: var(--lineaMarron);
-            display: flex;
-            justify-content: center;
-        }
-
-        .footer .credit span{
-            color: white;
-            font-size: 1.2rem;
-            padding: 1rem;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Nunito', sans-serif;
-        }
-
-        .modal-content {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 1rem 3rem rgba(0,0,0,.3);
-        }
-
-        .modal-content h2 {
-            margin-bottom: 2rem;
-            color: var(--EncabezadoHome);
-            text-align: center;
-            font-size: 2.5rem;
-        }
-
-        .modal-content label {
-            font-weight: 600;
-            font-size: 1.4rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .modal-buttons .btn-cancel {
-            background: #ccc;
-        }
-
-        .modal-buttons .btn-save {
-            background: var(--EncabezadoHome);
-        }
-
-        /* Media queries */
-        @media(max-width: 991px){
-            html{
-                font-size: 55%;
-            }
-        }
-
-        @media(max-width: 768px){
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer .box-container{
-                flex-direction: column;
-                align-items: center;
-            }
-
-            #menu-btn{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 2rem;
-            }
-
-            .header .navbar{
-                position: absolute;
-                top:115%; right: 6rem;
-                width: 30rem;
-                opacity:0;
-                display: block;
-                font-size: 2rem;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem; 
-                background: #fff; 
-                transform: scale(0);
-            }
-
-            .header .navbar.active{
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            .header .navbar a{
-                font-size: 2rem;
-                display: block;
-                padding: 1rem;
-                margin: .5rem 1rem;
-                border-radius: .5rem;    
-            }
-        }
-
-        @media(max-width: 450px){
-            html{
-                font-size: 50%;
-            }
-        }
+        .btn-save:hover { background:#e67e22; transform:scale(1.06); box-shadow:0 15px 40px rgba(192,103,34,0.4); }
+        footer { background:#222; color:#aaa; text-align:center; padding:30px; }
     </style>
 </head>
 <body>
 
-    <div class="layout">
+<!-- HEADER LIMPIO: SOLO LOGO + VOLVER AL DASHBOARD -->
+<header>
+    <img src="/images/Logo-artesania.png" class="logo-preview" id="liveLogo" alt="Logo">
+    <a th:href="@{/admin}" class="back-btn">
+        Volver al Dashboard
+    </a>
+</header>
 
-        <!-- Header -->
-        <header class="header">
-            <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="" class="logo">
-            
-            <nav class="navbar">
-                <a th:href="@{/}">HOME</a>
-                <a th:href="@{/#productos}">PRODUCTOS</a>
-                <a th:href="@{/ventas}">VENTAS</a>
-                <a th:href="@{/logout}">SALIR</a>
-            </nav>
+<div class="container">
+    <h1>Ajustes del Sitio</h1>
 
-            <div id="menu-btn" class="fas fa-bars"></div>
-        </header>
+    <div class="card">
+        <h2>Parámetros Generales</h2>
 
-        <!-- Contenido principal -->
-        <main class="contenedor">
-            
-            <section class="panel-control">
-                <h1 class="heading-panel">Panel de Control</h1>
-
-                <!-- Grid de tarjetas -->
-                <div class="cards-grid">
-                    <div class="card-panel" onclick="abrirCategoria('general')">
-                        <h3>Parámetros Generales</h3>
-                        <p>Configura Nombre, Logo, Idioma Y Moneda De La Plataforma.</p>
-                        <a class="btn">Configurar</a>
-                    </div>
-
-                    <div class="card-panel" onclick="abrirCategoria('roles')">
-                        <h3>Usuarios Y Roles</h3>
-                        <p>Gestiona Permisos, Crea Nuevos Roles Y Define Accesos.</p>
-                        <a class="btn">Administrar</a>
-                    </div>
-
-                    <div class="card-panel" onclick="abrirCategoria('payments')">
-                        <h3>Pagos Y Comisiones</h3>
-                        <p>Ajusta Métodos De Pago Y Porcentajes De Comisión.</p>
-                        <a class="btn">Ver más</a>
-                    </div>
-
-                    <div class="card-panel" onclick="abrirCategoria('security')">
-                        <h3>Seguridad</h3>
-                        <p>Define Políticas De Contraseña, Sesiones Y 2FA.</p>
-                        <a class="btn">Revisar</a>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="box-container">
-                <div class="box">
-                    <img th:src="@{/images/Logo-artesania.png}" src="images/Logo-artesania.png" alt="">
-                </div>
-
-                <div class="box">
-                    <h3>Síguenos</h3>
-                    <a href="#"><i class="fab fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fab fa-instagram"></i>Instagram</a>
-                </div>
-
-                <div class="box">
-                    <h3>Servicios</h3>
-                    <a th:href="@{/#home}"><i class="fas fa-check"></i>Home</a>
-                    <a th:href="@{/#productos}"><i class="fas fa-check"></i>Productos</a>
-                    <a th:href="@{/SeleccionRegistro}"><i class="fas fa-check"></i>Registro</a>
-                </div>
+        <div class="grid">
+            <div class="field">
+                <label>Dirección Física</label>
+                <textarea rows="3">Av. Primavera 1234, Surco, Lima - Perú</textarea>
             </div>
-
-            <div class="credit"><span>Creado Por Mr. Grupo | Todos Los Derechos Reservados</span></div>
-        </footer>
-    </div>
-
-    <!-- MODAL DE EDICIÓN -->
-    <div id="modalAjustes" class="modal-overlay">
-        <div class="modal-content">
-            <h2 id="modalTitulo"></h2>
-            <div id="modalContenido"></div>
-            <div class="modal-buttons">
-                <button class="btn btn-cancel" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn btn-save" onclick="guardarModal()">Guardar Cambios</button>
+            <div class="field">
+                <label>Número de Contacto / WhatsApp</label>
+                <input type="text" value="+51 999 999 999">
+            </div>
+            <div class="field">
+                <label>Correo Electrónico</label>
+                <input type="email" value="contacto@artesaniascertus.com">
+            </div>
+            <div class="field">
+                <label>Logo Principal</label>
+                <input type="file" id="logoInput" accept="image/*">
+                <div class="preview">
+                    <img id="previewLogo" src="/images/Logo-artesania.png" alt="Vista previa">
+                    <small style="color:#777;margin-top:8px;display:block;">Se actualiza en tiempo real</small>
+                </div>
             </div>
         </div>
+
+        <button type="button" class="btn-save" onclick="alert('¡Cambios guardados exitosamente!')">
+            GUARDAR CAMBIOS
+        </button>
     </div>
+</div>
 
-    <!-- Menú móvil -->
-    <script>
-        let menu = document.querySelector('#menu-btn');
-        let navbar = document.querySelector('.navbar');
+<footer>
+    © 2025 Artesanías Certus - Todos los derechos reservados
+</footer>
 
-        if(menu && navbar) {
-            menu.onclick = () => {
-                menu.classList.toggle('fa-times');
-                navbar.classList.toggle('active');
+<script>
+    document.getElementById('logoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewLogo').src = e.target.result;
+                document.getElementById('liveLogo').src = e.target.result;
             }
-
-            window.onscroll = () => {
-                menu.classList.remove('fa-times');
-                navbar.classList.remove('active');
-            }
+            reader.readAsDataURL(file);
         }
-    </script>
-
-    <!-- Configuración de API con contexto Thymeleaf -->
-    <script th:inline="javascript">
-        const API_BASE = /*[[@{/admin/api/settings}]]*/ '/admin/api/settings';
-    </script>
-
-    <script>
-        // === MODAL Y CATEGORÍAS ===
-        let configuraciones = [];
-        let categoriaActual = '';
-
-        // CARGAR CONFIGURACIONES AL INICIAR
-        fetch(API_BASE)
-            .then(r => {
-                if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
-                return r.json();
-            })
-            .then(data => {
-                configuraciones = data;
-                console.log('Configuraciones cargadas:', data);
-            })
-            .catch(err => {
-                console.error('Error cargando ajustes:', err);
-                alert('No se pudieron cargar los ajustes. Revisa el backend.');
-            });
-
-        // ABRIR MODAL
-        function abrirCategoria(categoria) {
-            categoriaActual = categoria;
-            const modal = document.getElementById('modalAjustes');
-            const titulo = document.getElementById('modalTitulo');
-            const contenido = document.getElementById('modalContenido');
-
-            let tituloTexto = '';
-            let campos = '';
-
-            if (categoria === 'general') {
-                tituloTexto = 'Parámetros Generales';
-                const siteName = configuraciones.find(c => c.key === 'site_name');
-                const email = configuraciones.find(c => c.key === 'contact_email');
-                campos = `
-                    <label>Nombre de la Plataforma</label>
-                    <input type="text" id="edit-site_name" value="${siteName?.value || ''}" data-original="${siteName?.value || ''}">
-                    
-                    <label>Email de Contacto</label>
-                    <input type="email" id="edit-contact_email" value="${email?.value || ''}" data-original="${email?.value || ''}">
-                `;
-            }
-
-            if (categoria === 'payments') {
-                tituloTexto = 'Pagos y Comisiones';
-                const comision = configuraciones.find(c => c.key === 'commission_rate');
-                campos = `
-                    <label>Porcentaje de Comisión (%)</label>
-                    <input type="number" id="edit-commission_rate" value="${comision?.value || ''}" data-original="${comision?.value || ''}" min="0" max="100">
-                `;
-            }
-
-            if (categoria === 'roles') {
-                tituloTexto = 'Usuarios y Roles';
-                campos = `<p style="color:#777; text-align:center; font-style:italic; font-size:1.4rem;">Próximamente: gestión de roles</p>`;
-            }
-
-            if (categoria === 'security') {
-                tituloTexto = 'Seguridad';
-                campos = `<p style="color:#777; text-align:center; font-style:italic; font-size:1.4rem;">Próximamente: 2FA, políticas de contraseña</p>`;
-            }
-
-            titulo.textContent = tituloTexto;
-            contenido.innerHTML = campos;
-            modal.style.display = 'flex';
-        }
-
-        // CERRAR MODAL
-        function cerrarModal() {
-            document.getElementById('modalAjustes').style.display = 'none';
-        }
-
-        // GUARDAR CAMBIOS
-        async function guardarModal() {
-            const updates = [];
-
-            if (categoriaActual === 'general') {
-                const siteName = document.getElementById('edit-site_name').value.trim();
-                const email = document.getElementById('edit-contact_email').value.trim();
-                const siteConfig = configuraciones.find(c => c.key === 'site_name');
-                const emailConfig = configuraciones.find(c => c.key === 'contact_email');
-
-                if (siteConfig && siteName !== siteConfig.value) {
-                    updates.push({ id: siteConfig.id, value: siteName });
-                }
-                if (emailConfig && email !== emailConfig.value) {
-                    updates.push({ id: emailConfig.id, value: email });
-                }
-            }
-
-            if (categoriaActual === 'payments') {
-                const comision = document.getElementById('edit-commission_rate').value;
-                const config = configuraciones.find(c => c.key === 'commission_rate');
-                if (config && comision !== config.value) {
-                    updates.push({ id: config.id, value: comision });
-                }
-            }
-
-            if (updates.length === 0) {
-                alert('No hay cambios para guardar');
-                cerrarModal();
-                return;
-            }
-
-            try {
-                for (const update of updates) {
-                    const res = await fetch(`${API_BASE}/${update.id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ value: update.value })
-                    });
-                    if (!res.ok) throw new Error('Error al guardar');
-                }
-                alert('Cambios guardados correctamente');
-                location.reload();
-            } catch (err) {
-                alert('Error al guardar: ' + err.message);
-            }
-        }
-
-        // Cerrar con ESC
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') cerrarModal();
-        });
-
-        // Cerrar al hacer clic fuera del modal
-        document.getElementById('modalAjustes').addEventListener('click', function(e) {
-            if (e.target === this) cerrarModal();
-        });
-    </script>
-
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a67655abcf6d575',t:'MTc2NDQ3NDc4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    });
+</script>
+</body>
 </html>
