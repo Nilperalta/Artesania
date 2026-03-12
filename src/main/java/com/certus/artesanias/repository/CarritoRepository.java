@@ -8,9 +8,9 @@ import com.certus.artesanias.models.Carrito;
 
 public interface CarritoRepository extends JpaRepository<Carrito, Long> {
 
-    // Método para obtener todos los items del carrito de un usuario
-    List<Carrito> findByUsuarioId(Long usuarioId);
+    // Obtener items del carrito por usuario
+    List<Carrito> findByUsuario_Id(Long usuarioId);
 
-    // Método para eliminar todos los items de un usuario
-    void deleteByUsuarioId(Long usuarioId);
+    // Eliminar items del carrito por usuario
+    void deleteByUsuario_Id(Long usuarioId);
 }

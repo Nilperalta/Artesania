@@ -29,11 +29,7 @@ public class SecurityConfig {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // ENCRIPTACIÓN
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     // AQUÍ SPRING SECURITY LEE EL USUARIO DESDE LA BD
     @Bean
@@ -87,6 +83,11 @@ public class SecurityConfig {
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
+            .oauth2Login(oauth -> oauth
+                .loginPage("/login")
+                .successHandler(successHandler)
+            )
+
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")

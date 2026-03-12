@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.certus.artesanias.models.Carrito;
 import com.certus.artesanias.models.Producto;
 import com.certus.artesanias.models.Usuario;
-import com.certus.artesanias.service.CarritoCliente;
-import com.certus.artesanias.service.ProductoCliente;
+import com.certus.artesanias.service.CarritoService;
+import com.certus.artesanias.service.ProductoService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,19 +23,22 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/comprador")
 public class CompradorController {
 
-    private final ProductoCliente productoCliente;
-    private final CarritoCliente carritoCliente;
+    private final ProductoService productoService;
+    private final CarritoService carritoService;
 
-    public CompradorController(ProductoCliente productoCliente, CarritoCliente carritoCliente) {
-        this.productoCliente = productoCliente;
-        this.carritoCliente = carritoCliente;
+    public CompradorController(ProductoService productoService, CarritoService carritoService) {
+        this.productoService = productoService;
+        this.carritoService = carritoService;
     }
 
     // ====================== DASHBOARD ======================
     @GetMapping
     public String homeComprador(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
 
         model.addAttribute("usuario", usuario);
         return "comprador/dashboard-comprador";
@@ -48,11 +51,21 @@ public class CompradorController {
                                   HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        List<Producto> productos = productoCliente.obtenerProductos();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        List<Producto> productos = productoService.obtenerProductos();
+        List<Carrito> carrito = carritoService.obtenerCarritoPorUsuarioId(usuario.getId());
+
+        int cantidadCarrito = carrito.stream()
+                .mapToInt(Carrito::getCantidad)
+                .sum();
+
         model.addAttribute("productos", productos);
         model.addAttribute("usuario", usuario);
+        model.addAttribute("cantidadCarrito", cantidadCarrito);
 
         if (agregado != null) {
             model.addAttribute("mensaje", "Producto agregado al carrito correctamente ✅");
@@ -64,11 +77,18 @@ public class CompradorController {
     // ====================== DETALLE PRODUCTO ======================
     @GetMapping("/producto/{id}")
     public String verDetalleProducto(@PathVariable Long id, Model model, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        Producto producto = productoCliente.obtenerProductoPorId(id);
-        if (producto == null) return "redirect:/comprador/productos";
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        Producto producto = productoService.obtenerProductoPorId(id);
+
+        if (producto == null) {
+            return "redirect:/comprador/productos";
+        }
 
         model.addAttribute("producto", producto);
         model.addAttribute("usuario", usuario);
@@ -81,9 +101,13 @@ public class CompradorController {
     public String verCarrito(HttpSession session, Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        List<Carrito> carrito = carritoService.obtenerCarritoPorUsuarioId(usuario.getId());
+
         carrito.forEach(Carrito::calcularSubtotal);
 
         BigDecimal total = carrito.stream()
@@ -104,9 +128,12 @@ public class CompradorController {
                                    HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        carritoCliente.agregarAlCarrito(usuario.getId(), productoId, cantidad);
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        carritoService.agregarAlCarrito(usuario.getId(), productoId, cantidad);
 
         return "redirect:/comprador/productos?agregado=true";
     }
@@ -114,10 +141,14 @@ public class CompradorController {
     // ====================== ELIMINAR ITEM ======================
     @GetMapping("/carrito/eliminar/{id}")
     public String eliminarItem(@PathVariable Long id, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        carritoCliente.eliminarDelCarrito(id);
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        carritoService.eliminarDelCarrito(id);
 
         return "redirect:/comprador/carrito";
     }
@@ -127,9 +158,13 @@ public class CompradorController {
     public String mostrarCheckout(HttpSession session, Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        List<Carrito> carrito = carritoService.obtenerCarritoPorUsuarioId(usuario.getId());
+
         carrito.forEach(Carrito::calcularSubtotal);
 
         BigDecimal total = carrito.stream()
@@ -151,9 +186,12 @@ public class CompradorController {
                                    Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
 
-        List<Carrito> carrito = carritoCliente.obtenerCarritoPorUsuarioId(usuario.getId());
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        List<Carrito> carrito = carritoService.obtenerCarritoPorUsuarioId(usuario.getId());
 
         if (carrito.isEmpty()) {
             model.addAttribute("mensajeError", "Tu carrito está vacío.");
@@ -161,14 +199,15 @@ public class CompradorController {
         }
 
         BigDecimal total = carrito.stream()
-                .map(item -> item.getProducto().getPrecio().multiply(BigDecimal.valueOf(item.getCantidad())))
+                .map(item -> item.getProducto().getPrecio()
+                .multiply(BigDecimal.valueOf(item.getCantidad())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         model.addAttribute("mensajeExito", "Compra realizada con éxito 🎉");
         model.addAttribute("total", total);
         model.addAttribute("carritoItems", carrito);
 
-        carritoCliente.vaciarCarrito(usuario.getId());
+        carritoService.vaciarCarrito(usuario.getId());
 
         return "comprador/checkout";
     }
@@ -176,8 +215,12 @@ public class CompradorController {
     // ====================== PERFIL ======================
     @GetMapping("/perfil")
     public String perfil(HttpSession session, Model model) {
+
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-        if (usuario == null) return "redirect:/login";
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
 
         model.addAttribute("usuario", usuario);
 
@@ -187,7 +230,9 @@ public class CompradorController {
     // ====================== CERRAR SESIÓN ======================
     @GetMapping("/salir")
     public String salir(HttpSession session) {
+
         session.invalidate();
+
         return "redirect:/login";
     }
 }
